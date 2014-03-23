@@ -13,7 +13,7 @@ static NSLocale *gLocale;
 
 @interface CSWDay()
 {
-    NSUInteger _day;
+    int _day;
     NSNumber *_number;
 }
 
@@ -23,6 +23,8 @@ static NSLocale *gLocale;
 @end
 
 @implementation CSWDay
+
+@synthesize dayOfWeek = _dayOfWeek, date = _date;
 
 ////
 #pragma mark class methods
@@ -77,10 +79,18 @@ static NSLocale *gLocale;
     return self;
 }
 
+////
+#pragma mark superclass methods (public)
+////
++(int)numberOfDaysForward:(CSWDay *)aDay
+{
+    return (int)([aDay.date timeIntervalSinceDate:[NSDate date]] / ( 60 * 60 * 24 * 1.0 ));
+}
+
 //
 #pragma mark accessor methods (public)
 //
--(NSUInteger)asInt
+-(int)asInt
 {
     return _day;
 }
@@ -90,31 +100,59 @@ static NSLocale *gLocale;
     return _number;
 }
 
+-(NSDate *)date
+{
+    return _date;
+}
+
+-(NSString *)dayOfWeek
+{
+    return _dayOfWeek;
+}
+
 -(void)setFromDate:(NSDate *)aDate
 {
     NSDateComponents *c = [gCal components: NSYearCalendarUnit
                                            |NSMonthCalendarUnit
                                            |NSDayCalendarUnit
+                                           |NSWeekdayCalendarUnit
                                   fromDate:aDate
                            ];
 
-    _day = c.year * 10000 + c.month * 100 + c.day;
+    _date = aDate;
+    _day = (int)c.year * 10000 + (int)c.month * 100 + (int)c.day;
     _number = [NSNumber numberWithInteger:_day];
     
-    
+    switch ( c.weekday ) {
+        case (1) :
+            _dayOfWeek = @"sunday";
+            break;
+        case (2) :
+            _dayOfWeek = @"monday";
+            break;
+        case (3) :
+            _dayOfWeek = @"tuesday";
+            break;
+        case (4) :
+            _dayOfWeek = @"wednesday";
+            break;
+        case (5) :
+            _dayOfWeek = @"thursday";
+            break;
+        case (6) :
+            _dayOfWeek = @"friday";
+            break;
+        case (7) :
+            _dayOfWeek = @"saturday";
+            break;
+    }
 }
 
 -(void)setFromNumber:(NSNumber *)aNumber;
 {
-    _day = [aNumber integerValue];
-    _number = aNumber;
-}
-
-////
-#pragma mark instance methods (public)
-////
--(NSDate *)toDate
-{
+//    _day = [aNumber intValue];
+//    _number = aNumber;
+    
     NSDateComponents *c = [[NSDateComponents alloc] init];
     
     int dayClone = _day;
@@ -122,10 +160,13 @@ static NSLocale *gLocale;
     dayClone %= 10000;
     c.month = (int)(dayClone / 100);
     c.day = dayClone % 100;
-        
-    return [gCal dateFromComponents:c];
+    NSDate *date = [gCal dateFromComponents:c];
+    return [self setFromDate:date];
 }
 
+////
+#pragma mark instance methods (public)
+////
 -(CSWDay *)findPreviousSunday
 {
     static NSDateFormatter *dayOfWeekFormatter = nil;
@@ -146,28 +187,29 @@ static NSLocale *gLocale;
                           };
     }
     
-    NSString *day = [dayOfWeekFormatter stringFromDate:self.toDate];
-    int days = [[daysToSubtract objectForKey:day] integerValue];
+    NSString *day = [dayOfWeekFormatter stringFromDate:self.date];
+    int days = [[daysToSubtract objectForKey:day] intValue];
     NSTimeInterval daysBackInSeconds = days * 60 * 60 * 24 * -1;
     
-    NSDate *sundayDate = [self.toDate dateByAddingTimeInterval:daysBackInSeconds];
+    NSDate *sundayDate = [self.date dateByAddingTimeInterval:daysBackInSeconds];
     return [CSWDay dayWithDate:sundayDate];
 }
 
--(CSWDay *)addDays:(NSInteger)aDays
+-(CSWDay *)addDays:(int)aDays
 {
-    NSUInteger secs = [self.toDate timeIntervalSince1970] + ( 60 * 60 * 24 * aDays );
+    NSUInteger secs = [self.date timeIntervalSince1970] + ( 60 * 60 * 24 * aDays );
     return [CSWDay dayWithDate:[NSDate dateWithTimeIntervalSince1970:secs]];
 }
 
 
--(NSInteger)daysBetween:(CSWDay *)aDay
+-(int)daysBetween:(CSWDay *)aDay
 {
-    NSInteger aSecs = [self.toDate timeIntervalSince1970];
-    NSInteger bSecs = [aDay.toDate timeIntervalSince1970];
+    NSInteger aSecs = [self.date timeIntervalSince1970];
+    NSInteger bSecs = [aDay.date timeIntervalSince1970];
     
-    return (NSInteger)( ( bSecs - aSecs ) / ( 60 * 60 * 24 * 1.0 ) );
+    return (int)( ( bSecs - aSecs ) / ( 60 * 60 * 24 * 1.0 ) );
 }
+
 
 
 @end

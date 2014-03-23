@@ -65,7 +65,7 @@
 ////
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"%d", self.day.integerValue];
+    return [NSString stringWithFormat:@"%d", self.day.intValue];
 }
 
 @end

@@ -12,7 +12,7 @@ static NSCalendar *gCal;
 
 @interface CSWTime()
 {
-    NSUInteger _time;
+    int _time;
     NSNumber *_number;
 }
 
@@ -84,14 +84,14 @@ static NSCalendar *gCal;
 -(void)setWithDate:(NSDate *)aDate
 {
     NSDateComponents *c = [gCal components:NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:aDate];
-    _time = ( c.hour % 24 ) * 100 + c.minute;
+    _time = ( c.hour % 24 ) * 100 + (int)c.minute;
     _number = [NSNumber numberWithInteger:_time];
 }
 
 -(void)setWithNumber:(NSNumber *)aNumber
 {
     _number = aNumber;
-    _time = aNumber.integerValue;
+    _time = aNumber.intValue;
 }
 
 -(NSDate *)toDate
@@ -120,11 +120,11 @@ static NSCalendar *gCal;
                         ];
     
     if ( matches.count != 1 )
-        [NSException raise:kExceptionFormatError format:@"Could not recognize time string: %@, found %d matches", aTimeStr, matches.count];
+        [NSException raise:kExceptionFormatError format:@"Could not recognize time string: %@, found %lu matches", aTimeStr,(unsigned long)matches.count];
     
     NSTextCheckingResult *match = matches.lastObject;
-    int hours      = [aTimeStr substringWithRange:[match rangeAtIndex:1]].integerValue;
-    int minutes    = [aTimeStr substringWithRange:[match rangeAtIndex:2]].integerValue;
+    int hours      = [aTimeStr substringWithRange:[match rangeAtIndex:1]].intValue;
+    int minutes    = [aTimeStr substringWithRange:[match rangeAtIndex:2]].intValue;
     
     if ( hours < 12 && [[aTimeStr substringWithRange:[match rangeAtIndex:3]] isEqualToString:@"P"] )
         hours += 12;

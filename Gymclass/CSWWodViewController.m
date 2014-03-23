@@ -7,6 +7,7 @@
 //
 
 #import "CSWWodViewController.h"
+#import "Flurry.h"
 
 @interface CSWWodViewController ()
 {
@@ -54,6 +55,7 @@
 //
 -(void)closePressed:(id)sender
 {
+    [Flurry endTimedEvent:kWodViewed withParameters:nil];
     [self dismissViewControllerAnimated:TRUE completion:nil];
 }
 

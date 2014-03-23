@@ -20,6 +20,8 @@
 #import "CSWInstructor.h"
 #import "CSWLocation.h"
 
+#import "Flurry.h"
+
 #import "AFNetworking/AFNetworking.h"
 
 #define kAppConfig       @"appConfig"
@@ -131,7 +133,7 @@ static NSMutableDictionary *gCachedLocationsByName;
     if ( !timeZoneString ) timeZoneString = @"America/New_York";
     
     _timeZone = [NSTimeZone timeZoneWithName:timeZoneString];
-    
+
     return _timeZone;
 }
 
@@ -750,15 +752,29 @@ static NSMutableDictionary *gCachedLocationsByName;
              ];
     }
     
+    CSWDay *workoutDay = [CSWDay dayWithNumber:aWorkout.day];
+    
+    NSDictionary *flurryParams = @{ @"time"        : aWorkout.time
+                                   ,@"dayOfWeek"   : workoutDay.dayOfWeek
+                                   ,@"gymId"       : self.gymId
+                                   ,@"daysForward" : [NSNumber numberWithInt:[CSWDay numberOfDaysForward:workoutDay]]
+                                  };
+    
+    void (^endBlock)(NSError *) = ^(NSError *error) {
+        [Flurry endTimedEvent:sourceTag withParameters:@{ @"success" : [NSNumber numberWithBool:!error] }];
+        if ( aBlock ) aBlock(error);
+    };
+
     CSWMembership *membership = [CSWMembership sharedMembership];
     
-    NSMutableDictionary *urlVariables = [NSMutableDictionary dictionaryWithDictionary:@{ @"workoutId"    : aWorkout.workoutId      ? aWorkout.workoutId      : @""
-                                                                                        ,@"membershipId" : membership.membershipId ? membership.membershipId : @""
-                                                                                        ,@"personId"     : membership.personId     ? membership.personId     : @""
-                                                                                        ,@"attendanceId" : @""   // may be overridden
-                                                                                        ,@"waitlistId"   : @""   // may be overridden
-                                                                                       }
-                                         ];
+    NSDictionary *vars = @{ @"workoutId"    : aWorkout.workoutId        ? aWorkout.workoutId      : @""
+                           ,@"membershipId" : membership.membershipId   ? membership.membershipId : @""
+                           ,@"personId"     : membership.personId       ? membership.personId     : @""
+                           ,@"attendanceId" : @""   // may be overridden
+                           ,@"waitlistId"   : @""   // may be overridden
+                          };
+    
+    NSMutableDictionary *urlVariables = [NSMutableDictionary dictionaryWithDictionary:vars];
 
     if (    ( !membership.membershipId && ( aQueryType == WorkoutQueryTypeSignup || aQueryType == WorkoutQueryTypeWaitlist ) )
          || ( aQueryType == WorkoutQueryTypeCancelSignup || aQueryType == WorkoutQueryTypeCancelWaitlist )
@@ -772,6 +788,8 @@ static NSMutableDictionary *gCachedLocationsByName;
         
         void (^getDetailSuccessBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
 
+            [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @1 } ];
+             
             NSDictionary *workoutDetailDict = [self.signupWebAbstract parseData:operation.responseData
                                                                    forOperation:@"queryWorkout"
                                                                    forOutputTag:@"getDetail"
@@ -841,20 +859,23 @@ static NSMutableDictionary *gCachedLocationsByName;
                                                                                       withVariables:urlVariables
                                                  ];
             
-            [self executeQuery:executeQueryRequest withCompletion:aBlock];
+            [Flurry logEvent:sourceTag withParameters:flurryParams timed:YES];
+            
+            [self executeQuery:executeQueryRequest withCompletion:endBlock];
         };
         
         void (^getDetailFailureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
-            
-            if ( aBlock ) {
-                aBlock( error );
-            }
+            [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @0 } ];
+            aBlock(error);
         };
 
         AFHTTPRequestOperation *getDetailOperation = [[AFHTTPRequestOperation alloc] initWithRequest:mRequest];
         getDetailOperation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
         getDetailOperation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
         [getDetailOperation setCompletionBlockWithSuccess:getDetailSuccessBlock failure:getDetailFailureBlock];
+        
+        [Flurry logEvent:kFetchingMembershipId timed:YES];
+        
         [getDetailOperation start];
 
     } else {
@@ -864,14 +885,17 @@ static NSMutableDictionary *gCachedLocationsByName;
                                                                                   withVariables:urlVariables
                                              ];
         
-        [self executeQuery:executeQueryRequest withCompletion:aBlock];
+        [Flurry logEvent:sourceTag withParameters:flurryParams timed:YES];
+        
+        [self executeQuery:executeQueryRequest withCompletion:endBlock];
     }
 }
 
 -(BOOL)refreshReservationStatusesWithCompletion:(void(^)(NSError *))aBlock
 {
-    if ( !self.gymId )
+    if ( !self.gymId ) {
         [NSException raise:kExceptionNoGymId format:@"Cannot refresh without a gymId configured"];
+    }
 
     CSWMembership *membership = [CSWMembership sharedMembership];
     
@@ -883,6 +907,8 @@ static NSMutableDictionary *gCachedLocationsByName;
                                 ];
 
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id respsonseObject){
+        
+        [Flurry endTimedEvent:kRefreshedReservationsForDay withParameters:@{ @"success" : @1 }];
 
         CSWDay *today = [CSWDay day];
         
@@ -983,11 +1009,10 @@ static NSMutableDictionary *gCachedLocationsByName;
             aBlock( nil );
         }
     };
-    
 
-    
     void (^failureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
-        
+
+        [Flurry endTimedEvent:kRefreshedReservationsForDay withParameters:@{ @"success" : @0 }];
         if ( aBlock ) {
             aBlock( error );
         }
@@ -998,6 +1023,7 @@ static NSMutableDictionary *gCachedLocationsByName;
     operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
     [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
     
+    [Flurry logEvent:kRefreshedReservationsForDay timed:YES];
     [operation start];
     
     return YES;
@@ -1293,18 +1319,24 @@ static NSMutableDictionary *gCachedLocationsByName;
 {
     int cacheTimeoutInterval;
     
+    NSDictionary *flurryParams = @{ @"dataType" : aCacheDataType
+                                   ,@"gymId"    : self.gymId ? self.gymId : @""
+                                  };
+    
     id cacheTimeoutIntervalObj = [self fetchGymConfigValue:@"timeoutInterval" forKey:aCacheDataType];
     if ( !cacheTimeoutIntervalObj ) {
         
         if ( LOG_DEBUG )
             NSLog(@"Fetching initial top-level app configuration");
         
+        [Flurry logEvent:kCacheNeverCached withParameters:flurryParams];
+        
         // app configuration has not yet been downloaded
         cacheTimeoutInterval = 0;
         
     } else {
         
-        cacheTimeoutInterval = [cacheTimeoutIntervalObj integerValue];
+        cacheTimeoutInterval = [cacheTimeoutIntervalObj intValue];
     }
 
     NSDate *now = [NSDate date];
@@ -1316,6 +1348,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             if ( LOG_DEBUG )
                 NSLog(@"Using existing cache value for '%@'[%@] (staleness: %d/%d)", aCacheDataType, [cacheObject description], cacheStaleness, cacheTimeoutInterval);
+
+            [Flurry logEvent:kCacheHit withParameters:flurryParams];
             
             return NO;
             
@@ -1323,6 +1357,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             if ( LOG_DEBUG )
                 NSLog(@"Cache value expired for '%@'[%@] (staleness: %d/%d)", aCacheDataType, [cacheObject description], cacheStaleness, cacheTimeoutInterval);
+            
+            [Flurry logEvent:kCacheMiss withParameters:flurryParams];
 
             return YES;
         }
@@ -1341,6 +1377,8 @@ static NSMutableDictionary *gCachedLocationsByName;
                     
                     if ( LOG_DEBUG )
                         NSLog(@"Using existing cache value for '%@' (staleness: %d/%d)", aCacheDataType, cacheStaleness, cacheTimeoutInterval);
+
+                    [Flurry logEvent:kCacheHit withParameters:flurryParams];
                     
                     return NO;
                     
@@ -1361,6 +1399,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             if ( LOG_DEBUG )
                 NSLog(@"(New Cache) Fetch initial cache value for '%@' (goodfor: %d)", aCacheDataType, cacheTimeoutInterval);
         }
+        
+        [Flurry logEvent:kCacheMiss withParameters:flurryParams];
         
         return YES;
     }

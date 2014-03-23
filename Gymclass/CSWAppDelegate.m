@@ -12,6 +12,8 @@
 #import "KeychainItemWrapper.h"
 #import "CSWPrimaryViewController.h"
 #import "CSWLoginViewController.h"
+#import "Flurry.h"
+#import "iRate.h"
 
 @interface CSWAppDelegate()
 {
@@ -31,9 +33,20 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
++ (void)initialize
+{
+    //configure iRate
+    [iRate sharedInstance].daysUntilPrompt = 1;
+    [iRate sharedInstance].usesUntilPrompt = 5;
+    [iRate sharedInstance].remindPeriod    = 0.5;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSSet *)launchOptions
 {
+    [Flurry setCrashReportingEnabled:YES];
+    [Flurry startSession:FLURRY_API_KEY];
+    [Flurry setVersion:APP_VERSION];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
@@ -77,6 +90,8 @@
             
         } @catch ( NSException *e ) {
             
+            [Flurry logError:@"Bad Gym Setup" message:e.reason exception:e];
+            
             // Gym seems to have been removed!
             [[[UIAlertView alloc] initWithTitle:@"Bad Gym Setup"
                                         message:e.reason
@@ -99,10 +114,19 @@
 -(void)didSetupGymId
 {
     if ( _membership.loginDesired && _membership.username && _membership.password ) {
-            
+        
+        [Flurry logEvent:kUserLoggingIn
+          withParameters:@{ @"reason" : @"appLaunch"
+                           ,@"gymId"  : _store.gymId
+                          }
+                   timed:YES
+         ];
+        
         [_store loginUserForcefully:NO withCompletion:^(NSError *error) {
                 
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                
+                [Flurry endTimedEvent:kUserLoggingIn withParameters:nil];
                     
                 [_indicator stopAnimating];
                 [_nav popViewControllerAnimated:NO]; // pop blackVC
@@ -110,6 +134,8 @@
                 if ( error ) {
                         
                     NSString *msg = [NSString stringWithFormat:@"Unable to login. %@", [error localizedDescription]];
+                    
+                    [Flurry logError:@"Login Error" message:msg error:error];
                     
                     [[[UIAlertView alloc] initWithTitle:@"Login Error"
                                                 message:msg
@@ -127,8 +153,12 @@
                         
                     } else {
                         
+                        NSString *msg = @"Unable to login with specified credentials.";
+                        
+                        [Flurry logError:@"Credentials Error" message:msg error:nil];
+                        
                         [[[UIAlertView alloc] initWithTitle:@"Credentials Error"
-                                                    message:@"Unable to login with specified credentials."
+                                                    message:msg
                                                    delegate:nil
                                           cancelButtonTitle:@"ok"
                                           otherButtonTitles:nil]
@@ -181,6 +211,10 @@
                 
                 if ( error ) {
                     
+                    [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @0 }];
+                    
+                    [Flurry logError:@"Could not contact Gym" message:error.localizedDescription error:error];
+                    
                     [[[UIAlertView alloc] initWithTitle:@"Could not contact Gym"
                                                 message:error.localizedDescription
                                                delegate:nil
@@ -190,6 +224,8 @@
 
                 } else {
                     
+                    [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @1 }];
+                    
                     [_primaryViewController setSelectedTimeToNow];
                     [_primaryViewController focusOnSelectedDateAndTime:true];
                 }
@@ -198,7 +234,16 @@
         
         if ( [CSWMembership sharedMembership].loginDesired ) {
             
-            [[CSWScheduleStore sharedStore] loginUserForcefully:YES withCompletion:completionBlock];
+            CSWScheduleStore *store = [CSWScheduleStore sharedStore];
+            
+            [Flurry logEvent:kUserLoggingIn
+              withParameters:@{ @"reason" : @"appBecameActive"
+                               ,@"gymId"  : store.gymId
+                              }
+                       timed:YES
+             ];
+            
+            [store loginUserForcefully:YES withCompletion:completionBlock];
             
         } else {
             

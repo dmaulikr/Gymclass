@@ -17,7 +17,7 @@
 #import "CSWInstructor.h"
 #import "CSWLocation.h"
 #import "CSWAppDelegate.h"
-
+#import "Flurry.h"
 
 #define NAV_BAR_HEIGHT 40
 #define kAddGymTitle @"Add a new gym..."
@@ -181,10 +181,14 @@
 
 -(IBAction)skipPressed:(id)sender
 {
+    [Flurry logEvent:kLoginSkipped withParameters:@{ @"gymId" : [CSWScheduleStore sharedStore].gymId }];
     if( !_store.gymId ) {
         
+        NSString *msg = @"A gym must be selected in order to browse its schedule.";
+        [Flurry logError:@"No Gym Selected" message:msg error:nil];
+        
         [[[UIAlertView alloc] initWithTitle:@"No Gym Selected"
-                                    message:@"A gym must be selected in order to browse its schedule."
+                                    message:msg
                                    delegate:nil
                           cancelButtonTitle:@"ok"
                           otherButtonTitles:nil
@@ -201,6 +205,7 @@
 
 -(IBAction)logoutPressed:(id)sender
 {
+    [Flurry logEvent:kLogoutPressed];
     CSWMembership *membership = [CSWMembership sharedMembership];
     [membership setCredentialsWithUsername:@"" withPassword:@""];
     membership.loginDesired = NO;
@@ -216,8 +221,11 @@
 
     if( ![CSWScheduleStore sharedStore].gymId ) {
         
+        NSString *msg = @"A gym must be selected in order to login.";
+        [Flurry logError:@"No Gym Selected" message:msg error:nil];
+        
         [[[UIAlertView alloc] initWithTitle:@"No Gym Selected"
-                                   message:@"A gym must be selected in order to login."
+                                   message:msg
                                   delegate:nil
                          cancelButtonTitle:@"ok"
                          otherButtonTitles:nil
@@ -227,11 +235,16 @@
     
     if ( [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] ) {
         
+        NSString *msg = @"Both email and password must be specified in order to login.";
+        
+        [Flurry logError:@"Credentials Error" message:msg error:nil];
+        
         [[[UIAlertView alloc] initWithTitle:@"Credentials Error"
-                                    message:@"Both email and password must be specified in order to login."
-                                   delegate:nil cancelButtonTitle:@"ok"
-                          otherButtonTitles:nil]
-         show];
+                                    message:msg
+                                   delegate:nil
+                          cancelButtonTitle:@"ok"
+                          otherButtonTitles:nil
+          ] show];
         return;
     }
 
@@ -244,6 +257,13 @@
 
     [self.networkActivity startAnimating];
     
+    [Flurry logEvent:kUserLoggingIn
+      withParameters:@{ @"reason" : @"loginPressed"
+                       ,@"gymId"  : store.gymId
+                      }
+               timed:YES
+     ];
+    
     [store loginUserForcefully:YES withCompletion:^(NSError *error) {
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -252,24 +272,34 @@
         
             if ( error ) {
                 
+                [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @0 }];
+                
                 NSString *msg;
                 if ( error.code == kErrorCodeCouldNotGetToken ) {
                     msg = @"Unable to connect to the gym's scheduling system.";
                 } else if ( error.code == kErrorCodeInvalidCredentials ) {
+                    [Flurry logEvent:kLoginBadCredentials];
                     msg = @"Credentials appear to be invalid.";
                 } else {
                     msg = [error localizedDescription];
                 }
                 
+                [Flurry logError:@"Unable to Login" message:msg error:error];
+
                 [[[UIAlertView alloc] initWithTitle:@"Unable to Login"
                                             message:msg
                                            delegate:nil
                                   cancelButtonTitle:@"ok"
                                   otherButtonTitles:nil] show];
+                
+            } else {
+                
+                [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @1 }];
             }
             
             if ( store.isLoggedIn ) {
-            
+                
+                [Flurry logEvent:kLoginSuccess];
                 [self.navigationController pushViewController:[CSWPrimaryViewController new]
                                                      animated:TRUE
                  ];
@@ -290,6 +320,8 @@
     [sheet addButtonWithTitle:@"nevermind"];
     sheet.cancelButtonIndex = 1;
     sheet.destructiveButtonIndex = 1;
+    
+    [Flurry logEvent:kRefreshPressed];
     
     [sheet showFromToolbar:self.navigationController.toolbar];
 }
@@ -321,10 +353,11 @@
 //
 -(void)dismissGymSelector:(id)sender
 {
-
     CSWScheduleStore *store = [CSWScheduleStore sharedStore];
     
     if ( self.gymSelector.shouldAddNewGym ) {
+        
+        [Flurry logEvent:kDidVisitAddGymPage];
         
         [[[UIAlertView alloc] initWithTitle:kAddGymTitle
                                     message:[store fetchGymConfigValue:@"addGymMessage"]
@@ -389,6 +422,9 @@
             if ( error ) {
 
                 NSString *msg = [NSString stringWithFormat:@"could not setup for gym %@: %@", gymId, [error localizedDescription]];
+                
+                [Flurry logError:error.domain message:msg error:error];
+                
                 [[[UIAlertView alloc] initWithTitle:error.domain
                                             message:msg
                                            delegate:nil

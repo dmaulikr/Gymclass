@@ -334,8 +334,8 @@
     
     NSRange returnRange = NSMakeRange(0, dataString.length);
     
-    int startIndexMatchNo             = [[aRangeMatchConfig objectForKey:@"startIndexMatchNo"] integerValue];
-    int endIndexMatchNo               = [[aRangeMatchConfig objectForKey:@"endIndexMatchNo"] integerValue];
+    int startIndexMatchNo             = [[aRangeMatchConfig objectForKey:@"startIndexMatchNo"] intValue];
+    int endIndexMatchNo               = [[aRangeMatchConfig objectForKey:@"endIndexMatchNo"] intValue];
     NSRegularExpression *startAtRegEx = [aRangeMatchConfig objectForKey:@"_startAtRegEx"];
     NSRegularExpression *endAtRegEx   = [aRangeMatchConfig objectForKey:@"_endAtRegEx"];
         
@@ -371,8 +371,8 @@
             
             for ( NSTextCheckingResult *endMatch in endMatches ) {
                 
-                int endMatchLoc    = [endMatch rangeAtIndex:0].location;
-                int endMatchLength = [endMatch rangeAtIndex:0].length;
+                int endMatchLoc    = (int)[endMatch rangeAtIndex:0].location;
+                int endMatchLength = (int)[endMatch rangeAtIndex:0].length;
 
                 int endMatchCountdown = endIndexMatchNo;
                 if ( endMatchLoc > returnRange.location ) {
@@ -412,9 +412,9 @@
         NSString *activeKey = [dataString substringWithRange:[groupByMatch rangeAtIndex:1]];
         NSRange groupByRange = [groupByMatch rangeAtIndex:0];
         
-        int startLocation = groupByRange.location + groupByRange.length;
+        NSUInteger startLocation = groupByRange.location + groupByRange.length;
         
-        int endLocation;
+        NSUInteger endLocation;
         if ( groupByMatches.count == i + 1 ) {
             endLocation = dataString.length;
         } else {
@@ -490,7 +490,7 @@
                                 filteredElems = [elem.children filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"not tagName like %@", @"text"]];
                             }
                             
-                            int index;
+                            NSUInteger index;
                             id rawIndex = [op.params objectAtIndex:1];
                             if ( [rawIndex isKindOfClass:[NSString class]] ) {
                                 index = [rawIndex integerValue];
@@ -617,8 +617,8 @@
     
         if ( !mutableMatchResults.count ) return @[];
         
-        int startIndex  = [[matchesAsArray objectForKey:@"startIndex"] integerValue];
-        int endIndex    = [[matchesAsArray objectForKey:@"endIndex"] integerValue];
+        NSInteger startIndex  = [[matchesAsArray objectForKey:@"startIndex"] integerValue];
+        NSInteger endIndex    = [[matchesAsArray objectForKey:@"endIndex"] integerValue];
         
         NSMutableArray *finalResults = [[NSMutableArray alloc] init];
         for ( int i = 0; i < mutableMatchResults.count; i++ ) {
@@ -636,8 +636,8 @@
         if ( !mutableMatchResults.count )
             return @{};
         
-        int startIndex = [[appendingMatches objectForKey:@"startIndex"] integerValue];
-        int endIndex   = [[appendingMatches objectForKey:@"endIndex"] integerValue];
+        NSUInteger startIndex = [[appendingMatches objectForKey:@"startIndex"] integerValue];
+        NSUInteger endIndex   = [[appendingMatches objectForKey:@"endIndex"] integerValue];
         
         NSString *joinWith = [appendingMatches objectForKey:@"joinWith"];
         if ( !joinWith )
@@ -682,7 +682,7 @@
     } else {
         
         // matchIteration
-        int matchIndex = [matchIteration integerValue] - 1;
+        NSUInteger matchIndex = [matchIteration integerValue] - 1;
         
         if ( matchIndex >= mutableMatchResults.count ) {
             if ( shouldReturnString == YES ) {
@@ -711,7 +711,7 @@
         
         for ( NSString *key in aCapturesConfig.allKeys ) {
         
-            int captureIndex = [[aCapturesConfig objectForKey:key] integerValue];
+            NSInteger captureIndex = [[aCapturesConfig objectForKey:key] integerValue];
         
             NSRange captureRange = [aMatch rangeAtIndex:captureIndex];
             NSString *captureStr = ( captureRange.length > 0 ) ? [aDataString substringWithRange:captureRange] : @"";

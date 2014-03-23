@@ -9,6 +9,7 @@
 #import "CSWGymSelector.h"
 #import "CSWScheduleStore.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Flurry.h"
 
 #define kSelectionFormat @"Touch here to pick %@"
 
@@ -69,6 +70,8 @@
             self.selectedGymId = nil;
             
             NSString *msg = [NSString stringWithFormat:@"Please try again later. %@", error.localizedDescription];
+
+            [Flurry logError:@"Gym Listing Unavailable" message:msg error:error];
             
             [[[UIAlertView alloc] initWithTitle:@"Gym Listing Unavailable"
                                         message:msg

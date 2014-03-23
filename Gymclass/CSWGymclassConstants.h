@@ -9,7 +9,11 @@
 #ifndef CSWGymclassConstants_h
 #define CSWGymclassConstants_h
 
+#define APP_VERSION @"1.1.0"
+
 #define LOG_DEBUG 0
+
+#define FLURRY_API_KEY @"CZ68D4PWS9Q5BK2BBDM7"
 
 #define BACKEND_SERVICER_DOMAIN @"sites.zenplanner.com"
 
@@ -36,5 +40,42 @@
 #define kExceptionGymConfigError     @"GYM CONFIG ERROR"
 #define kExceptionNoGymId            @"NO GYM ID"
 #define kExceptionNoValueAvail       @"NO VALUE AVAILABLE"
+
+// Ananlytics
+#define kLogoutPressed       @"logoutPressed"
+#define kLoginSkipped        @"loginSkipped"
+#define kLoginSuccess        @"loginSuccess"
+#define kRefreshPressed      @"refreshPressed"
+#define kLoginBadCredentials @"loginBadCredentials"
+#define kDidVisitAddGymPage  @"DidVisitAddGymPage"
+
+#define kGotoPrevDay    @"gotoPrevDay"
+#define kGotoNextDay    @"gotoNextDay"
+#define kGotoLoginPage  @"gotoLoginPage"
+#define kGotoNowPressed @"gotoNowPressed"
+#define kWodViewed      @"wodViewed"
+#define kFilterPressed  @"filterPressed"
+
+#define kFetchingMembershipId @"fetchingMembershipId"
+
+#define kRefreshedReservationsForDay @"refreshedReservationsForDay"
+#define kUserLoggingIn @"userLoggingIn"
+
+#define kCacheNeverCached @"cacheNeverCached"
+#define kCacheHit @"cacheHit"
+#define kCacheMiss @"cacheMiss"
+
+#define kCouldNotUndoSignup         @"couldNotUndoSignup"
+#define kUnexpectedServicerResponse @"unexpectedServicerResponse"
+#define kLoginError                 @"loginError"
+#define kCredentialsError           @"credentialsError"
+
+#define kCouldNotContactGym         @"couldNotContactGym"
+
+#define kWeekScheduleUnavailable    @"weekScheduleUnavailable"
+#define kSpotsRemainingUnavailable  @"spotsRemainingUnavailable"
+#define kReservationsUnavailable    @"reservationsUnavailable"
+
+#define kAttemptToSignUpNotLoggedIn @"attemptToSignUpNotLoggedIn"
 
 #endif

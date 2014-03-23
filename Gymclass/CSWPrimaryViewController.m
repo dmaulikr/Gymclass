@@ -18,6 +18,7 @@
 #import "CSWWodViewController.h"
 #import "CSWColors.h"
 #import "CSWLoginViewController.h"
+#import "Flurry.h"
 
 #define ONE_DAY 60*60*24
 
@@ -260,7 +261,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     [self scrollToSelectedTime:true];
 }
 
-
 //
 #pragma mark accessor methods (public)
 //
@@ -325,6 +325,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 //
 -(IBAction)prevDay:(id)sender
 {
+    [Flurry logEvent:kGotoPrevDay withParameters:@{ @"sender" : NSStringFromClass( [sender class] ) }];
     [self.networkIndicator stopAnimating]; // to be sure it resets
     
     NSIndexPath *firstPath = [NSIndexPath indexPathForItem:0 inSection:0];
@@ -341,7 +342,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
         self.selectedTime = [CSWTime timeWithNumber:workout.time];
     }
 
-    self.selectedDay = [CSWDay dayWithDate:[[self.selectedDay toDate] dateByAddingTimeInterval:-ONE_DAY]];
+    self.selectedDay = [CSWDay dayWithDate:[self.selectedDay.date dateByAddingTimeInterval:-ONE_DAY]];
     [self updateDateLabel];
     
     [UIView transitionWithView:self.dateLabel
@@ -365,6 +366,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 
 -(IBAction)nextDay:(id)sender
 {
+    [Flurry logEvent:kGotoNextDay withParameters:@{ @"sender" : NSStringFromClass( [sender class] ) }];
     [self.networkIndicator stopAnimating]; // to be sure it resets
     
     NSIndexPath *firstPath = [NSIndexPath indexPathForItem:0 inSection:0];
@@ -381,7 +383,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
         self.selectedTime = [CSWTime timeWithNumber:workout.time];
     }
     
-    self.selectedDay = [CSWDay dayWithDate:[self.selectedDay.toDate dateByAddingTimeInterval:ONE_DAY]];
+    self.selectedDay = [CSWDay dayWithDate:[self.selectedDay.date dateByAddingTimeInterval:ONE_DAY]];
 
     [UIView transitionWithView:self.dateLabel
                       duration:0.2
@@ -638,6 +640,8 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                               
                                               NSString *msg = [NSString stringWithFormat:@"Unable to update schedule for %@.", [self.store fetchGymConfigValue:@"displayShortName"]];
                                               
+                                              [Flurry logError:@"Network Unavailable" message:msg error:error];
+                                              
                                               [[[UIAlertView alloc] initWithTitle:@"Network Unavailable"
                                                                           message:msg
                                                                          delegate:nil
@@ -668,6 +672,9 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                           if ( !didShowAlert ) {
                                               
                                               NSString *msg = [NSString stringWithFormat:@"Unable to signup statuses for %@.", [self.store fetchGymConfigValue:@"displayShortName"]];
+                                              
+                                              [Flurry logError:@"Network Unavailable" message:msg error:error];
+                                              
                                               [[[UIAlertView alloc] initWithTitle:@"Network Unavailable"
                                                                           message:msg
                                                                          delegate:nil
@@ -691,6 +698,8 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                           if ( !didShowAlert ) {
                                               
                                               NSString *msg = [NSString stringWithFormat:@"Unable to fetch remaining class openings for %@.", [self.store       fetchGymConfigValue:@"displayShortName"]];
+                                              
+                                              [Flurry logError:@"Network Unavailable" message:msg error:error];
                                               
                                               [[[UIAlertView alloc] initWithTitle:@"Network Unavailable"
                                                                           message:msg
@@ -775,11 +784,13 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 
 -(void)configPressed:(id)sender
 {
+    [Flurry logEvent:kGotoLoginPage];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)nowPressed:(id)sender
 {
+    [Flurry logEvent:kGotoNowPressed];
     CSWDay *today = [CSWDay dayWithDate:[NSDate date]];
     
     UIViewAnimationOptions transition;
@@ -815,6 +826,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 
 -(void)wodPressed:(id)sender
 {
+    [Flurry logEvent:kWodViewed withParameters:@{ @"gymId" : self.store.gymId } timed:YES];
     CSWWod *wod = [CSWWod wodWithDay:self.selectedDay withMoc:self.managedObjectContext];
 
     self.wodViewController.content = wod.wodDesc;
@@ -852,6 +864,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 
 -(void)filterPressed:(id)sender
 {
+    [Flurry logEvent:kFilterPressed withParameters:@{ @"gymId" : self.store.gymId }];
     CGRect winRect = [UIScreen mainScreen].bounds;
    
     if ( !_blackoutButton ) {
@@ -943,10 +956,12 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                               msg = @"Sorry, the waitlist for this class is full";
                           } else if ( error.code == kErrorCodeUnexpectedServicerResponse ) {
                               msg = @"The response from the servicer could not be understood";
-                              
                           } else {
                               msg = [error localizedDescription];
                           }
+                          
+                          [Flurry logError:message message:msg error:error];
+                          
                           [[[UIAlertView alloc] initWithTitle:message
                                                       message:msg
                                                      delegate:nil
@@ -961,7 +976,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 
 -(void)updateDateLabel
 {
-    NSString *dateString = [gDayDateFormatter stringFromDate:[self.selectedDay toDate]];
+    NSString *dateString = [gDayDateFormatter stringFromDate:self.selectedDay.date];
     self.dateLabel.text = dateString;
 }
 
@@ -1085,6 +1100,9 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     if ( timeStatus == WorkoutTimeStatusPast ) return;
     
     if ( !self.store.isLoggedIn ) {
+        
+        [Flurry logEvent:kAttemptToSignUpNotLoggedIn];
+        
         [[[UIAlertView alloc] initWithTitle:@"Must login to sign up for a class"
                                     message:@"Touch the gear icon in upper-left corner of the screen to login"
                                    delegate:nil

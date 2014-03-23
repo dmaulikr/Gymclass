@@ -11,20 +11,21 @@
 @interface CSWDay : NSObject
 
 -(id)initWithDate:(NSDate *)aDate;
--(NSDate *)toDate;
 
 -(id)initWithNumber:(NSNumber *)aNumber;
 -(CSWDay *)findPreviousSunday;
--(CSWDay *)addDays:(NSInteger)aDays;
+-(CSWDay *)addDays:(int)aDays;
 
--(NSInteger)daysBetween:(CSWDay *)aDay;
+-(int)daysBetween:(CSWDay *)aDay;
 
-@property (nonatomic, readonly) NSUInteger asInt;
+@property (nonatomic, readonly) int asInt;
 @property (nonatomic, readonly) NSNumber *asNumber;
+@property (nonatomic, readonly) NSString *dayOfWeek;
+@property (nonatomic, readonly) NSDate *date;
 
 +(CSWDay *)day;
 +(CSWDay *)dayWithDate:(NSDate *)aDate;
 +(CSWDay *)dayWithNumber:(NSNumber *)aNumber;
-
++(int)numberOfDaysForward:(CSWDay *)aDay;
 
 @end

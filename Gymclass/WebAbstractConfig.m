@@ -105,15 +105,15 @@ static NSRegularExpression *defaultPatternRegEx;
 
 +(NSString *)removeSurroundingChars:(NSString *)aSurroundingChars fromString:(NSString *)aString
 {
-    int surLength = aSurroundingChars.length;
+    NSUInteger surLength = aSurroundingChars.length;
 
     if ( ( surLength % 2 ) != 0 )
         [NSException raise:kExceptionWebAbstractConfigValidate
                     format:@"length of 'surroundingChars' must be of an even length"
          ];
    
-    int length = aString.length;
-    int surHalfLength = surLength / 2;
+    NSUInteger length = aString.length;
+    NSUInteger surHalfLength = surLength / 2;
 
     if ( !aString ) {
         return nil;
@@ -1368,7 +1368,7 @@ static NSRegularExpression *defaultPatternRegEx;
         
         if ( highestCaptureSpecified > regEx.numberOfCaptureGroups )
             [NSException raise:kExceptionWebAbstractConfigValidate
-                        format:@"pattern '%@' captures only %d substring(s), so 'captures' dictionary cannot specify an out-of-range capture group (%d) in '%@'", pattern, regEx.numberOfCaptureGroups,highestCaptureSpecified, pathDesc
+                        format:@"pattern '%@' captures only %d substring(s), so 'captures' dictionary cannot specify an out-of-range capture group (%d) in '%@'", pattern, (int)regEx.numberOfCaptureGroups,highestCaptureSpecified, pathDesc
              ];
     
         [mutableParseStruct setObject:regEx forKey:@"_regEx"];
