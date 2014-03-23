@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="DayMarker" representedClassName="CSWDayMarker" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="gymId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastRefreshed" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <entity name="Instructor" representedClassName="CSWInstructor" syncable="YES">
+        <attribute name="gymId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="instructorId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="workouts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Workout" inverseName="instructor" inverseEntity="Workout" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="CSWLocation" syncable="YES">
+        <attribute name="gymId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="workouts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Workout" inverseName="location" inverseEntity="Workout" syncable="YES"/>
+    </entity>
+    <entity name="Week" representedClassName="CSWWeek" syncable="YES">
+        <attribute name="gymId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastRefreshed" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="startDay" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Wod" representedClassName="CSWWod" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="gymId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastRefreshed" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wodDesc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wodDescFormat" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Workout" representedClassName="CSWWorkout" syncable="YES">
+        <attribute name="attendanceId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="day" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="didAttend" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="displayable" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="gymId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFull" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isOnWaitlist" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isPast" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isSignedUp" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lastRefreshed" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="placesAvailable" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="placesTotal" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="waitlistId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="waitlistIsFull" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="waitlistPlacesAvailable" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="waitlistPlacesTotal" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="wasNoShow" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="workoutId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="instructor" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Instructor" inverseName="workouts" inverseEntity="Instructor" syncable="YES"/>
+        <relationship name="location" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="workouts" inverseEntity="Location" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DayMarker" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Instructor" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Location" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Week" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Wod" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Workout" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>

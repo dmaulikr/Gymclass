@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fetchWorkoutsForWeek</key>
+	<dict>
+		<key>output</key>
+		<dict>
+			<key>loggedIn</key>
+			<dict>
+				<key>groupByPattern</key>
+				<string>&lt;tr class=&quot;group&quot;&gt;\s*&lt;td colspan=&quot;\d+&quot;&gt;(.*?)&lt;/td&gt;\s*&lt;/tr&gt;</string>
+				<key>eachGroup</key>
+				<dict>
+					<key>parse</key>
+					<dict>
+						<key>pattern</key>
+						<string>\(&apos;dialog-appointment\.cfm\?AppointmentId=(.*?)&apos;\)&quot;&gt;\s*&lt;td.*?&gt;&lt;div class=&quot;(?:clickable\s*)?(\w*?)\s*(sessionFull)?\s*&quot;.*?&gt;(.*?)&lt;/div&gt;&lt;/td&gt;\s*&lt;td class=&quot;items&quot;&gt;&lt;span class=&apos;hyperlink&apos;&gt;(.*?)&lt;/span&gt;\s*&lt;span.*?&gt;(.*?)&lt;/div&gt;&lt;/td&gt;\s*?&lt;td.*?&gt;(\d+) spots? left&lt;/td&gt;\s*(?:&lt;td.*?&gt;(.*?)&lt;/td&gt;)\s*&lt;td.*?&gt;(.*?)&lt;/td&gt;\s*&lt;/tr&gt;</string>
+						<key>matchesAsArray</key>
+						<dict>
+							<key>all</key>
+							<true/>
+						</dict>
+						<key>captures</key>
+						<dict>
+							<key>workoutId</key>
+							<integer>1</integer>
+							<key>color</key>
+							<integer>2</integer>
+							<key>isFull</key>
+							<integer>3</integer>
+							<key>time</key>
+							<integer>4</integer>
+							<key>type</key>
+							<integer>5</integer>
+							<key>isSignedUp</key>
+							<integer>6</integer>
+							<key>placesAvailable</key>
+							<integer>7</integer>
+							<key>instructorName</key>
+							<integer>8</integer>
+							<key>locationName</key>
+							<integer>9</integer>
+						</dict>
+					</dict>
+				</dict>
+			</dict>
+			<key>loggedOut</key>
+			<dict>
+				<key>groupByPattern</key>
+				<string>&lt;tr class=&quot;group&quot;&gt;\s*&lt;td colspan=&quot;\d+&quot;&gt;(.*?)&lt;/td&gt;\s*&lt;/tr&gt;</string>
+				<key>eachGroup</key>
+				<dict>
+					<key>parse</key>
+					<dict>
+						<key>pattern</key>
+						<string>\(&apos;dialog-appointment\.cfm\?AppointmentId=(.*?)&apos;\)&quot;&gt;\s*&lt;td.*?&gt;&lt;div class=&quot;(?:clickable\s*)?(\w*?)\s*(sessionFull)?\s*&quot;.*?&gt;(.*?)&lt;/div&gt;&lt;/td&gt;\s*&lt;td class=&quot;items&quot;&gt;(.*?)&lt;/td&gt;\s*&lt;td class=&quot;items&quot;&gt;(.*?)&lt;/td&gt;\s*&lt;td class=&quot;items&quot;&gt;(.*?)&lt;/td&gt;\s*&lt;/tr&gt;</string>
+						<key>matchesAsArray</key>
+						<dict>
+							<key>all</key>
+							<true/>
+						</dict>
+						<key>captures</key>
+						<dict>
+							<key>workoutId</key>
+							<integer>1</integer>
+							<key>color</key>
+							<integer>2</integer>
+							<key>isFull</key>
+							<integer>3</integer>
+							<key>time</key>
+							<integer>4</integer>
+							<key>type</key>
+							<integer>5</integer>
+							<key>instructorName</key>
+							<integer>6</integer>
+							<key>locationName</key>
+							<integer>7</integer>
+						</dict>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

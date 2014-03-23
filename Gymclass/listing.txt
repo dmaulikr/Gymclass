@@ -1,0 +1,1540 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+<script>if (window != top) {window.location = "/zenplanner/portal/calendar.cfm?DATE=2013%2D04%2D23&PERSONID=7C270F36%2DD107%2D4999%2D83E5%2DAE1371CDB6D9&VIEW=LIST&FRAME=true";}</script>
+<meta http-equiv="X-UA-Compatible" content="IE-IE7,chrome=1">
+<link type="text/css" rel="stylesheet" href="/3p/dojo/1.7.2/dijit/themes/nihilo/nihilo.css">
+<link type="text/css" rel="stylesheet" href="/zenplanner/portal/skin/css.cfm">
+<script src="/3p/dojo/1.7.2/dojo/dojo.js?d=20120510" type="text/javascript" djConfig="parseOnLoad:true, locale:'en-us'"></script>
+<script src="/zen/js/zen.js?d=20120510"></script>
+<title>Crossfit NYC</title>
+</head>
+<body class="nihilo">
+<div id="idBanner">
+<a href="http://crossfitnyc.com"><img src="https://zenplanner-library.s3.amazonaws.com/D5CDA9F1-EC12-4644-AC58-DB195AD796D6/Portal%20Images/logo.jpg" style="max-height:100px;"></a>
+</div>
+<div id="idPage">
+<div id="idPageContent" style="float:none; width:auto;">
+<div class="panel" style="position:relative; margin-bottom:5px;">
+<div style="position:absolute; top:5px; left:5px;">
+<INPUT TYPE="button" VALUE="&laquo; Back" ONCLICK="window.location='/zenplanner/portal/calendar.cfm?DATE=2013%2D04%2D16&PERSONID=7C270F36%2DD107%2D4999%2D83E5%2DAE1371CDB6D9&VIEW=LIST'" CLASS="small" LABEL="&amp;laquo; Back" /><INPUT TYPE="button" VALUE="Next &raquo;" ONCLICK="window.location='/zenplanner/portal/calendar.cfm?DATE=2013%2D04%2D30&PERSONID=7C270F36%2DD107%2D4999%2D83E5%2DAE1371CDB6D9&VIEW=LIST'" CLASS="small" LABEL="Next &amp;raquo;" />
+</div>
+<div style="position:absolute; top:5px; right:5px;">
+<INPUT TYPE="button" VALUE="List" ONCLICK="window.location='/zenplanner/portal/calendar.cfm?DATE=2013%2D04%2D23&PERSONID=7C270F36%2DD107%2D4999%2D83E5%2DAE1371CDB6D9&VIEW=list'" CLASS="small" LABEL="List" /><INPUT TYPE="button" VALUE="Week" ONCLICK="window.location='/zenplanner/portal/calendar.cfm?DATE=2013%2D04%2D23&PERSONID=7C270F36%2DD107%2D4999%2D83E5%2DAE1371CDB6D9&VIEW=week'" CLASS="small" LABEL="Week" /><INPUT TYPE="button" VALUE="Month" ONCLICK="window.location='/zenplanner/portal/calendar.cfm?DATE=2013%2D04%2D23&PERSONID=7C270F36%2DD107%2D4999%2D83E5%2DAE1371CDB6D9&VIEW=month'" CLASS="small" LABEL="Month" />
+</div>
+<h2 style="text-align:center; margin-bottom:10px;">
+Week of Apr 21, 2013
+</h2>
+</div>
+<div class="panel" style="margin-bottom:5px;">
+<div class="right">
+<img src="/zenplanner/skin/16/star.png" height="16" width="16" align="absmiddle"> = Your Reservations
+</div>
+<FORM STYLE="margin:0px; padding:0px;" ACTION="calendar.cfm" METHOD="get">
+<INPUT ID="idview" NAME="view" VALUE="LIST" TYPE="hidden">
+<b>Show:</b>
+<SELECT name="CalendarType" style="width:120px;" onchange="zen.setValue('AppointmentGroupId', ''); this.domNode.form.submit();" dojoType="zen.input"><option value="" selected>(All Calendars)</option><option value="">---------</option><option value="FREETRIAL">FREE Classes</option><option value="DROPIN">DROP-IN Classes</option><option value="">---------</option><option value="APPOINTMENTGROUP:C220C505-1173-4746-B0F1-591F6DC9C60D">Post Elements</option><option value="APPOINTMENTGROUP:FEF0EB88-6502-47DE-BF44-64364CA9CCCC">Endurance</option><option value="APPOINTMENTGROUP:0D9CEF76-7D30-4507-BD2D-846B27495CD0">Elements</option><option value="APPOINTMENTGROUP:345F6942-2E96-4490-B067-9FC4638B2EAF">CrossFit WOD</option><option value="APPOINTMENTGROUP:94CBD93C-19B2-4B2A-9D2D-B9FF65DCC2B7">Intro Class</option><option value="">----------</option><option value="PERSON:7C270F36-D107-4999-83E5-AE1371CDB6D9">Eric</option></SELECT>
+<SELECT name="staffId" style="width:110px;" onchange="this.domNode.form.submit();" dojoType="zen.input"><option value="" selected>(All Staff)</option><OPTION value="2E1C3FAC-D0F8-462E-A202-30502639E17E">Allison Bojarski</OPTION><OPTION value="8771D8B2-2DA6-4CA1-9EFF-2CAEB6B306A2">Avery Wittkamp</OPTION><OPTION value="ED24AFB4-3245-4F77-843A-1F0AEAFC1728">Ben Koretz</OPTION><OPTION value="55358742-CBA7-4E8E-80F5-521D0B44C459">Brian DeGennaro</OPTION><OPTION value="012FF16B-0D53-4C5F-8B0E-77FA16C57A88">Court Wing</OPTION><OPTION value="0AD770F8-4E8B-451D-A3C5-38CDAF5A8856">Courtney Salera</OPTION><OPTION value="7CF6F476-2DFA-4B14-8E04-3B8F449354A8">David Stogsdill</OPTION><OPTION value="30620ACF-1BF4-4285-9C66-145549860E4E">Heidi Jones</OPTION><OPTION value="CCEE5F3C-4DD0-4011-8F58-A2BEE2177330">Jason Lapadula</OPTION><OPTION value="D17EA95B-29CB-4EF8-92D9-265CABAC1F81">Joseph Campbell</OPTION><OPTION value="8C7C9443-37CD-436C-BE03-FFAA249321DA">Joshua Newman</OPTION><OPTION value="6A7E3E49-6136-4F04-BD8F-5C2BD6D3F106">Kasey Heil</OPTION><OPTION value="8C922F93-BEFE-4D11-9AAE-752451628774">Kevin Prowse</OPTION><OPTION value="F61F1DF8-5921-4988-99F4-67E1140C8AB0">Kyle Smith</OPTION><OPTION value="ADD94B12-2883-4F59-9CA6-A5D3854F5512">Melissa Simson</OPTION><OPTION value="F825503F-1F95-4548-B7A7-AB783E98F07F">Michael (Sully) Sullivan</OPTION><OPTION value="2234CAD9-E90D-491E-A442-025C9C0A4B07">Michael Bultman</OPTION><OPTION value="6633825F-DC21-44B8-AEC2-1815115D4DA8">Nick Walters</OPTION><OPTION value="437E7ABD-F71A-4986-86B6-5FE7EF293F3E">Sara Carr</OPTION><OPTION value="3C7CB13E-0281-4B8B-AA75-FF2874F0B4FA">Sean McArdle</OPTION><OPTION value="36673969-1FF4-4024-942C-E31F8F5751AF">Sofia Flynn</OPTION><OPTION value="6FAED2E9-A3AE-42A7-BBF5-77EB5F7A795D">Staff Staff</OPTION><OPTION value="DF713F79-94DF-4016-B5AD-73976CC182DE">Tom Tanzosh</OPTION><OPTION value="B69FE71C-B8C7-429C-A888-1BC6ADAB1E6B">WODIFY LOGIN</OPTION></SELECT>
+<SELECT name="locationId" style="width:110px;" onchange="this.domNode.form.submit();" dojoType="zen.input"><option value="" selected>(All Locations)</option><OPTION value="3B5CEE1B-5935-4105-B640-A89C716FA19F">44 W. 28th Street, 2nd Floor</OPTION><OPTION value="624C1424-0CA4-4577-84E1-87FB1AAE77A2">25 W. 26th Street, 3rd Floor</OPTION><OPTION value="06C3F556-09F5-4C17-AEFC-EBEB23F74CBE">25 W. 26th Street, 4th Floor</OPTION><OPTION value="4E00777D-2C7F-4F3E-B180-DF67279E8842">44 W. 28th Street, 2nd Floor -</OPTION></SELECT>
+</FORM>
+</div>
+<table class="list calendar" cellpadding="0" cellspacing="0">
+<tr class="group">
+<td colspan="5">Sunday, April 21, 2013</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FEC3DDFE-0974-4153-AB2D-309EBAC42D06')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">8:30 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-FEC3DDFE-0974-4153-AB2D-309EBAC42D06'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=063E47EE-3B02-439A-85EF-D98626E7E51D')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">9:30 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-063E47EE-3B02-439A-85EF-D98626E7E51D'></div></td>
+<td class="items">2 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=509C2453-2BCF-44B8-B5E8-8D081123F581')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">10:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-509C2453-2BCF-44B8-B5E8-8D081123F581'></div></td>
+<td class="items">9 spots left</td>
+<td class="items">Sean McArdle</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=43D9DE10-F8EE-4F78-A78B-26850E967891')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">10:30 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-43D9DE10-F8EE-4F78-A78B-26850E967891'></div></td>
+<td class="items">9 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7D18FE36-4B1A-476A-9208-5EF1A1B25B6F')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">11:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-7D18FE36-4B1A-476A-9208-5EF1A1B25B6F'></div></td>
+<td class="items">3 spots left</td>
+<td class="items">Sean McArdle</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=C7B63FBA-7FA6-4462-AD2F-7F1F59A33B51')">
+<td class="label"><div class="clickable WHITE " style="padding:3px;">11:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Free Intro to CrossFit</span> <span id='idStars-C7B63FBA-7FA6-4462-AD2F-7F1F59A33B51'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Melissa Simson</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=B8B09D32-AB4A-483A-850D-1D7C3685C5F0')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">11:30 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-B8B09D32-AB4A-483A-850D-1D7C3685C5F0'></div></td>
+<td class="items">5 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=D20F876A-AD71-4F2F-8A42-06AC3EFB29DF')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">12:00 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-D20F876A-AD71-4F2F-8A42-06AC3EFB29DF'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Sean McArdle</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=5E5682DA-7AA1-4D64-A44D-250A60F003D8')">
+<td class="label"><div class="clickable WHITE " style="padding:3px;">12:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Free Intro to CrossFit</span> <span id='idStars-5E5682DA-7AA1-4D64-A44D-250A60F003D8'></div></td>
+<td class="items">21 spots left</td>
+<td class="items">Melissa Simson</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FF4DFB3E-B2ED-4D66-BEDD-2597941843A9')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">12:30 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-FF4DFB3E-B2ED-4D66-BEDD-2597941843A9'></div></td>
+<td class="items">17 spots left</td>
+<td class="items">Sofia Flynn</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=CD84F4A9-C2D2-4CD8-B87B-D9354D347347')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">1:00 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-CD84F4A9-C2D2-4CD8-B87B-D9354D347347'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Sean McArdle</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7A558472-0238-4CE0-825B-5C52C412F070')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">1:30 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-7A558472-0238-4CE0-825B-5C52C412F070'></div></td>
+<td class="items">10 spots left</td>
+<td class="items">Sofia Flynn</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=50AC34C2-903D-4C8C-9986-72E24BFAB921')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">2:30 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-50AC34C2-903D-4C8C-9986-72E24BFAB921'></div></td>
+<td class="items">1 spot left</td>
+<td class="items">Sofia Flynn</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="group">
+<td colspan="5">Monday, April 22, 2013</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1FF35273-F842-4529-993C-A4E04F986120')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-1FF35273-F842-4529-993C-A4E04F986120'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FE9A80EE-913B-4E16-BA14-D557AA6E15DB')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-FE9A80EE-913B-4E16-BA14-D557AA6E15DB'></div></td>
+<td class="items">3 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=26345804-68C1-414C-8BCA-130F4E1D5968')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-26345804-68C1-414C-8BCA-130F4E1D5968'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=55D175F7-EDC5-49EE-A03D-9B2CECAC9F64')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-55D175F7-EDC5-49EE-A03D-9B2CECAC9F64'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=96A7E9C1-9A01-4D27-B6FD-435C62FEDEF3')">
+<td class="label"><div class="clickable GREEN " style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Team Practice WOD</span> <span id='idStars-96A7E9C1-9A01-4D27-B6FD-435C62FEDEF3'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=922F181F-42D9-4947-99CC-99FB1855E73F')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-922F181F-42D9-4947-99CC-99FB1855E73F'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=3DAA8FC2-5404-41C5-BCB3-F69FF579B63C')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-3DAA8FC2-5404-41C5-BCB3-F69FF579B63C'></div></td>
+<td class="items">3 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1A7C4C3D-7A42-4C40-BAEA-86BC10E175A1')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-1A7C4C3D-7A42-4C40-BAEA-86BC10E175A1'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=E3067B03-8302-46EC-99EA-38CFBE722E1A')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-E3067B03-8302-46EC-99EA-38CFBE722E1A'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7375B526-032A-449E-B3AB-CEE593997A68')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-7375B526-032A-449E-B3AB-CEE593997A68'></div></td>
+<td class="items">5 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=AF91681C-E76F-499F-8E16-8B6A6B89D6BD')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-AF91681C-E76F-499F-8E16-8B6A6B89D6BD'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=A548A7E8-1AEA-4B85-A206-C3847515D8D7')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-A548A7E8-1AEA-4B85-A206-C3847515D8D7'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7E9076B9-DF2E-40D4-8875-1E4F8985CCCD')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">8:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-7E9076B9-DF2E-40D4-8875-1E4F8985CCCD'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=CB760452-E460-427B-9A65-A94874906171')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">8:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-CB760452-E460-427B-9A65-A94874906171'></div></td>
+<td class="items">13 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=635B2A9E-E0EE-4343-A023-0A05B04CAB90')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">8:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-635B2A9E-E0EE-4343-A023-0A05B04CAB90'></div></td>
+<td class="items">2 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=A798D1C2-259D-4AAF-939C-0C354A07F6D5')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">9:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-A798D1C2-259D-4AAF-939C-0C354A07F6D5'></div></td>
+<td class="items">9 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=93712064-AC29-49DA-948A-C86FEB1606ED')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">9:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-93712064-AC29-49DA-948A-C86FEB1606ED'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=2AD6E39E-57FA-4F48-A538-D717F766DFDD')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">10:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-2AD6E39E-57FA-4F48-A538-D717F766DFDD'></div></td>
+<td class="items">10 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=5FA435A4-E26A-4EC4-8C6A-566A7EFF8204')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">12:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-5FA435A4-E26A-4EC4-8C6A-566A7EFF8204'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=BAF53A82-9C16-4068-B0E7-1C7996FF00ED')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">12:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-BAF53A82-9C16-4068-B0E7-1C7996FF00ED'></div></td>
+<td class="items">14 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=720B7E8F-AF95-4850-B849-B95ADC71C03D')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">1:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-720B7E8F-AF95-4850-B849-B95ADC71C03D'></div></td>
+<td class="items">10 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=6AC175EA-0862-452C-B1FA-F3359B94198B')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">3:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-6AC175EA-0862-452C-B1FA-F3359B94198B'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FE56B616-BEF5-496D-8D0E-F0D7313BF5BE')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">4:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-FE56B616-BEF5-496D-8D0E-F0D7313BF5BE'></div></td>
+<td class="items">4 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=CC8E599F-0080-4298-89C8-0A96EE80E836')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">5:00 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-CC8E599F-0080-4298-89C8-0A96EE80E836'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=84E7630D-0466-4FBB-BA85-6D7864076533')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">5:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-84E7630D-0466-4FBB-BA85-6D7864076533'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=26EE8E1C-2C60-4839-B316-C343E23F8227')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-26EE8E1C-2C60-4839-B316-C343E23F8227'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=BC98F314-56AC-4CAA-980C-C5BBEF45E641')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-BC98F314-56AC-4CAA-980C-C5BBEF45E641'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=20AAC77E-3444-4772-9113-261458D4EF03')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-20AAC77E-3444-4772-9113-261458D4EF03'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=573FAF11-2CE0-4C57-92B4-503D982715A8')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-573FAF11-2CE0-4C57-92B4-503D982715A8'></div></td>
+td class="items">0 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7CE34769-3245-407B-A123-E16C3F4D75BE')">
+<td class="label"><div class="clickable BLACK sessionFull" style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-7CE34769-3245-407B-A123-E16C3F4D75BE'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=08E3D97C-7D10-4065-9A9B-DF466458B897')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-08E3D97C-7D10-4065-9A9B-DF466458B897'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=B61D0ED0-179D-45A9-A6C9-9AB31FE70613')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-B61D0ED0-179D-45A9-A6C9-9AB31FE70613'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=29CA213B-356D-4CA0-B147-8A1D15847A83')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-29CA213B-356D-4CA0-B147-8A1D15847A83'></div></td>
+<td class="items">2 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=CC6D1D13-E81D-4E88-988C-B24B37A6E863')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-CC6D1D13-E81D-4E88-988C-B24B37A6E863'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7E09362C-ADF7-4105-B5FA-55F39FB7C7FF')">
+<td class="label"><div class="clickable GREEN " style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Team Practice WOD</span> <span id='idStars-7E09362C-ADF7-4105-B5FA-55F39FB7C7FF'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=32948429-6560-41F9-AA31-BB14E0679427')">
+<td class="label"><div class="clickable BLACK sessionFull" style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-32948429-6560-41F9-AA31-BB14E0679427'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=C56F7B2D-3B7C-458D-9FC1-D7C20FEAD848')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-C56F7B2D-3B7C-458D-9FC1-D7C20FEAD848'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=B932DBC7-1A62-4188-8700-9C2363A060B2')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-B932DBC7-1A62-4188-8700-9C2363A060B2'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=DC951A86-51B6-41BA-AF98-F578D2C6F0AE')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-DC951A86-51B6-41BA-AF98-F578D2C6F0AE'></div></td>
+<td class="items">2 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=C73D8911-0F4E-4F39-BCEA-3B63F8D06C99')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-C73D8911-0F4E-4F39-BCEA-3B63F8D06C99'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FB9C271A-2C27-4026-BB4D-31C6A5ECFB37')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">8:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-FB9C271A-2C27-4026-BB4D-31C6A5ECFB37'></div></td>
+<td class="items">12 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=18A1BD07-BE03-47C3-9848-0D30E98F4720')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-18A1BD07-BE03-47C3-9848-0D30E98F4720'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FF9D075F-8215-4A13-8C06-AAFD7D41721E')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-FF9D075F-8215-4A13-8C06-AAFD7D41721E'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="group">
+<td colspan="5">Tuesday, April 23, 2013</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=2ACA525D-0A0D-4DF4-A91D-30D48E302135')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-2ACA525D-0A0D-4DF4-A91D-30D48E302135'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=97C2B0F0-BD42-4278-97F4-351C95F9E59D')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-97C2B0F0-BD42-4278-97F4-351C95F9E59D'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=6981BC33-46F7-45F4-8478-0B2F76BE9BF2')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-6981BC33-46F7-45F4-8478-0B2F76BE9BF2'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=DA0048B1-43CA-45FE-880C-3CFE2BC5C30F')">
+<td class="label"><div class="clickable GREEN " style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Team Practice WOD</span> <span id='idStars-DA0048B1-43CA-45FE-880C-3CFE2BC5C30F'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=31E3C350-6533-41A2-AAC4-CB61683AFCA8')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-31E3C350-6533-41A2-AAC4-CB61683AFCA8'></div></td>
+<td class="items">3 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=481794A4-2F7F-436E-A9DC-84BEC0F49401')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-481794A4-2F7F-436E-A9DC-84BEC0F49401'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7E54BC72-B6A7-40C7-A57E-B3C80D69F207')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-7E54BC72-B6A7-40C7-A57E-B3C80D69F207'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=87B2FD70-5515-4E17-9A20-E93619E9DF5C')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-87B2FD70-5515-4E17-9A20-E93619E9DF5C'></div></td>
+<td class="items">1 spot left</td>
+<td class="items">Sara Carr</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=11E6D16F-E961-4DE1-8E23-BD6AE61BD83F')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-11E6D16F-E961-4DE1-8E23-BD6AE61BD83F'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=866D4E69-E054-421E-A85F-31BAD727CEC8')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-866D4E69-E054-421E-A85F-31BAD727CEC8'></div></td>
+<td class="items">5 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=EC6C44D4-48AE-40B9-92B6-645C1BB5A8EA')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">8:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-EC6C44D4-48AE-40B9-92B6-645C1BB5A8EA'></div></td>
+<td class="items">5 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=4FDBD9DD-111F-4133-B7B3-29F75E9E3B89')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-4FDBD9DD-111F-4133-B7B3-29F75E9E3B89'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=C9101573-F176-4A53-ABC5-21AD5FAB3F65')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">9:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-C9101573-F176-4A53-ABC5-21AD5FAB3F65'></div></td>
+<td class="items">12 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=90C3CEE4-8BAB-45BB-9665-4183DD70CA55')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">10:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-90C3CEE4-8BAB-45BB-9665-4183DD70CA55'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FCCE0065-D26C-4A9C-A765-1AD83C5CA9DA')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">12:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-FCCE0065-D26C-4A9C-A765-1AD83C5CA9DA'></div></td>
+<td class="items">1 spot left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=B1A62C94-12C0-4427-B7C7-EA3E75E168E5')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">12:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-B1A62C94-12C0-4427-B7C7-EA3E75E168E5'></div></td>
+<td class="items">9 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=99127416-C582-490A-BAF7-F1D73B6FBCCB')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">1:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-99127416-C582-490A-BAF7-F1D73B6FBCCB'></div></td>
+<td class="items">5 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=407CF120-302E-4BB0-8B45-1B3252891E5D')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">3:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-407CF120-302E-4BB0-8B45-1B3252891E5D'></div></td>
+<td class="items">12 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=E10BEA00-D51F-4002-8B1C-1A6A8210711B')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">4:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-E10BEA00-D51F-4002-8B1C-1A6A8210711B'></div></td>
+<td class="items">1 spot left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=08BDE764-A287-4E5E-8468-2B76AEC829B0')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">5:00 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-08BDE764-A287-4E5E-8468-2B76AEC829B0'></div></td>
+<td class="items">19 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=775E371C-E599-4C49-8251-C9BDD32494B6')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">5:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-775E371C-E599-4C49-8251-C9BDD32494B6'></div></td>
+<td class="items">5 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=C05E9742-AD4B-47B7-B4E8-3019C51B35F1')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-C05E9742-AD4B-47B7-B4E8-3019C51B35F1'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=15F80564-86BA-4D48-B3A8-4E29C5A30D3E')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-15F80564-86BA-4D48-B3A8-4E29C5A30D3E'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=E5BA795B-57F7-4319-8962-B09562DF46FE')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-E5BA795B-57F7-4319-8962-B09562DF46FE'></div></td>
+<td class="items">12 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=90E93FB1-3F5D-4C9D-AD5C-EF5D8FCE9E82')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-90E93FB1-3F5D-4C9D-AD5C-EF5D8FCE9E82'></div></td>
+<td class="items">3 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=09F80143-72DC-41BD-871E-36783AEAFDD7')">
+<td class="label"><div class="clickable BLACK sessionFull" style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-09F80143-72DC-41BD-871E-36783AEAFDD7'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=A18B2A54-112E-4F86-910A-B66A599883B4')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">6:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-A18B2A54-112E-4F86-910A-B66A599883B4'></div></td>
+<td class="items">3 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=ACC122BD-DC93-4CDB-BD83-E23DB0C33B8B')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-ACC122BD-DC93-4CDB-BD83-E23DB0C33B8B'></div></td>
+<td class="items">1 spot left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=0464B87A-DCE9-41B3-9FCD-D402D1A5164B')">
+<td class="label"><div class="clickable BLACK sessionFull" style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-0464B87A-DCE9-41B3-9FCD-D402D1A5164B'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=A0FFA0CF-3426-4A7C-A945-88D8ABA3B06C')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-A0FFA0CF-3426-4A7C-A945-88D8ABA3B06C'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=06D82F13-484E-4D0A-9A17-CEB86B7326F3')">
+<td class="label"><div class="clickable GREEN " style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Team Practice WOD</span> <span id='idStars-06D82F13-484E-4D0A-9A17-CEB86B7326F3'></div></td>
+<td class="items">17 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=B04B5814-80EA-493D-8E68-2F971016A89B')">
+<td class="label"><div class="clickable BLACK sessionFull" style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-B04B5814-80EA-493D-8E68-2F971016A89B'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=8A4A34E8-ED99-429D-9622-CE2EB4BCA74E')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">7:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-8A4A34E8-ED99-429D-9622-CE2EB4BCA74E'></div></td>
+<td class="items">1 spot left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=AFA3918C-F303-408F-B0D9-2C9E4DE4A7F5')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-AFA3918C-F303-408F-B0D9-2C9E4DE4A7F5'></div></td>
+<td class="items">2 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=F585CA56-E7C4-4A8C-AE7F-5209BBE4BCE3')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-F585CA56-E7C4-4A8C-AE7F-5209BBE4BCE3'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=53C156DB-B8DA-42F1-A34F-154E5DDDA5A1')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-53C156DB-B8DA-42F1-A34F-154E5DDDA5A1'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=6CBE440A-2E8F-4691-97E0-3230FF74CC26')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">8:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-6CBE440A-2E8F-4691-97E0-3230FF74CC26'></div></td>
+<td class="items">14 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=2C0D47EE-3CC6-4856-B370-A7EA78232527')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">8:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-2C0D47EE-3CC6-4856-B370-A7EA78232527'></div></td>
+<td class="items">4 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=EED3DFE4-3A65-47BB-A25B-C3D415D69051')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-EED3DFE4-3A65-47BB-A25B-C3D415D69051'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="group">
+<td colspan="5">Wednesday, April 24, 2013</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=068007EF-6342-4202-AD2E-23B014FAA57D')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-068007EF-6342-4202-AD2E-23B014FAA57D'></div></td>
+<td class="items">9 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=78BE602E-A01B-41F4-89AD-DE36AF350E69')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-78BE602E-A01B-41F4-89AD-DE36AF350E69'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FB1D4533-4203-47BB-ACF2-6C27A355B41E')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-FB1D4533-4203-47BB-ACF2-6C27A355B41E'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=11EA6DCB-9911-4EA1-84D8-78EC268E2413')">
+<td class="label"><div class="clickable YELLOW sessionFull" style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-11EA6DCB-9911-4EA1-84D8-78EC268E2413'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=2505A3F8-78D2-444F-B6B8-4D806F2666DE')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-2505A3F8-78D2-444F-B6B8-4D806F2666DE'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=39527D0E-096B-4769-9D0D-B54F2B0E8A76')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-39527D0E-096B-4769-9D0D-B54F2B0E8A76'></div></td>
+<td class="items">13 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=824F499E-7CCC-44A3-94BC-8A66CDAB6E73')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-824F499E-7CCC-44A3-94BC-8A66CDAB6E73'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=557B80C5-61F0-44B3-A52E-5801B65DA23A')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-557B80C5-61F0-44B3-A52E-5801B65DA23A'></div></td>
+<td class="items">3 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=D14130F9-E37F-4A42-BA11-D33D5CCB153C')">
+<td class="label"><div class="clickable YELLOW sessionFull" style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-D14130F9-E37F-4A42-BA11-D33D5CCB153C'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=5258AE61-496C-41DF-B353-53F4A441112C')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-5258AE61-496C-41DF-B353-53F4A441112C'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=664BD7C8-EF6D-4D22-8B70-0D1D18FDB922')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-664BD7C8-EF6D-4D22-8B70-0D1D18FDB922'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=E87C2842-6D2B-481B-8C5D-BCFB7E65AE32')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-E87C2842-6D2B-481B-8C5D-BCFB7E65AE32'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=AA50A2AE-E92B-4E37-B87C-EC8C9F036E4A')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">8:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-AA50A2AE-E92B-4E37-B87C-EC8C9F036E4A'></div></td>
+<td class="items">1 spot left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FA461077-ECF7-455E-88DD-F03B50D148C6')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-FA461077-ECF7-455E-88DD-F03B50D148C6'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7FA85F3A-B3E6-42F2-BE6C-4FEF12768D79')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">9:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-7FA85F3A-B3E6-42F2-BE6C-4FEF12768D79'></div></td>
+<td class="items">14 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=8BC1B9C5-047C-462A-8807-53F77DDA6ADF')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">9:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-8BC1B9C5-047C-462A-8807-53F77DDA6ADF'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=A3CF9D40-F9CD-4CFA-B892-DAB105543CF4')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">10:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-A3CF9D40-F9CD-4CFA-B892-DAB105543CF4'></div></td>
+<td class="items">13 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=F0F77035-2F83-4CFF-B61E-536D04A84A38')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">12:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-F0F77035-2F83-4CFF-B61E-536D04A84A38'></div></td>
+<td class="items">4 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=2F152B9E-9E61-405F-BA25-1EB5E5A7C204')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">12:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-2F152B9E-9E61-405F-BA25-1EB5E5A7C204'></div></td>
+<td class="items">18 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=17699838-64EC-48D2-AC03-51E49D1EE61C')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">1:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-17699838-64EC-48D2-AC03-51E49D1EE61C'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=491469C0-1849-46E3-BBF4-48DED2B3ED40')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">3:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-491469C0-1849-46E3-BBF4-48DED2B3ED40'></div></td>
+<td class="items">13 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=47739A40-B413-4D15-A539-461E58CDF4D4')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">4:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-47739A40-B413-4D15-A539-461E58CDF4D4'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=20C4B07B-5939-497F-A34A-1543036DC23D')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">5:00 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-20C4B07B-5939-497F-A34A-1543036DC23D'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=350E1883-E9DC-47D1-A0BB-B20C9D6B148D')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">5:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-350E1883-E9DC-47D1-A0BB-B20C9D6B148D'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=7BBF9F06-2739-4BF7-BA7F-C06DE0D4F85F')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-7BBF9F06-2739-4BF7-BA7F-C06DE0D4F85F'></div></td>
+<td class="items">1 spot left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=8CFF4AD5-E051-4882-8117-D8A95C256343')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-8CFF4AD5-E051-4882-8117-D8A95C256343'></div></td>
+<td class="items">9 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=91D9756F-0CDC-4D36-A4CE-94DBEB6101E6')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-91D9756F-0CDC-4D36-A4CE-94DBEB6101E6'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=9D23D4A0-CF02-4C01-A892-BFFC06A4CBD3')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-9D23D4A0-CF02-4C01-A892-BFFC06A4CBD3'></div></td>
+<td class="items">12 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=3339CC91-3E80-49D0-83A3-0D4CEF539EB3')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-3339CC91-3E80-49D0-83A3-0D4CEF539EB3'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=584A8BC8-C31A-4F30-A52A-2CCB18EC6C3D')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-584A8BC8-C31A-4F30-A52A-2CCB18EC6C3D'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=F0C8E826-5A12-41C5-A469-94A05D32C11B')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-F0C8E826-5A12-41C5-A469-94A05D32C11B'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=38922534-864D-4DB1-8042-4A9B6EE536AE')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-38922534-864D-4DB1-8042-4A9B6EE536AE'></div></td>
+<td class="items">13 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=3DC7FB33-4F18-4F25-9B49-7EFEE6B7FB58')">
+<td class="label"><div class="clickable YELLOW sessionFull" style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-3DC7FB33-4F18-4F25-9B49-7EFEE6B7FB58'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=5EE8F66F-1FEF-41A5-9331-2C3C66153914')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-5EE8F66F-1FEF-41A5-9331-2C3C66153914'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=F47A317D-F16E-4274-BD5A-256E29E63149')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-F47A317D-F16E-4274-BD5A-256E29E63149'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=8B21C6D5-6817-4EF6-AE70-6A6D676491EF')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-8B21C6D5-6817-4EF6-AE70-6A6D676491EF'></div></td>
+<td class="items">13 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=90AD0C32-6860-4841-9D79-C8C720C8E8EC')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">8:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-90AD0C32-6860-4841-9D79-C8C720C8E8EC'></div></td>
+<td class="items">19 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=87B66D96-984B-4532-823B-6E039137B806')">
+<td class="label"><div class="clickable YELLOW sessionFull" style="padding:3px;">8:00 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-87B66D96-984B-4532-823B-6E039137B806'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=365F1F2D-FF24-4C1E-9D00-FF23FBDA94F2')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-365F1F2D-FF24-4C1E-9D00-FF23FBDA94F2'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=61E27F4A-2B7E-4CA1-9EAA-2B49D4897ADA')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-61E27F4A-2B7E-4CA1-9EAA-2B49D4897ADA'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="group">
+<td colspan="5">Thursday, April 25, 2013</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=36DF5D61-6824-4C88-BD2A-3E4DC3C03D4D')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-36DF5D61-6824-4C88-BD2A-3E4DC3C03D4D'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=E3B6CB29-39F9-4687-9D15-8C797829F698')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-E3B6CB29-39F9-4687-9D15-8C797829F698'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=43AB65AC-7215-4473-BB3F-9912E9897DD8')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-43AB65AC-7215-4473-BB3F-9912E9897DD8'></div></td>
+<td class="items">18 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=A1D07CAC-4E76-497E-9107-56B95299113D')">
+<td class="label"><div class="clickable GREEN " style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Team Practice WOD</span> <span id='idStars-A1D07CAC-4E76-497E-9107-56B95299113D'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1CB5EAB9-37FE-4358-A828-470C4DB23B64')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-1CB5EAB9-37FE-4358-A828-470C4DB23B64'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1F0BB702-2085-45B4-AE20-58F0B2A8EAFF')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-1F0BB702-2085-45B4-AE20-58F0B2A8EAFF'></div></td>
+<td class="items">17 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=2B2D7EE4-4876-4E31-9321-6FF86A1DC0D0')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-2B2D7EE4-4876-4E31-9321-6FF86A1DC0D0'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FAFD7E0F-5F2C-475B-8530-2989554BDC50')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-FAFD7E0F-5F2C-475B-8530-2989554BDC50'></div></td>
+<td class="items">13 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=9A4C2C4C-3831-458F-884C-88CEF1142C00')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-9A4C2C4C-3831-458F-884C-88CEF1142C00'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=9F875100-481A-43A3-922D-0CF0D73C2ECC')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-9F875100-481A-43A3-922D-0CF0D73C2ECC'></div></td>
+<td class="items">17 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=E845435A-E34C-437D-A27D-5CDBC08872CC')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-E845435A-E34C-437D-A27D-5CDBC08872CC'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=70EA300A-2B2C-422E-A4A4-5F0517B65542')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-70EA300A-2B2C-422E-A4A4-5F0517B65542'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=E3764B98-139D-4EBC-8511-D9EEE5124895')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">9:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-E3764B98-139D-4EBC-8511-D9EEE5124895'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=D6629FF0-E46B-4821-AD9B-12BA18815DF2')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">10:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-D6629FF0-E46B-4821-AD9B-12BA18815DF2'></div></td>
+<td class="items">19 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=46D6C5A9-243F-49FF-9A0B-A0088BB5EFE6')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">12:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-46D6C5A9-243F-49FF-9A0B-A0088BB5EFE6'></div></td>
+<td class="items">8 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=6E3446B9-28AE-4D25-B62F-A430C9A0C1FB')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">12:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-6E3446B9-28AE-4D25-B62F-A430C9A0C1FB'></div></td>
+<td class="items">18 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=860C47B3-D5F5-4AB1-A96F-D9D765A3A165')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">1:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-860C47B3-D5F5-4AB1-A96F-D9D765A3A165'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=9CD2B6B3-9598-452D-987A-D005CEFA7A4A')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">3:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-9CD2B6B3-9598-452D-987A-D005CEFA7A4A'></div></td>
+<td class="items">19 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1A794D04-5923-4AED-A2A6-2941EA489D07')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">4:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-1A794D04-5923-4AED-A2A6-2941EA489D07'></div></td>
+<td class="items">14 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=EBBFAF0D-DB18-46B8-B1E1-D52DCC846908')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">5:00 PM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-EBBFAF0D-DB18-46B8-B1E1-D52DCC846908'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=6D992411-A4BA-45BD-B8D0-A18356D6FC38')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">5:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-6D992411-A4BA-45BD-B8D0-A18356D6FC38'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=767631BC-BA5F-4A32-B05F-8E05AB4CCEE4')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-767631BC-BA5F-4A32-B05F-8E05AB4CCEE4'></div></td>
+<td class="items">2 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=BE66AA31-5A90-4389-B2E2-1ACD4ECE36C0')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-BE66AA31-5A90-4389-B2E2-1ACD4ECE36C0'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=BB1BA0DA-F2EE-4A58-8FDE-B79DA84532A0')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-BB1BA0DA-F2EE-4A58-8FDE-B79DA84532A0'></div></td>
+<td class="items">18 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=001AD6F3-86B9-42EA-AC6F-42F2D19E06B4')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-001AD6F3-86B9-42EA-AC6F-42F2D19E06B4'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=D02DDC30-440C-4DAD-B8B2-25E1C36E3AC9')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-D02DDC30-440C-4DAD-B8B2-25E1C36E3AC9'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1B6C94DE-9B89-43AB-BEAE-9699BF2ECF24')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-1B6C94DE-9B89-43AB-BEAE-9699BF2ECF24'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=C9C73690-F544-4153-B2DB-809470044B65')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-C9C73690-F544-4153-B2DB-809470044B65'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=41038977-AE3A-4091-9C50-F04FAAD25DBF')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-41038977-AE3A-4091-9C50-F04FAAD25DBF'></div></td>
+<td class="items">2 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1F4B1EDA-3DC8-4F30-95C5-60F2FE6193A9')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-1F4B1EDA-3DC8-4F30-95C5-60F2FE6193A9'></div></td>
+<td class="items">14 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=113DF533-8AFA-4DC2-87E5-EF0627C9D769')">
+<td class="label"><div class="clickable GREEN " style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Team Practice WOD</span> <span id='idStars-113DF533-8AFA-4DC2-87E5-EF0627C9D769'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1336CD08-A9B0-4A20-9E08-E7DAD8B10494')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-1336CD08-A9B0-4A20-9E08-E7DAD8B10494'></div></td>
+<td class="items">14 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=31F0C21A-2364-4601-9562-EB7FD71A3807')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-31F0C21A-2364-4601-9562-EB7FD71A3807'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=410197DA-97EC-417E-A0AB-7A89BF21C9D8')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-410197DA-97EC-417E-A0AB-7A89BF21C9D8'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=58ED4D83-539D-4BE1-986C-51F9667DE31D')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-58ED4D83-539D-4BE1-986C-51F9667DE31D'></div></td>
+<td class="items">19 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=8EFDCADF-A63A-4417-92EF-291E583F7D06')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-8EFDCADF-A63A-4417-92EF-291E583F7D06'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Kasey Heil</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=696436B0-6228-434C-93E5-00136B9EA4B5')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">8:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-696436B0-6228-434C-93E5-00136B9EA4B5'></div></td>
+<td class="items">18 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=89370109-2251-4655-9EE8-0E6B1876D8FF')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-89370109-2251-4655-9EE8-0E6B1876D8FF'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=3AA188E6-1B4B-4741-A3DA-B9797249B5D4')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-3AA188E6-1B4B-4741-A3DA-B9797249B5D4'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Joseph Campbell</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="group">
+<td colspan="5">Friday, April 26, 2013</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=DF91BCE3-EE74-4039-9A59-E39A77E3253F')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-DF91BCE3-EE74-4039-9A59-E39A77E3253F'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=AA79ECEC-84BA-4F3E-ABBF-9A3EB37E5CCB')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-AA79ECEC-84BA-4F3E-ABBF-9A3EB37E5CCB'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=53F10ABC-BC0D-473B-9FF6-8B4A9415CA55')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">6:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-53F10ABC-BC0D-473B-9FF6-8B4A9415CA55'></div></td>
+<td class="items">9 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=9AC6DDEE-0202-4BBE-A21A-E73157E1CA0C')">
+<td class="label"><div class="clickable GREEN " style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Team Practice WOD</span> <span id='idStars-9AC6DDEE-0202-4BBE-A21A-E73157E1CA0C'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=0AABFD97-34D5-4B88-AF8A-707B82F0891E')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-0AABFD97-34D5-4B88-AF8A-707B82F0891E'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=EFB81FBE-AC23-454B-8252-1C38B17C4577')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-EFB81FBE-AC23-454B-8252-1C38B17C4577'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=535D1277-7FEF-40DF-91E2-600596B30A20')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-535D1277-7FEF-40DF-91E2-600596B30A20'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=DB11FFE6-5575-4C08-81E1-E5544F28A2F8')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">7:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-DB11FFE6-5575-4C08-81E1-E5544F28A2F8'></div></td>
+<td class="items">4 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=0A9B92DA-A9ED-4C82-B46E-68068FA17E16')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-0A9B92DA-A9ED-4C82-B46E-68068FA17E16'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=D00E3144-57F9-4BFB-B490-A87ADFFC7054')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:45 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-D00E3144-57F9-4BFB-B490-A87ADFFC7054'></div></td>
+<td class="items">17 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=9AA86E08-A375-4606-B602-A7627BA34A33')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-9AA86E08-A375-4606-B602-A7627BA34A33'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Nick Walters</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=343EAA52-B920-4017-A1EC-E5B88A2D678B')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">8:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-343EAA52-B920-4017-A1EC-E5B88A2D678B'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=FE10654A-8D20-4C97-834B-2457FC2899DB')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">8:30 AM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-FE10654A-8D20-4C97-834B-2457FC2899DB'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=0D98AAB3-B8B3-4CB1-86F3-F5C35DB00922')">
+<td class="label"><div class="clickable PURPLE " style="padding:3px;">9:00 AM</div></td>
+<td class="items"><span class='hyperlink'>All Level WOD</span> <span id='idStars-0D98AAB3-B8B3-4CB1-86F3-F5C35DB00922'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Kyle Smith</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=CA5810EA-34FB-49E3-A942-BA4F7838200D')">
+<td class="label"><div class="clickable YELLOW " style="padding:3px;">9:00 AM</div></td>
+<td class="items"><span class='hyperlink'>CrossFit Endurance WOD</span> <span id='idStars-CA5810EA-34FB-49E3-A942-BA4F7838200D'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Heidi Jones</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=1A183ACF-9E6B-41BA-BDD3-004383718C43')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">10:00 AM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-1A183ACF-9E6B-41BA-BDD3-004383718C43'></div></td>
+<td class="items">19 spots left</td>
+<td class="items">Sara Carr</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=D2DFCF32-6BA2-4251-90E8-81167F0BD925')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">12:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-D2DFCF32-6BA2-4251-90E8-81167F0BD925'></div></td>
+<td class="items">4 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=CF3CFE33-48E9-4DF6-91CB-ED946EC97961')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">12:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-CF3CFE33-48E9-4DF6-91CB-ED946EC97961'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=EC7FCF52-85C2-4273-B4CF-02D51FD0308C')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">1:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-EC7FCF52-85C2-4273-B4CF-02D51FD0308C'></div></td>
+<td class="items">7 spots left</td>
+<td class="items">Jason Lapadula</td>
+<td class="items">44 W. 28th Street, 2nd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=C1EE4767-BDE8-4E2B-B8A1-0F1943A77A34')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">3:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-C1EE4767-BDE8-4E2B-B8A1-0F1943A77A34'></div></td>
+<td class="items">16 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=BA70C50D-5B76-4D07-840D-CEA10D6F6E1C')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">4:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-BA70C50D-5B76-4D07-840D-CEA10D6F6E1C'></div></td>
+<td class="items">15 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=96993DA3-D7AD-4406-B02D-092CF3CAA8BD')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">4:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-96993DA3-D7AD-4406-B02D-092CF3CAA8BD'></div></td>
+<td class="items">14 spots left</td>
+<td class="items">Tom Tanzosh</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=239A531B-6ADB-420B-9DBB-66BFA00C27AA')">
+<td class="label"><div class="clickable BLUE " style="padding:3px;">5:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-239A531B-6ADB-420B-9DBB-66BFA00C27AA'></div></td>
+<td class="items">5 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=454659D7-3DD3-48F9-8834-B6E457F99249')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-454659D7-3DD3-48F9-8834-B6E457F99249'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Tom Tanzosh</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=4BCCE816-6CAC-412A-8BCE-BF4F465E0515')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-4BCCE816-6CAC-412A-8BCE-BF4F465E0515'></div></td>
+<td class="items">11 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=99B861B8-121B-40E1-BCF8-E8EF3248FAAC')">
+<td class="label"><div class="clickable WHITE sessionFull" style="padding:3px;">5:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Free Intro to CrossFit</span> <span id='idStars-99B861B8-121B-40E1-BCF8-E8EF3248FAAC'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Melissa Simson</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=304532AF-CDEF-499E-BDD0-6515A0205667')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-304532AF-CDEF-499E-BDD0-6515A0205667'></div></td>
+<td class="items">18 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=437A9668-7521-49AE-A7A2-B4496AE19710')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-437A9668-7521-49AE-A7A2-B4496AE19710'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=27B8509C-89D2-4FB5-AA04-CB1837BB20B4')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-27B8509C-89D2-4FB5-AA04-CB1837BB20B4'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Tom Tanzosh</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=C1F7A0D3-6B23-4FC1-BEFD-06FDD5B600C7')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-C1F7A0D3-6B23-4FC1-BEFD-06FDD5B600C7'></div></td>
+<td class="items">12 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=3DA51FE1-4C3B-49D1-81FD-7CD46AA9404C')">
+<td class="label"><div class="clickable WHITE sessionFull" style="padding:3px;">6:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Free Intro to CrossFit</span> <span id='idStars-3DA51FE1-4C3B-49D1-81FD-7CD46AA9404C'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Melissa Simson</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=6031EC1B-BE62-4C20-8AD2-A554321370B3')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-6031EC1B-BE62-4C20-8AD2-A554321370B3'></div></td>
+<td class="items">18 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=94FF3625-766D-4DC9-837F-42A84A03C01B')">
+<td class="label"><div class="clickable GREEN " style="padding:3px;">7:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Team Practice WOD</span> <span id='idStars-94FF3625-766D-4DC9-837F-42A84A03C01B'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Avery Wittkamp</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=85038B8B-929C-4A64-B4CE-346452F0FFE7')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:15 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-85038B8B-929C-4A64-B4CE-346452F0FFE7'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Brian DeGennaro</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=2FA617C0-AF49-4A59-94D3-E4F109E5498B')">
+<td class="label"><div class="clickable BLUE sessionFull" style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Beginner WOD</span> <span id='idStars-2FA617C0-AF49-4A59-94D3-E4F109E5498B'></div></td>
+<td class="items">0 spots left</td>
+<td class="items">Tom Tanzosh</td>
+<td class="items">44 W. 28th Street, 2nd Floor -</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=E8BC435D-95FF-453E-AB15-84A52776C77C')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">7:30 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-E8BC435D-95FF-453E-AB15-84A52776C77C'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Michael (Sully) Sullivan</td>
+<td class="items">25 W. 26th Street, 3rd Floor</td>
+</tr>
+<tr class="item" onclick="zen.showDialog('dialog-appointment.cfm?AppointmentId=25B7FCE7-3554-4382-8288-BECAB34E0BF6')">
+<td class="label"><div class="clickable BLACK " style="padding:3px;">8:00 PM</div></td>
+<td class="items"><span class='hyperlink'>Black Box WOD</span> <span id='idStars-25B7FCE7-3554-4382-8288-BECAB34E0BF6'></div></td>
+<td class="items">20 spots left</td>
+<td class="items">Kevin Prowse</td>
+<td class="items">25 W. 26th Street, 4th Floor</td>
+</tr>
+<tr class="group">
+<td colspan="5">Saturday, April 27, 2013</td>
+</tr>
