@@ -19,12 +19,10 @@
 ////
 #pragma mark class methods (public)
 ////
-+(CSWDayMarker *)dayMarkerWithDay:(CSWDay *)aDay withMoc:(NSManagedObjectContext *)aMoc
++(CSWDayMarker *)dayMarkerWithDay:(CSWDay *)aDay gymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc
 {
-    NSString *gymId = [CSWMembership sharedMembership].gymId;
-    
     NSFetchRequest *dayMarkerRequest = [[NSFetchRequest alloc] initWithEntityName:@"DayMarker"];
-    dayMarkerRequest.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND day = %d", gymId, aDay.asInt];
+    dayMarkerRequest.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND day = %d", aGymId, aDay.asInt];
     
     NSError *error;
     CSWDayMarker *dayMarker = [aMoc executeFetchRequest:dayMarkerRequest error:&error].lastObject;
@@ -37,7 +35,7 @@
     if ( !dayMarker ) {
         dayMarker = [NSEntityDescription insertNewObjectForEntityForName:@"DayMarker" inManagedObjectContext:aMoc];
         
-        dayMarker.gymId = gymId;
+        dayMarker.gymId = aGymId;
         dayMarker.day = [NSNumber numberWithInt:aDay.asInt];
         dayMarker.lastRefreshed = [NSDate dateWithTimeIntervalSince1970:0];
     }

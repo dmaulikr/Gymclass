@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CSWLoginViewController">
             <connections>
+                <outlet property="devWarningLabel" destination="com-pI-Cjy" id="UxO-2d-b5G"/>
                 <outlet property="emailTextField" destination="24" id="892"/>
                 <outlet property="gymLongNameLabel" destination="199" id="894"/>
                 <outlet property="loginButton" destination="15" id="890"/>
@@ -117,6 +118,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </activityIndicatorView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="com-pI-Cjy" userLabel="Label - DEV warning">
+                    <rect key="frame" x="50" y="421" width="220" height="0.0"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="56"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -131,6 +139,8 @@
                 <constraint firstItem="31" firstAttribute="top" secondItem="24" secondAttribute="bottom" constant="8" id="8tf-33-tlC"/>
                 <constraint firstItem="1XF-7R-Rai" firstAttribute="top" secondItem="15" secondAttribute="bottom" constant="45" id="9iw-Gk-up9"/>
                 <constraint firstItem="15" firstAttribute="centerX" secondItem="1XF-7R-Rai" secondAttribute="centerX" id="ESJ-0Z-WiM"/>
+                <constraint firstItem="com-pI-Cjy" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="50" id="Hg6-iQ-sKv"/>
+                <constraint firstAttribute="centerX" secondItem="com-pI-Cjy" secondAttribute="centerX" id="LXb-Kz-wJI"/>
                 <constraint firstAttribute="trailing" secondItem="ObQ-jn-ycG" secondAttribute="trailing" id="SrB-II-geH"/>
                 <constraint firstItem="15" firstAttribute="leading" secondItem="31" secondAttribute="leading" id="TfU-yc-cd9"/>
                 <constraint firstAttribute="bottom" secondItem="41" secondAttribute="bottom" constant="56" id="WlN-TM-sKq"/>
@@ -139,7 +149,9 @@
                 <constraint firstItem="31" firstAttribute="centerX" secondItem="24" secondAttribute="centerX" id="al6-JG-u1E"/>
                 <constraint firstItem="15" firstAttribute="top" secondItem="31" secondAttribute="bottom" constant="22" id="bCQ-Db-4Zv"/>
                 <constraint firstAttribute="bottom" secondItem="ObQ-jn-ycG" secondAttribute="bottom" id="bdh-3D-w7N"/>
+                <constraint firstAttribute="trailing" secondItem="com-pI-Cjy" secondAttribute="trailing" constant="50" id="jaD-Xe-VUC"/>
                 <constraint firstAttribute="centerX" secondItem="31" secondAttribute="centerX" id="mJ2-p3-UAS"/>
+                <constraint firstItem="tRh-Un-EwM" firstAttribute="top" secondItem="com-pI-Cjy" secondAttribute="bottom" constant="60" id="pnz-WV-eNS"/>
                 <constraint firstItem="31" firstAttribute="leading" secondItem="24" secondAttribute="leading" id="pqA-wO-j0C"/>
                 <constraint firstAttribute="bottom" secondItem="tRh-Un-EwM" secondAttribute="bottom" constant="56" id="ukb-es-Qah"/>
                 <constraint firstItem="ObQ-jn-ycG" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="wVC-o1-o2j"/>

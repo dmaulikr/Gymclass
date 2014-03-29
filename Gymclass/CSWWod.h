@@ -11,7 +11,7 @@
 
 @interface CSWWod : NSManagedObject
 
-+(CSWWod *)wodWithDay:(CSWDay *)aDay withMoc:(NSManagedObjectContext *)aMoc;
++(CSWWod *)wodWithDay:(CSWDay *)aDay gymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc;
 +(void)purgeAllWodsForGymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc;
 -(void)populateWithDict:(NSDictionary *)aDict withMoc:(NSManagedObjectContext *)aMoc;
 

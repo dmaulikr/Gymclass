@@ -83,33 +83,34 @@ static NSRegularExpression *preMapDisplayTypesRegEx = nil;
     }
 }
 
-+(CSWWorkout *)workoutWithDict:(NSDictionary *)aDict withMoc:(NSManagedObjectContext *)aMoc
++(CSWWorkout *)workoutWithDict:(NSDictionary *)aDict gymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc
 {
     NSString *workoutId = aDict[@"id"];
-    CSWWorkout *workout = [CSWWorkout workoutWithId:workoutId withMoc:aMoc wasCreated:NULL];
+    CSWWorkout *workout = [CSWWorkout workoutWithId:workoutId gymId:aGymId withMoc:aMoc wasCreated:NULL];
     [workout populateWithDict:aDict withMoc:aMoc];
     
     return workout;
 }
 
-+(CSWWorkout *)workoutWithId:(NSString *)aWorkoutId withMoc:(NSManagedObjectContext *)aMoc wasCreated:(BOOL *)wasCreated
++(CSWWorkout *)workoutWithId:(NSString *)aWorkoutId gymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc wasCreated:(BOOL *)wasCreated
 {
-    NSString *gymId = [CSWMembership sharedMembership].gymId;
+    //note: previously, grabbed gymId from Membership here.  But discarded that because in certain long-waiting web calls,
+    // the user could potentially change gymIds before this code was called the gymId would be wrong for the eventually-returned results
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Workout"];
-    request.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND workoutId = %@", gymId, aWorkoutId];
+    request.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND workoutId = %@", aGymId, aWorkoutId];
     
     NSError *err;
     CSWWorkout *workout = [[aMoc executeFetchRequest:request error:&err] lastObject];
     if ( err )
-        [NSException raise:kExceptionCoreDataError format:@"Error fetching workout for workoutId '%@' for gymId %@", aWorkoutId, gymId];
+        [NSException raise:kExceptionCoreDataError format:@"Error fetching workout for workoutId '%@' for gymId %@", aWorkoutId, aGymId];
     
     if ( !workout ) {
 
         workout = [NSEntityDescription insertNewObjectForEntityForName:@"Workout"
                                                 inManagedObjectContext:aMoc
                    ];
-        workout.gymId = gymId;
+        workout.gymId = aGymId;
         workout.workoutId = aWorkoutId;
         workout.placesAvailable = @-1;
         workout.displayable = @-1;
@@ -219,7 +220,9 @@ static NSRegularExpression *preMapDisplayTypesRegEx = nil;
 
                 CSWLocation *location = [CSWLocation locationWithName:val withMoc:aMoc];
                 if ( !location ) {
-                    location = [CSWLocation declareLocation:@{@"name" : val}
+                    location = [CSWLocation declareLocation:@{ @"name"  : val
+                                                              ,@"gymId" : self.gymId
+                                                             }
                                                     withMoc:aMoc
                                 ];
                 }
@@ -230,7 +233,9 @@ static NSRegularExpression *preMapDisplayTypesRegEx = nil;
                 
                 CSWInstructor *instructor = [CSWInstructor instructorWithName:val withMoc:aMoc];
                 if ( !instructor ) {
-                    instructor = [CSWInstructor declareInstructor:@{@"name" : val}
+                    instructor = [CSWInstructor declareInstructor:@{ @"name" : val
+                                                                    ,@"gymId" : self.gymId
+                                                                   }
                                                           withMoc:aMoc
                                   ];
                 }

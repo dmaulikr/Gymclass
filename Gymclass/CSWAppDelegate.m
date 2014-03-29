@@ -36,16 +36,16 @@
 + (void)initialize
 {
     //configure iRate
-    [iRate sharedInstance].daysUntilPrompt = 1;
-    [iRate sharedInstance].usesUntilPrompt = 5;
-    [iRate sharedInstance].remindPeriod    = 0.5;
+    [iRate sharedInstance].daysUntilPrompt = 10;
+    [iRate sharedInstance].usesUntilPrompt = 10;
+    [iRate sharedInstance].remindPeriod    = 2;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSSet *)launchOptions
 {
     [Flurry setCrashReportingEnabled:YES];
+    [Flurry setAppVersion:APP_VERSION];
     [Flurry startSession:FLURRY_API_KEY];
-    [Flurry setVersion:APP_VERSION];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -71,10 +71,10 @@
         _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         _indicator.hidesWhenStopped = YES;
         _indicator.frame = CGRectMake( CGRectGetMidX(blackVC.view.frame) - _indicator.frame.size.width/2.0
-                                     ,CGRectGetMidY(blackVC.view.frame) - _indicator.frame.size.height * 2.0 // set indicator above center
-                                     ,_indicator.frame.size.width
-                                     ,_indicator.frame.size.height
-                                    );
+                                      ,CGRectGetMidY(blackVC.view.frame) - _indicator.frame.size.height * 2.0 // set indicator above center
+                                      ,_indicator.frame.size.width
+                                      ,_indicator.frame.size.height
+                                     );
         
         [_indicator startAnimating];
         [blackVC.view addSubview:_indicator];
@@ -89,15 +89,14 @@
             [self didSetupGymId];
             
         } @catch ( NSException *e ) {
-            
+
             [Flurry logError:@"Bad Gym Setup" message:e.reason exception:e];
             
-            // Gym seems to have been removed!
             [[[UIAlertView alloc] initWithTitle:@"Bad Gym Setup"
-                                        message:e.reason
-                                       delegate:nil
-                              cancelButtonTitle:@"ok"
-                              otherButtonTitles:nil
+                                       message:e.reason
+                                      delegate:nil
+                             cancelButtonTitle:@"ok"
+                             otherButtonTitles:nil
               ] show];
             
             [_membership setContextToGymId:nil];
@@ -211,7 +210,7 @@
                 
                 if ( error ) {
                     
-                    [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @0 }];
+                    [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @"N" }];
                     
                     [Flurry logError:@"Could not contact Gym" message:error.localizedDescription error:error];
                     
@@ -224,10 +223,12 @@
 
                 } else {
                     
-                    [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @1 }];
+                    [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @"Y" }];
                     
-                    [_primaryViewController setSelectedTimeToNow];
-                    [_primaryViewController focusOnSelectedDateAndTime:true];
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        [_primaryViewController setSelectedTimeToNow];
+                        [_primaryViewController focusOnSelectedDateAndTime:true];
+                    }];
                 }
             }];
         };

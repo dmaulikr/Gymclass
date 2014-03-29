@@ -47,7 +47,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     WorkoutQueryType selectedWorkoutQueryType;
     UITableViewCell *selectedCell;
     NSIndexPath *selectedIndexPath;
-    UIAlertView *cannotUndoAlertView;
+    UIAlertView *_cannotUndoAlertView;
 }
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -95,6 +95,8 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     [super viewDidLoad];
 
     [self setSelectedTimeToNow];
+    
+    self.devLabel.text = ( DEV_BACKEND_MODE ) ? @"DEV" : @"";
     
     self.scheduleTableView.separatorInset = UIEdgeInsetsZero;
 
@@ -622,7 +624,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     if ( [self.store fetchGymConfigValue:@"canFetchWodDesc"] ) refreshesNeededForIndicatorStop++;
     if ( self.store.isLoggedIn )                               refreshesNeededForIndicatorStop++;
     
-    __block bool didShowAlert = NO;
+    __block int alertCount = 0;
     
     //completion blocks for this call are already on main thread
     bool refreshing = [self.store loadScheduleForDay:self.selectedDay
@@ -636,21 +638,25 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                       
                                       if ( error ) {
                                           
-                                          if ( !didShowAlert ) {
-                                              
-                                              NSString *msg = [NSString stringWithFormat:@"Unable to update schedule for %@.", [self.store fetchGymConfigValue:@"displayShortName"]];
-                                              
-                                              [Flurry logError:@"Network Unavailable" message:msg error:error];
-                                              
-                                              [[[UIAlertView alloc] initWithTitle:@"Network Unavailable"
+                                            NSString *msg = [NSString stringWithFormat:@"Unable to update schedule for %@.", [self.store fetchGymConfigValue:@"displayShortName"]];
+                                          
+                                            if ( alertCount == 0 ) {
+                                                
+                                                [Flurry logError:@"Network Unavailable <schedule>" message:msg error:error];
+                                                
+                                                [[[UIAlertView alloc] initWithTitle:@"Network Unavailable"
                                                                           message:msg
                                                                          delegate:nil
                                                                 cancelButtonTitle:@"ok"
                                                                 otherButtonTitles:nil] show];
-                                              
-                                              didShowAlert = YES;
-                                          }
+                                                
+                                            } else if ( alertCount == 1 ) {
+                                                
+                                                [Flurry logError:@"Network Unavailable <multi>" message:msg error:error];
+                                            }
                                           
+                                            alertCount++;
+
                                       } else if ( didRefresh ) {
                                           
                                           [self.fetchedResultsController performFetch:NULL];
@@ -669,18 +675,24 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                       
                                       if ( error ) {
                                           
-                                          if ( !didShowAlert ) {
-                                              
-                                              NSString *msg = [NSString stringWithFormat:@"Unable to signup statuses for %@.", [self.store fetchGymConfigValue:@"displayShortName"]];
-                                              
-                                              [Flurry logError:@"Network Unavailable" message:msg error:error];
+                                          NSString *msg = [NSString stringWithFormat:@"Unable to signup statuses for %@.", [self.store fetchGymConfigValue:@"displayShortName"]];
+                                          
+                                          if ( alertCount == 0 ) {
+
+                                              [Flurry logError:@"Network Unavailable <reservations>" message:msg error:error];
                                               
                                               [[[UIAlertView alloc] initWithTitle:@"Network Unavailable"
                                                                           message:msg
                                                                          delegate:nil
                                                                 cancelButtonTitle:@"ok"
                                                                 otherButtonTitles:nil] show];
+
+                                          } else if ( alertCount == 1 ) {
+                                              
+                                                [Flurry logError:@"Network Unavailable <multi>" message:msg error:error];
                                           }
+                                          
+                                          alertCount++;
                                       }
                                   }];
                               }
@@ -695,18 +707,24 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                       
                                       if ( error ) {
                                           
-                                          if ( !didShowAlert ) {
-                                              
-                                              NSString *msg = [NSString stringWithFormat:@"Unable to fetch remaining class openings for %@.", [self.store       fetchGymConfigValue:@"displayShortName"]];
-                                              
-                                              [Flurry logError:@"Network Unavailable" message:msg error:error];
+                                          NSString *msg = [NSString stringWithFormat:@"Unable to fetch remaining class openings for %@.", [self.store       fetchGymConfigValue:@"displayShortName"]];
+                                          
+                                          if ( alertCount == 0 ) {
+
+                                              [Flurry logError:@"Network Unavailable <spots>" message:msg error:error];
                                               
                                               [[[UIAlertView alloc] initWithTitle:@"Network Unavailable"
                                                                           message:msg
                                                                          delegate:nil
                                                                 cancelButtonTitle:@"ok"
                                                                 otherButtonTitles:nil] show];
+                                              
+                                          } else if ( alertCount == 1 ) {
+                                              
+                                              [Flurry logError:@"Network Unavailable <multi>" message:msg error:error];
                                           }
+                                          
+                                          alertCount++;
                                       }
                                   }];
                               }
@@ -766,7 +784,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 {
     if ( _wodBarButton ) {
         
-        CSWWod *wod = [CSWWod wodWithDay:self.selectedDay withMoc:self.managedObjectContext];
+        CSWWod *wod = [CSWWod wodWithDay:self.selectedDay gymId:self.store.gymId withMoc:self.managedObjectContext];
         
         if ( wod && wod.wodDesc && ![wod.wodDesc isEqualToString:@""] ) {
             
@@ -827,7 +845,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 -(void)wodPressed:(id)sender
 {
     [Flurry logEvent:kWodViewed withParameters:@{ @"gymId" : self.store.gymId } timed:YES];
-    CSWWod *wod = [CSWWod wodWithDay:self.selectedDay withMoc:self.managedObjectContext];
+    CSWWod *wod = [CSWWod wodWithDay:self.selectedDay gymId:self.store.gymId withMoc:self.managedObjectContext];
 
     self.wodViewController.content = wod.wodDesc;
     self.wodViewController.dateString = self.dateLabel.text;
@@ -951,16 +969,25 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                           
                           NSString *msg;
                           if ( error.code == kErrorCodeCannotUndo ) {
+                              
                               msg = @"This signup could not be cancelled because it begins within 60 minutes";
+                              [Flurry logEvent:kCantCancelLateSignup withParameters:@{ @"gymId" : self.store.gymId }];
+                              
                           } else if ( error.code == kErrorCodeWaitlistIsFull ) {
+                              
                               msg = @"Sorry, the waitlist for this class is full";
+                              [Flurry logEvent:kWaitlistFull withParameters:@{ @"gymId" : self.store.gymId }];
+                              
                           } else if ( error.code == kErrorCodeUnexpectedServicerResponse ) {
+                              
                               msg = @"The response from the servicer could not be understood";
+                              [Flurry logError:@"Servicer Response not Understood" message:msg error:error];
+                              
                           } else {
+                              
                               msg = [error localizedDescription];
+                              [Flurry logError:@"Unknown Signup Error" message:msg error:error];
                           }
-                          
-                          [Flurry logError:message message:msg error:error];
                           
                           [[[UIAlertView alloc] initWithTitle:message
                                                       message:msg
@@ -1102,13 +1129,14 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     if ( !self.store.isLoggedIn ) {
         
         [Flurry logEvent:kAttemptToSignUpNotLoggedIn];
-        
+
         [[[UIAlertView alloc] initWithTitle:@"Must login to sign up for a class"
                                     message:@"Touch the gear icon in upper-left corner of the screen to login"
                                    delegate:nil
                           cancelButtonTitle:@"ok"
                           otherButtonTitles:nil]
          show];
+
         return;
     }
     
@@ -1157,12 +1185,15 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
             
             NSString *msg = [NSString stringWithFormat:@"Because this class begins in under %d minutes, you may not be able to undo this action", [[self.store fetchGymConfigValue:@"cannotUndoWithinMins"] intValue]];
             
-            [[[UIAlertView alloc] initWithTitle:@"WARNING!"
-                                        message:msg
-                                       delegate:self
-                              cancelButtonTitle:@"nevermind"
-                              otherButtonTitles:@"proceed", nil
-              ] show];
+            _cannotUndoAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING!"
+                                                              message:msg
+                                                             delegate:self
+                                                    cancelButtonTitle:@"nevermind"
+                                                    otherButtonTitles:@"proceed", nil
+                                    ];
+            
+            [_cannotUndoAlertView show];
+            
             return;
             
         } else {
@@ -1181,15 +1212,27 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 ////
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if ( alertView == cannotUndoAlertView ) {
+    if ( alertView == _cannotUndoAlertView ) {
         
+        NSString *didForce;
         if ( buttonIndex == 1 ) {
             
             [self handleSignupRequest];
             
+            didForce = @"Y";
+            
         } else if ( buttonIndex == 0 ) {
             // cancel button pressed
+            
+            didForce = @"Y";
         }
+        
+        [Flurry logEvent:kRequestedLateSignup withParameters:@{ @"gymId"    : self.store.gymId
+                                                               ,@"didForce" : didForce
+                                                              }
+         ];
+        
+        _cannotUndoAlertView = nil; // release
     }
 }
 

@@ -16,6 +16,7 @@
 @interface CSWGymSelector ()
 {
     NSDictionary *_gymConfigs;
+    NSArray *_gymKeys;
     NSString *_selectedGymId;
 }
 
@@ -88,6 +89,7 @@
         
         if ( gymConfigs ) {
             _gymConfigs = gymConfigs;
+            _gymKeys = [_gymConfigs.allKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         }
         
         if ( refreshed ) {
@@ -97,10 +99,12 @@
 
         NSInteger index;
         if ( self.selectedGymId ) {
-            index = [_gymConfigs.allKeys indexOfObject:self.selectedGymId];
-        } else {
+            index = [_gymKeys indexOfObject:self.selectedGymId];
+        }
+        
+        if ( !self.selectedGymId || index == NSNotFound ) {
             index = 0;
-            self.selectedGymId = gymConfigs.allKeys[0];
+            self.selectedGymId = _gymKeys[0];
         }
         
         [self.picker selectRow:index inComponent:0 animated:YES];
@@ -150,7 +154,7 @@
     
     if ( row < _gymConfigs.count ) {
         
-        NSString *key = _gymConfigs.allKeys[row];
+        NSString *key = _gymKeys[row];
         return _gymConfigs[key][@"displayShortName"];
         
     } else {
@@ -165,7 +169,7 @@
         
         _shouldAddNewGym = NO;
         
-        NSString *gymId = _gymConfigs.allKeys[row];
+        NSString *gymId = _gymKeys[row];
         self.selectedGymId = gymId;
         self.configForSelectedGymId = _gymConfigs[gymId];
         self.doneButton.title = [NSString stringWithFormat:kSelectionFormat, _gymConfigs[gymId][@"displayShortName"]];

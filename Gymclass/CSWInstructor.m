@@ -59,17 +59,15 @@ static NSString *_cachedFetchAllGymId = nil;
 +(CSWInstructor *)declareInstructor:(NSDictionary *)aDict withMoc:(NSManagedObjectContext *)aMoc
 {
     if ( [depricatedInstructorNames containsObject:aDict[@"name"]] ) return nil;
-    
-    NSString *gymId = [CSWMembership sharedMembership].gymId;
 
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Instructor"];
-    request.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND name = %@", gymId, aDict[@"name"]];
+    request.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND name = %@", aDict[@"gymId"], aDict[@"name"]];
     
     NSError *err;
     CSWInstructor *instructor = [[aMoc executeFetchRequest:request error:&err] lastObject];
     if ( err )
         [NSException raise:kExceptionCoreDataError
-                    format:@"Error fetching location for name '%@' for gymId %@", aDict[@"name"], gymId
+                    format:@"Error fetching location for name '%@' for gymId %@", aDict[@"name"], aDict[@"gymId"]
          ];
     
     if ( !instructor ) {
@@ -78,7 +76,7 @@ static NSString *_cachedFetchAllGymId = nil;
                                                    inManagedObjectContext:aMoc
                       ];
         
-        instructor.gymId = gymId;
+        instructor.gymId = aDict[@"gymId"];
         instructor.name = aDict[@"name"];
     }
     

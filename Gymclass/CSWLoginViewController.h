@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *gymLongNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *selectGymLabel;
+@property (weak, nonatomic) IBOutlet UILabel *devWarningLabel;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;

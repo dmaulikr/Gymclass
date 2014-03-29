@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSNumber *day;
 @property (nonatomic, strong) NSDate *lastRefreshed;
 
-+(CSWDayMarker *)dayMarkerWithDay:(CSWDay *)aDay withMoc:(NSManagedObjectContext *)aMoc;
++(CSWDayMarker *)dayMarkerWithDay:(CSWDay *)aDay gymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc;
 +(void)purgeAllDayMarkersWithMoc:(NSManagedObjectContext *)aMoc;
 
 @end

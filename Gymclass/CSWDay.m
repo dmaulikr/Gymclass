@@ -84,7 +84,7 @@ static NSLocale *gLocale;
 ////
 +(int)numberOfDaysForward:(CSWDay *)aDay
 {
-    return (int)([aDay.date timeIntervalSinceDate:[NSDate date]] / ( 60 * 60 * 24 * 1.0 ));
+    return (int)([[NSDate date] timeIntervalSinceDate:aDay.date] / ( 60 * 60 * 24 * 1.0 ));
 }
 
 //

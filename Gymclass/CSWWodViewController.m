@@ -29,6 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _webView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,7 +65,7 @@
 //
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    return TRUE;
+    return YES;
 }
 
 @end

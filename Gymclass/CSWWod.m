@@ -28,24 +28,22 @@
 ////
 #pragma mark class methods (public)
 ////
-+(CSWWod *)wodWithDay:(CSWDay *)aDay withMoc:(NSManagedObjectContext *)aMoc
++(CSWWod *)wodWithDay:(CSWDay *)aDay gymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc
 {
-    NSString *gymId = [CSWMembership sharedMembership].gymId;
-    
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Wod"];
     
-    request.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND day = %d", gymId, aDay.asInt];
+    request.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND day = %d", aGymId, aDay.asInt];
     
     NSError *err;
     CSWWod *wod = [[aMoc executeFetchRequest:request error:&err] lastObject];
     if ( err )
-        [NSException raise:kExceptionCoreDataError format:@"Error fetching wod for day='%d' for gymId='%@'", aDay.asInt, gymId];
+        [NSException raise:kExceptionCoreDataError format:@"Error fetching wod for day='%d' for gymId='%@'", aDay.asInt, aGymId];
     
     if ( !wod ) {
         wod = [NSEntityDescription insertNewObjectForEntityForName:@"Wod"
                                             inManagedObjectContext:aMoc
                ];
-        wod.gymId = gymId;
+        wod.gymId = aGymId;
         wod.day = [NSNumber numberWithInt:aDay.asInt];
         wod.lastRefreshed = [NSDate dateWithTimeIntervalSince1970:0];
     }

@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="backgroundView" destination="a08-04-XMH" id="7Gw-LS-5W3"/>
                 <outlet property="dateLabel" destination="798" id="810"/>
+                <outlet property="devLabel" destination="VSi-GJ-aSi" id="O1o-pT-AVe"/>
                 <outlet property="filteringLabel" destination="811" id="843"/>
                 <outlet property="nextDayButton" destination="29" id="143"/>
                 <outlet property="prevDayButton" destination="28" id="144"/>
@@ -37,6 +38,17 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DEV" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VSi-GJ-aSi">
+                            <rect key="frame" x="60" y="6" width="200" height="36"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="9IF-FO-7mV"/>
+                                <constraint firstAttribute="height" constant="36" id="ARb-5i-wIj"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Monday 9/7/2013" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="798" userLabel="dateLabel">
                             <rect key="frame" x="83" y="10" width="155" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -90,8 +102,10 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="centerX" secondItem="VSi-GJ-aSi" secondAttribute="centerX" id="1Fh-ur-vUt"/>
                         <constraint firstAttribute="centerX" secondItem="811" secondAttribute="centerX" id="MMR-u8-rr1"/>
                         <constraint firstAttribute="height" constant="42" id="NhA-mG-tKE"/>
+                        <constraint firstItem="VSi-GJ-aSi" firstAttribute="top" secondItem="a08-04-XMH" secondAttribute="top" constant="6" id="UpU-DS-54H"/>
                         <constraint firstItem="29" firstAttribute="height" secondItem="28" secondAttribute="height" id="VgE-DA-17T"/>
                         <constraint firstItem="29" firstAttribute="baseline" secondItem="28" secondAttribute="baseline" id="W5o-VV-35P"/>
                         <constraint firstItem="811" firstAttribute="top" secondItem="798" secondAttribute="bottom" constant="-1" id="Wk7-5e-kmd"/>

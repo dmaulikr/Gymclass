@@ -58,16 +58,14 @@ static NSString *_cachedFetchAllGymId = nil;
 
 +(CSWLocation *)declareLocation:(NSDictionary *)aDict withMoc:(NSManagedObjectContext *)aMoc
 {
-    NSString *gymId = [CSWMembership sharedMembership].gymId;
-    
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Location"];
-    request.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND name = %@", gymId, aDict[@"name"]];
+    request.predicate = [NSPredicate predicateWithFormat:@"gymId = %@ AND name = %@", aDict[@"gymId"], aDict[@"name"]];
     
     NSError *err;
     CSWLocation *location = [[aMoc executeFetchRequest:request error:&err] lastObject];
     if ( err )
         [NSException raise:kExceptionCoreDataError
-                    format:@"Error fetching location for name '%@' for gymId %@", aDict[@"name"], gymId
+                    format:@"Error fetching location for name '%@' for gymId %@", aDict[@"name"], aDict[@"gymId"]
          ];
     
     if ( !location ) {
@@ -76,7 +74,7 @@ static NSString *_cachedFetchAllGymId = nil;
                                                  inManagedObjectContext:aMoc
                     ];
         
-        location.gymId = gymId;
+        location.gymId = aDict[@"gymId"];
         location.name = aDict[@"name"];
     }
     

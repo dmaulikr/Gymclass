@@ -16,8 +16,8 @@
 +(void)setDisplayTypesMap:(NSDictionary *)aDisplayTypes;
 +(void)setPreMapDisplayTypesRegEx:(NSString *)aRegExString;
 
-+(CSWWorkout *)workoutWithDict:(NSDictionary *)aDict withMoc:(NSManagedObjectContext *)aMoc;
-+(CSWWorkout *)workoutWithId:(NSString *)aWorkoutId withMoc:(NSManagedObjectContext *)aMoc wasCreated:(BOOL *)wasCreated;
++(CSWWorkout *)workoutWithDict:(NSDictionary *)aDict gymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc;
++(CSWWorkout *)workoutWithId:(NSString *)aWorkoutId gymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc wasCreated:(BOOL *)wasCreated;
 +(void)purgeWorkoutsNotInSet:(NSSet *)aSet ForDay:(int)aDayAsInt forGymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc;
 +(void)purgeAllWorkoutsForGymId:(NSString *)aGymId withMoc:(NSManagedObjectContext *)aMoc;
 -(void)populateWithDict:(NSDictionary *)aDict withMoc:(NSManagedObjectContext *)aMoc;

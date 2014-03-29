@@ -9,6 +9,17 @@
 #ifndef CSWGymclassConstants_h
 #define CSWGymclassConstants_h
 
+// comment out this line to use production web-service
+//#define USE_DEV_BACKEND
+
+#ifdef USE_DEV_BACKEND
+#define CONFIGURATION_DOMAIN @"dev.cindysoftware.com"
+#define DEV_BACKEND_MODE YES
+#else
+#define CONFIGURATION_DOMAIN @"cindysoftware.com"
+#define DEV_BACKEND_MODE NO
+#endif
+
 #define APP_VERSION @"1.1.0"
 
 #define LOG_DEBUG 0
@@ -16,8 +27,6 @@
 #define FLURRY_API_KEY @"CZ68D4PWS9Q5BK2BBDM7"
 
 #define BACKEND_SERVICER_DOMAIN @"sites.zenplanner.com"
-
-#define CONFIGURATION_DOMAIN @"cindysoftware.com"
 
 #define BACKEND_CONFIGURATION_DOMAIN CONFIGURATION_DOMAIN
 
@@ -62,8 +71,8 @@
 #define kUserLoggingIn @"userLoggingIn"
 
 #define kCacheNeverCached @"cacheNeverCached"
-#define kCacheHit @"cacheHit"
-#define kCacheMiss @"cacheMiss"
+#define kfreshData @"freshData"
+#define kStaleData @"staleData"
 
 #define kCouldNotUndoSignup         @"couldNotUndoSignup"
 #define kUnexpectedServicerResponse @"unexpectedServicerResponse"
@@ -77,5 +86,11 @@
 #define kReservationsUnavailable    @"reservationsUnavailable"
 
 #define kAttemptToSignUpNotLoggedIn @"attemptToSignUpNotLoggedIn"
+
+#define kRequestedLateSignup @"requestedLateSignup"
+#define kCantCancelLateSignup @"cantCancelLateSignup"
+
+#define kWaitlistFull @"Waitlist Full"
+
 
 #endif

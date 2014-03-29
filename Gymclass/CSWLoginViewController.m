@@ -79,7 +79,11 @@
     self.passwordTextField.delegate = self;
     
     _flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
+
+    //
+    // Warn user that we are using DEV backend
+    //
+    self.devWarningLabel.text = ( DEV_BACKEND_MODE ) ? @"DEV" : @"";
 }
 
 - (void)didReceiveMemoryWarning
@@ -236,9 +240,9 @@
     if ( [self.emailTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""] ) {
         
         NSString *msg = @"Both email and password must be specified in order to login.";
-        
-        [Flurry logError:@"Credentials Error" message:msg error:nil];
-        
+
+        //no flurry for this
+
         [[[UIAlertView alloc] initWithTitle:@"Credentials Error"
                                     message:msg
                                    delegate:nil
@@ -272,7 +276,7 @@
         
             if ( error ) {
                 
-                [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @0 }];
+                [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @"N" }];
                 
                 NSString *msg;
                 if ( error.code == kErrorCodeCouldNotGetToken ) {
@@ -294,18 +298,20 @@
                 
             } else {
                 
-                [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @1 }];
+                [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @"Y" }];
             }
             
             if ( store.isLoggedIn ) {
                 
-                [Flurry logEvent:kLoginSuccess];
-                [self.navigationController pushViewController:[CSWPrimaryViewController new]
+                CSWPrimaryViewController *vc = [CSWPrimaryViewController new];
+                [self.navigationController pushViewController:vc
                                                      animated:TRUE
                  ];
-            
+                
                 membership.loginDesired = YES;
                 [membership persistSave];
+                
+                
             }
         }];
     }];
@@ -313,6 +319,8 @@
 
 -(void)refreshPressed:(id)sender
 {
+    [self dismissGymSelector:nil];
+    
     UIActionSheet *sheet = [[UIActionSheet alloc] init];
     sheet.title = @"This will force all data to be refreshed from the network.  Are you sure you want to do this?";
     sheet.delegate = self;
@@ -417,6 +425,7 @@
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             
+            //[self.view sendSubviewToBack:self.networkActivity];
             [self.networkActivity stopAnimating];
             
             if ( error ) {
@@ -429,7 +438,8 @@
                                             message:msg
                                            delegate:nil
                                   cancelButtonTitle:@"ok"
-                                  otherButtonTitles:nil] show];
+                                  otherButtonTitles:nil
+                  ] show];
                 
                 self.selectGymLabel.hidden = NO;
             }

@@ -15,6 +15,7 @@
 @interface CSWPrimaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, CSWFilterViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *devLabel;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UILabel *filteringLabel;
 @property (weak, nonatomic) IBOutlet UIButton *prevDayButton;
