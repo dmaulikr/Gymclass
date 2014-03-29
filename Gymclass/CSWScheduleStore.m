@@ -762,7 +762,8 @@ static NSMutableDictionary *gCachedLocationsByName;
                                    ,@"dayOfWeek"   : workoutDay.dayOfWeek
                                    ,@"gymId"       : self.gymId
                                    ,@"daysForward" : [self daysForwardSegmentString:[CSWDay numberOfDaysForward:workoutDay]]
-                                   ,@"instructor"  : [NSString stringWithFormat:@"%@: %@", self.gymId, aWorkout.instructor]
+                                   ,@"instructor"  : [NSString stringWithFormat:@"%@: %@", self.gymId, aWorkout.instructor.name]
+                                   ,@"location"    : [NSString stringWithFormat:@"%@: %@", self.gymId, aWorkout.location.name]
                                   };
     
     void (^endBlock)(NSError *) = ^(NSError *error) {
@@ -1397,7 +1398,7 @@ static NSMutableDictionary *gCachedLocationsByName;
 
         // keep in mind if not set, lastRefreshed will come back as 1/1/1970
         NSDate *lastRefreshed = [cacheObject lastRefreshed];
-        int cacheStaleness = [now timeIntervalSinceDate:[cacheObject lastRefreshed]];
+        int cacheStaleness = [now timeIntervalSinceDate:lastRefreshed];
         if ( cacheStaleness < cacheTimeoutInterval ) {
             
             if ( LOG_DEBUG )
