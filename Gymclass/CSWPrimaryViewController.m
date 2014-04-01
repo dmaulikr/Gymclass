@@ -78,13 +78,8 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     if (self) {
         self.managedObjectContext = [(CSWAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         [self.managedObjectContext setStalenessInterval:0.0];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(modelWasUpdated:)
-                                                     name:NSManagedObjectContextDidSaveNotification
-                                                   object:self.store.backgroundThreadMoc
-         ];
-        
+
+
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     return self;
@@ -93,6 +88,12 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(modelWasUpdated:)
+                                                 name:NSManagedObjectContextDidSaveNotification
+                                               object:self.store.backgroundThreadMoc
+     ];
 
     [self setSelectedTimeToNow];
     
@@ -240,6 +241,8 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     _wodViewController = nil;
     _filterViewController = nil;
     _loginVC = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -731,17 +734,22 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                        
                               wodDescCompletion:^(NSError *error) {
                                   
-                                  [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                  refreshesNeededForIndicatorStop--;
+                                  
+                                  if ( !error || refreshesNeededForIndicatorStop <= 0 ) {
+                                  
+                                      [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                     
+                                          if ( refreshesNeededForIndicatorStop <= 0 ) {
+                                              [self.networkIndicator stopAnimating];
+                                          }
                                       
-                                      if ( --refreshesNeededForIndicatorStop <= 0 ) {
-                                          [self.networkIndicator stopAnimating];
-                                      }
-                                      
-                                      // error is normal here; means wod is not yet available
-                                      if ( !error ) {
-                                          [self updateWodButtonState];
-                                      }
-                                  }];
+                                          // error is normal here; means wod is not yet available
+                                          if ( !error ) {
+                                              [self updateWodButtonState];
+                                          }
+                                      }];
+                                  }
                               }
                        ];
 
@@ -1126,8 +1134,31 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     
     if ( timeStatus == WorkoutTimeStatusPast ) return;
     
-    if ( !self.store.isLoggedIn ) {
+    if ( self.store.isLoggedIn ) {
+
+        NSNumber *maxDaysForward = [self.store fetchGymConfigValue:@"maxDaysForwardAllowedForSignup" forKey:nil forGymId:self.store.gymId];
+        if ( maxDaysForward ) {
+            
+            int max = maxDaysForward.intValue;
+            int daysForward = [CSWDay numberOfDaysForward:[CSWDay dayWithNumber:workout.day]];
+
+            if ( daysForward > max ) {
+                
+                [Flurry logEvent:kAttemptToSignUpTooFarForward];
+               
+                [[[UIAlertView alloc] initWithTitle:@"Too Far Ahead"
+                                            message:@"This class is too far ahead in the future for signup"
+                                           delegate:nil
+                                  cancelButtonTitle:@"ok"
+                                  otherButtonTitles:nil
+                  ] show];
+                
+                return;
+            }
+        }
         
+    } else {
+    
         [Flurry logEvent:kAttemptToSignUpNotLoggedIn];
 
         [[[UIAlertView alloc] initWithTitle:@"Must login to sign up for a class"
@@ -1214,7 +1245,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 {
     if ( alertView == _cannotUndoAlertView ) {
         
-        NSString *didForce;
+        NSString *didForce = @"N";
         if ( buttonIndex == 1 ) {
             
             [self handleSignupRequest];
@@ -1223,8 +1254,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
             
         } else if ( buttonIndex == 0 ) {
             // cancel button pressed
-            
-            didForce = @"Y";
         }
         
         [Flurry logEvent:kRequestedLateSignup withParameters:@{ @"gymId"    : self.store.gymId

@@ -10,7 +10,7 @@
 #define CSWGymclassConstants_h
 
 // comment out this line to use production web-service
-//#define USE_DEV_BACKEND
+#define USE_DEV_BACKEND
 
 #ifdef USE_DEV_BACKEND
 #define CONFIGURATION_DOMAIN @"dev.cindysoftware.com"
@@ -20,7 +20,8 @@
 #define DEV_BACKEND_MODE NO
 #endif
 
-#define APP_VERSION @"1.1.0"
+#define APP_VERSION_FOR_CONFIG @"1.1"
+#define APP_VERSION_FOR_ANALYTICS @"1.1.2"
 
 #define LOG_DEBUG 0
 
@@ -36,7 +37,7 @@
 
 #define WEB_TIMEOUT_SECS 35
 
-#define APP_CONFIG_URL [NSString stringWithFormat:@"http://%@/config/gymclassConfig.plist", CONFIGURATION_DOMAIN]
+#define APP_CONFIG_URL [NSString stringWithFormat:@"http://%@/config/by_version/%@", CONFIGURATION_DOMAIN, APP_VERSION_FOR_CONFIG]
 
 #define GYM_CONFIG_URL_PREFIX [NSString stringWithFormat:@"http://%@/config/gyms", CONFIGURATION_DOMAIN]
 
@@ -86,6 +87,7 @@
 #define kReservationsUnavailable    @"reservationsUnavailable"
 
 #define kAttemptToSignUpNotLoggedIn @"attemptToSignUpNotLoggedIn"
+#define kAttemptToSignUpTooFarForward @"attemptToSignUpTooFarForward"
 
 #define kRequestedLateSignup @"requestedLateSignup"
 #define kCantCancelLateSignup @"cantCancelLateSignup"

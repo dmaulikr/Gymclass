@@ -28,6 +28,9 @@
 #define kLastCachedTimes @"lastCachedTimes"
 #define kCookies         @"cookies"
 
+#define DONT_REFRESH_SCHEDULE_WITHIN_SECS 20
+
+
 static CSWScheduleStore *staticStore = nil;
 
 static NSUserDefaults *userDefaults;
@@ -43,6 +46,7 @@ static NSMutableDictionary *gCachedLocationsByName;
     NSOperationQueue *webQueue;
     NSTimeZone *_timeZone;
     NSManagedObjectContext *_backgroundThreadMoc;
+    NSMutableDictionary *_refreshingWeeks;
 }
 
 +(NSURL *)appDocumentsDir;
@@ -103,6 +107,13 @@ static NSMutableDictionary *gCachedLocationsByName;
     if ( self ) {
         mainThreadMoc = [(CSWAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         webQueue = [NSOperationQueue new];
+        _refreshingWeeks = [NSMutableDictionary new];
+        
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            _backgroundThreadMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            _backgroundThreadMoc.persistentStoreCoordinator = [(CSWAppDelegate *)[[UIApplication sharedApplication] delegate]   persistentStoreCoordinator];
+            _backgroundThreadMoc.undoManager = nil;
+        });
     }
 
     return self;
@@ -113,17 +124,9 @@ static NSMutableDictionary *gCachedLocationsByName;
 ////
 -(NSManagedObjectContext *)backgroundThreadMoc
 {
-    if ( _backgroundThreadMoc ) return _backgroundThreadMoc;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once (&onceToken, ^{
-        _backgroundThreadMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _backgroundThreadMoc.persistentStoreCoordinator = [(CSWAppDelegate *)[[UIApplication sharedApplication] delegate] persistentStoreCoordinator];
-        _backgroundThreadMoc.undoManager = nil;
-    });
-
     return _backgroundThreadMoc;
 }
+
 
 -(NSTimeZone *)timeZone
 {
@@ -180,15 +183,15 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
                 
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        
-                    NSError *error;
-                    NSDictionary *appConfig = [NSPropertyListSerialization propertyListWithData:operation.responseData
-                                                                                        options:NSPropertyListImmutable
-                                                                                         format:NULL
-                                                                                          error:&error
-                                               ];
+                NSError *error;
+                NSDictionary *appConfig = [NSPropertyListSerialization propertyListWithData:operation.responseData
+                                                                                    options:NSPropertyListImmutable
+                                                                                     format:NULL
+                                                                                      error:&error
+                                           ];
 
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    
                     if ( error ) {
                         aCompletionBlock( false, nil, error );
                         return;
@@ -218,16 +221,13 @@ static NSMutableDictionary *gCachedLocationsByName;
             };
             
             void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-                
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    if ( aCompletionBlock ) {
-                        aCompletionBlock( false, nil, error );
-                    }
-                }];
+                if ( aCompletionBlock ) {
+                    aCompletionBlock( false, nil, error );
+                }
             };
         
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-            [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)];
+            [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
             [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
             [operation start];
             
@@ -436,9 +436,27 @@ static NSMutableDictionary *gCachedLocationsByName;
     bool queryByWeek = [[self fetchGymConfigValue:@"queryByWeek"] boolValue];
     __block bool didRequestReservationStatuses = false;
     
+
+    //
+    // simple mechanism to prevent schedule refreshes piling on top of each other
+    //
+    bool weekAlreadyRefreshing = NO;
+    NSDate *now = [NSDate date];
+    NSDate *startedRefreshing = _refreshingWeeks[week.description];
+    if ( startedRefreshing ) {
+        int interval = [now timeIntervalSinceDate:startedRefreshing];
+        if ( interval < DONT_REFRESH_SCHEDULE_WITHIN_SECS ) {
+            weekAlreadyRefreshing = YES;
+        } else {
+            [_refreshingWeeks removeObjectForKey:week.description];
+        }
+    }
+    
     int refreshing = 0;
-    if ( [self isCacheRefreshNeededForDataType:@"workoutListings" forObject:week] ) {
+    if ( !weekAlreadyRefreshing && [self isCacheRefreshNeededForDataType:@"workoutListings" forObject:week] ) {
         
+        _refreshingWeeks[week.description] = now;
+
         refreshing |= 1;
         
         int queryCount = ( queryByWeek ) ? 1 : 7;
@@ -447,6 +465,7 @@ static NSMutableDictionary *gCachedLocationsByName;
 
         // Zenplanner API allows only 1 day at a time querying per request, so restrict to that
         for ( int i = 0; i < queryCount; i++ ) {
+        //for ( int i = 0; i < 7; i++ ) {
             
             CSWDay *activeDay = [sundayDay addDays:i];
             
@@ -466,6 +485,7 @@ static NSMutableDictionary *gCachedLocationsByName;
                                                                       forOutputTag:@"fetchWorkouts"
                                                 ];
                 
+                // test point 1
                 @synchronized(self.backgroundThreadMoc) {
                 
                     NSMutableSet *workoutIds = [NSMutableSet new];
@@ -477,22 +497,26 @@ static NSMutableDictionary *gCachedLocationsByName;
                         mutableDict[@"displayable"] = @1;
                         
                         [workoutIds addObject:workoutDict[@"id"]];
-
+                        
                         [CSWWorkout workoutWithDict:mutableDict gymId:membership.gymId withMoc:self.backgroundThreadMoc];
-                     }
-
+                    }
+                    
+                    NSString *responseDate = responseStruct[@"date"];
+                    
+                    
                     [CSWWorkout purgeWorkoutsNotInSet:workoutIds
-                                               ForDay:responseStruct[@"date"]
+                                               ForDay:[responseDate intValue]
                                              forGymId:membership.gymId
-                                              withMoc:self.backgroundThreadMoc
+                                              withMoc:_backgroundThreadMoc
                      ];
-
+                    
+                     
                      [self.backgroundThreadMoc save:NULL];
                 }
                 
                 if ( ++querySucceededCount == queryCount ) {
                     
-//                    @synchronized( self ) {
+                   //@synchronized( self ) {
                         
                         if ( !didRequestReservationStatuses && self.isLoggedIn ) {
                             
@@ -518,7 +542,7 @@ static NSMutableDictionary *gCachedLocationsByName;
                                 }
                             }
                         }
-//                    }
+                  //}
                     
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                         
@@ -544,8 +568,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             };
 
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-            operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-            operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+            operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            //operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
             
             [operation start];
@@ -563,7 +587,9 @@ static NSMutableDictionary *gCachedLocationsByName;
                         reservationsBlock( error ); // error may be nil
                     }
             
-                    [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
+                    if ( !error ) {
+                        [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
+                    }
                 }];
                 
             } else {
@@ -602,7 +628,7 @@ static NSMutableDictionary *gCachedLocationsByName;
                                                                       forOperation:@"fetchWorkouts"
                                                                       forOutputTag:@"fetchSpotsRemaining"
                                                 ];
-                    
+                
                 @synchronized( self.backgroundThreadMoc ) {
                         
                     for ( NSDictionary *dict in responseStruct[@"appointmentSpots"] ) {
@@ -616,12 +642,11 @@ static NSMutableDictionary *gCachedLocationsByName;
                     [self.backgroundThreadMoc save:NULL];
                 }
                 
-                //i think this block could include only mainThreadMoc save
+                if ( daySpotsLeftBlock ) {
+                    daySpotsLeftBlock( nil );
+                }
+
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        
-                    if ( daySpotsLeftBlock ) {
-                        daySpotsLeftBlock( nil );
-                    }
                         
                     [self recordCacheDidRefreshForDataType:@"workoutSpotsRemaining" forObject:dayMarker];
                     [mainThreadMoc save:NULL];
@@ -636,8 +661,8 @@ static NSMutableDictionary *gCachedLocationsByName;
     
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequestForSpots];
             [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
-            operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-            operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+            operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            //operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             [operation start];
 
         } else {
@@ -672,16 +697,16 @@ static NSMutableDictionary *gCachedLocationsByName;
                                          ];
 
                 @synchronized(self.backgroundThreadMoc) {
+                    
                     [wod populateWithDict:wodDict withMoc:self.backgroundThreadMoc];
                     [self.backgroundThreadMoc save:NULL];
                 }
  
+                if ( wodDescBlock ) {
+                    wodDescBlock( nil );
+                }
+                
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-
-                    if ( wodDescBlock ) {
-                        wodDescBlock( nil );
-                    }
-                                
                     [self recordCacheDidRefreshForDataType:@"wodDesc" forObject:wod];
                     [mainThreadMoc save:NULL];
                 }];
@@ -690,20 +715,23 @@ static NSMutableDictionary *gCachedLocationsByName;
             void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *operation, NSError *error){
 
                 // we record cache refresh even on failure because failure is normal here
+                if ( wodDescBlock ) {
+                    wodDescBlock( error );
+                }
+                
+                // we record cache refresh even on failure because failure is normal here
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    if ( wodDescBlock ) {
-                        wodDescBlock( nil );
-                    }
-                                
                     [self recordCacheDidRefreshForDataType:@"wodDesc" forObject:wod];
                     [mainThreadMoc save:NULL];
                 }];
             };
 
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequestForWod];
+            operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            
+            //failure intentionally on background
+            operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
-            operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-            operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
             [operation start];
         
         } else {
@@ -755,7 +783,7 @@ static NSMutableDictionary *gCachedLocationsByName;
                         format:@"Invalid WorkoutQueryType specified"
              ];
     }
-    
+
     CSWDay *workoutDay = [CSWDay dayWithNumber:aWorkout.day];
     
     NSDictionary *flurryParams = @{ @"time"        : [self timeOfDaySegmentString:aWorkout.time]
@@ -795,7 +823,7 @@ static NSMutableDictionary *gCachedLocationsByName;
         void (^getDetailSuccessBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
 
             [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @"Y" } ];
-             
+            
             NSDictionary *workoutDetailDict = [self.signupWebAbstract parseData:operation.responseData
                                                                    forOperation:@"queryWorkout"
                                                                    forOutputTag:@"getDetail"
@@ -872,12 +900,12 @@ static NSMutableDictionary *gCachedLocationsByName;
         
         void (^getDetailFailureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
             [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @"N" } ];
-            aBlock(error);
+            if ( aBlock ) aBlock(error);
         };
 
         AFHTTPRequestOperation *getDetailOperation = [[AFHTTPRequestOperation alloc] initWithRequest:mRequest];
-        getDetailOperation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        getDetailOperation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        getDetailOperation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);   //should be on main
+        //getDetailOperation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         [getDetailOperation setCompletionBlockWithSuccess:getDetailSuccessBlock failure:getDetailFailureBlock];
         
         [Flurry logEvent:kFetchingMembershipId timed:YES];
@@ -914,7 +942,9 @@ static NSMutableDictionary *gCachedLocationsByName;
 
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id respsonseObject){
         
-        [Flurry endTimedEvent:kRefreshedReservationsForDay withParameters:@{ @"success" : @"Y" }];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [Flurry endTimedEvent:kRefreshedReservationsForDay withParameters:@{ @"success" : @"Y" }];
+        }];
 
         CSWDay *today = [CSWDay day];
         
@@ -1026,8 +1056,8 @@ static NSMutableDictionary *gCachedLocationsByName;
     };
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-    operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-    operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+    operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    // failure should be on main
     [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
     
     [Flurry logEvent:kRefreshedReservationsForDay timed:YES];
@@ -1157,7 +1187,7 @@ static NSMutableDictionary *gCachedLocationsByName;
     
     if ( aForcefully ) {
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), coldLogin);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), coldLogin);
         
     } else {
 
@@ -1193,8 +1223,8 @@ static NSMutableDictionary *gCachedLocationsByName;
         
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:isLoggedInUrlRequest];
         [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
-        operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
-        operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        // failure should be on main
         [operation start];
     }
 }
@@ -1223,11 +1253,18 @@ static NSMutableDictionary *gCachedLocationsByName;
         
         [self refreshReservationStatusesWithCompletion:^(NSError *error) {
             
-            [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
+            //this may be overkill?
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             
-            if ( aBlock ) {
-                aBlock( nil );
-            }
+                if ( !error ) {
+                    [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
+                }
+            
+                if ( aBlock ) {
+                    aBlock( error );
+                }
+            }];
+            
         }];
     };
     
@@ -1239,7 +1276,8 @@ static NSMutableDictionary *gCachedLocationsByName;
     };
     
     AFHTTPRequestOperation *executeQueryOperation = [[AFHTTPRequestOperation alloc] initWithRequest:aRequest];
-    executeQueryOperation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+    executeQueryOperation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //failure queue should go on main
     [executeQueryOperation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
     [executeQueryOperation start];
 }

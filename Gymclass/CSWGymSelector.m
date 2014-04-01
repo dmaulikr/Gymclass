@@ -97,9 +97,9 @@
             [self.networkIndicator stopAnimating];
         }
 
-        NSInteger index;
+        NSInteger index = NSNotFound;
         if ( self.selectedGymId ) {
-            index = [_gymKeys indexOfObject:self.selectedGymId];
+            index = [_gymKeys indexOfObject:self.selectedGymId]; // may be NSNotFound
         }
         
         if ( !self.selectedGymId || index == NSNotFound ) {

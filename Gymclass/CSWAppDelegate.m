@@ -44,7 +44,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSSet *)launchOptions
 {
     [Flurry setCrashReportingEnabled:YES];
-    [Flurry setAppVersion:APP_VERSION];
+    [Flurry setAppVersion:APP_VERSION_FOR_ANALYTICS];
     [Flurry startSession:FLURRY_API_KEY];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

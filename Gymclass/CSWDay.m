@@ -84,7 +84,7 @@ static NSLocale *gLocale;
 ////
 +(int)numberOfDaysForward:(CSWDay *)aDay
 {
-    return (int)([[NSDate date] timeIntervalSinceDate:aDay.date] / ( 60 * 60 * 24 * 1.0 ));
+    return (int)( 1 + [aDay.date timeIntervalSinceDate:[NSDate date]] / ( 60 * 60 * 24 * 1.0 ));
 }
 
 //
@@ -150,12 +150,9 @@ static NSLocale *gLocale;
 
 -(void)setFromNumber:(NSNumber *)aNumber;
 {
-//    _day = [aNumber intValue];
-//    _number = aNumber;
-    
     NSDateComponents *c = [[NSDateComponents alloc] init];
     
-    int dayClone = _day;
+    NSUInteger dayClone = aNumber.integerValue;
     c.year = (int)(dayClone / 10000);
     dayClone %= 10000;
     c.month = (int)(dayClone / 100);
