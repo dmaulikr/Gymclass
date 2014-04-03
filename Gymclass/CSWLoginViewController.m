@@ -22,6 +22,7 @@
 #define NAV_BAR_HEIGHT 40
 #define kAddGymTitle @"Add a new gym..."
 
+
 @interface CSWLoginViewController ()
 {
     UIButton *_blackoutButton;
@@ -29,6 +30,7 @@
     UIBarButtonItem *_flexSpace;
     NSOperationQueue *_backgroundQueue;
     CSWScheduleStore *_store;
+    bool _gymSelectorIsDismissing;
 }
 
 @property (strong, nonatomic) CSWGymSelector *gymSelector;
@@ -59,6 +61,7 @@
     if (self) {
         _backgroundQueue = [NSOperationQueue new];
         _store = [CSWScheduleStore sharedStore];
+        _gymSelectorIsDismissing = NO;
     }
     return self;
 }
@@ -100,6 +103,7 @@
 {
     [super viewWillAppear:animated];
     
+    [self enableInteraction]; // this is a catch all to make sure enabled starting off
     [self updateButtonStatuses];
 
     self.navigationController.navigationBarHidden = TRUE;
@@ -146,6 +150,8 @@
 //
 -(void)selectGymPressed:(id)sender
 {
+    _gymSelectorIsDismissing = NO;
+    
     if ( !_blackoutButton ) {
         _blackoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _blackoutButton.frame = self.view.bounds;
@@ -268,12 +274,16 @@
                timed:YES
      ];
     
+    [self disableInteraction];
+
     [store loginUserForcefully:YES withCompletion:^(NSError *error) {
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             
+            [self enableInteraction];
+            
             [self.networkActivity stopAnimating];
-        
+            
             if ( error ) {
                 
                 [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @"N" }];
@@ -356,11 +366,39 @@
     }
 }
 
+-(void)enableInteraction
+{
+    _loginButton.enabled = YES;
+    _selectGymButton.enabled = YES;
+    _refreshButton.enabled = YES;
+    _skipButton.enabled = YES;
+    _logoutButton.enabled = YES;
+    _emailTextField.enabled = YES;
+    _passwordTextField.enabled = YES;
+}
+
+-(void)disableInteraction
+{
+    _loginButton.enabled = NO;
+    _selectGymButton.enabled = NO;
+    _refreshButton.enabled = NO;
+    _skipButton.enabled = NO;
+    _logoutButton.enabled = NO;
+    _emailTextField.enabled = NO;
+    _passwordTextField.enabled = NO;
+}
+
 //
 #pragma mark CSWGymSelector delegate methods
 //
 -(void)dismissGymSelector:(id)sender
 {
+    if ( _gymSelectorIsDismissing ) {
+        return;
+    } else {
+        _gymSelectorIsDismissing = YES;
+    }
+    
     CSWScheduleStore *store = [CSWScheduleStore sharedStore];
     
     if ( self.gymSelector.shouldAddNewGym ) {

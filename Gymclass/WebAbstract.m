@@ -91,9 +91,9 @@
     return !![self fetchOperation:aOperation forOutputTag:aSourceTag];
 }
 
--(NSURLRequest *)buildUrlRequestForOperation:(NSString *)aOperation
-                                forSourceTag:(NSString *)aSourceTag
-                               withVariables:(NSDictionary *)aVariables
+-(NSMutableURLRequest *)buildUrlRequestForOperation:(NSString *)aOperation
+                                       forSourceTag:(NSString *)aSourceTag
+                                      withVariables:(NSDictionary *)aVariables
 {
     NSString *pathDesc = [NSString stringWithFormat:@"sourceTag '%@' for operation '%@'", aSourceTag, aOperation];
     

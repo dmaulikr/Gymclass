@@ -18,6 +18,7 @@
     NSDictionary *_gymConfigs;
     NSArray *_gymKeys;
     NSString *_selectedGymId;
+    bool _isRespondingToPicker;
 }
 
 @property (strong, nonatomic) CSWScheduleStore *store;
@@ -31,6 +32,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _shouldAddNewGym = NO;
+        _isRespondingToPicker = YES;
     }
     return self;
 }
@@ -63,6 +65,7 @@
 -(void)prepareView
 {
     self.doneButton.enabled = YES;
+    _isRespondingToPicker = YES;
     
     bool isRefreshing = [self.store fetchConfigForAllGymsWithCompletion:^(bool refreshed, NSDictionary *gymConfigs, NSError *error ) {
         
@@ -123,10 +126,16 @@
 -(void)donePressed:(id)sender
 {
     self.doneButton.enabled = NO;
+    _isRespondingToPicker = NO;
     if ( [self.delegate respondsToSelector:@selector(dismissGymSelector:)] ) {
         [self.delegate dismissGymSelector:sender];
     }
 }
+
+////
+#pragma mark instance methods (private)
+////
+
 
 //
 #pragma mark UIPickerViewDataSource
@@ -165,6 +174,8 @@
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    if ( !_isRespondingToPicker ) return;
+    
     if ( row < _gymConfigs.allKeys.count ) {
         
         _shouldAddNewGym = NO;

@@ -29,6 +29,7 @@
 #define kCookies         @"cookies"
 
 #define DONT_REFRESH_SCHEDULE_WITHIN_SECS 20
+#define LOGIN_TIMEOUT_SECS 30
 
 
 static CSWScheduleStore *staticStore = nil;
@@ -465,7 +466,6 @@ static NSMutableDictionary *gCachedLocationsByName;
 
         // Zenplanner API allows only 1 day at a time querying per request, so restrict to that
         for ( int i = 0; i < queryCount; i++ ) {
-        //for ( int i = 0; i < 7; i++ ) {
             
             CSWDay *activeDay = [sundayDay addDays:i];
             
@@ -795,7 +795,10 @@ static NSMutableDictionary *gCachedLocationsByName;
                                   };
     
     void (^endBlock)(NSError *) = ^(NSError *error) {
-        [Flurry endTimedEvent:flurryEvent withParameters:@{ @"success" : ( error ) ? @"N" : @"Y" }];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [Flurry endTimedEvent:flurryEvent withParameters:@{ @"success" : ( error ) ? @"N" : @"Y" }];
+        }];
         if ( aBlock ) aBlock(error);
     };
 
@@ -1070,11 +1073,13 @@ static NSMutableDictionary *gCachedLocationsByName;
 -(void)loginUserForcefully:(BOOL)aForcefully withCompletion:(void(^)(NSError *))aBlock
 {
     CSWMembership *membership = [CSWMembership sharedMembership];
+
+    NSMutableURLRequest *isLoggedInUrlRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"loginUser"
+                                                                                       forSourceTag:@"isLoggedIn"
+                                                                                      withVariables:@{}
+                                                 ];
     
-    NSURLRequest *isLoggedInUrlRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"loginUser"
-                                                                                forSourceTag:@"isLoggedIn"
-                                                                               withVariables:@{}
-                                          ];
+    isLoggedInUrlRequest.timeoutInterval = LOGIN_TIMEOUT_SECS;
 
     void (^coldLogin)() = ^{
         
@@ -1082,10 +1087,11 @@ static NSMutableDictionary *gCachedLocationsByName;
         [CSWScheduleStore resetCookies];
         
         // it looks like we need to refresh the session
-        NSURLRequest *sessionUrlRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"loginUser"
-                                                                                 forSourceTag:@"sessionRefresh"
-                                                                                withVariables:nil
-                                           ];
+        NSMutableURLRequest *sessionUrlRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"loginUser"
+                                                                                        forSourceTag:@"sessionRefresh"
+                                                                                       withVariables:nil
+                                                  ];
+        sessionUrlRequest.timeoutInterval = LOGIN_TIMEOUT_SECS;
 
         NSError *error;
         [CSWScheduleStore synchronousWebRequest:sessionUrlRequest error:&error];
@@ -1133,13 +1139,14 @@ static NSMutableDictionary *gCachedLocationsByName;
                     return;
                 }
         
-                NSURLRequest *urlRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"loginUser"
-                                                                                  forSourceTag:@"submitCredentials"
-                                                                                 withVariables:@{ @"user"    : membership.username
-                                                                                                 ,@"pass"    : membership.password
-                                                                                                 ,@"xsToken" : xsToken
-                                                                                                }
-                                            ];
+                NSMutableURLRequest *urlRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"loginUser"
+                                                                                         forSourceTag:@"submitCredentials"
+                                                                                        withVariables:@{ @"user"    : membership.username
+                                                                                                        ,@"pass"    : membership.password
+                                                                                                        ,@"xsToken" : xsToken
+                                                                                                       }
+                                                   ];
+                urlRequest.timeoutInterval = LOGIN_TIMEOUT_SECS;
         
                 // lets attempt login again
                 NSData *htmlData = [CSWScheduleStore synchronousWebRequest:urlRequest error:&error];
@@ -1253,18 +1260,15 @@ static NSMutableDictionary *gCachedLocationsByName;
         
         [self refreshReservationStatusesWithCompletion:^(NSError *error) {
             
-            //this may be overkill?
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
                 if ( !error ) {
                     [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
                 }
-            
-                if ( aBlock ) {
-                    aBlock( error );
-                }
             }];
             
+            if ( aBlock ) {
+                aBlock( error );
+            }
         }];
     };
     

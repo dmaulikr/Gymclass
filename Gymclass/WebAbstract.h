@@ -25,9 +25,9 @@
                forOutputTag:(NSString *)aOutputTag;
 
 /* Build a URL string from configuartion */
--(NSURLRequest *)buildUrlRequestForOperation:(NSString *)aOperation
-                                forSourceTag:(NSString *)aSourceTag
-                               withVariables:(NSDictionary *)aVariables;
+-(NSMutableURLRequest *)buildUrlRequestForOperation:(NSString *)aOperation
+                                       forSourceTag:(NSString *)aSourceTag
+                                      withVariables:(NSDictionary *)aVariables;
 
 /* Parse NSData from configuration */
 -(id)parseData:(NSData *)aData
