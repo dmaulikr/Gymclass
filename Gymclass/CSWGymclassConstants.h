@@ -10,7 +10,7 @@
 #define CSWGymclassConstants_h
 
 // comment out this line to use production web-service
-#define USE_DEV_BACKEND
+//#define USE_DEV_BACKEND
 
 #ifdef USE_DEV_BACKEND
 #define CONFIGURATION_DOMAIN @"dev.cindysoftware.com"
@@ -21,7 +21,7 @@
 #endif
 
 #define APP_VERSION_FOR_CONFIG @"1.1"
-#define APP_VERSION_FOR_ANALYTICS @"1.1.4"
+#define APP_VERSION_FOR_ANALYTICS @"1.1.5"
 
 #define LOG_DEBUG 0
 
@@ -37,9 +37,9 @@
 
 #define WEB_TIMEOUT_SECS 35
 
-#define APP_CONFIG_URL [NSString stringWithFormat:@"http://%@/config/by_version/%@", CONFIGURATION_DOMAIN, APP_VERSION_FOR_CONFIG]
+#define APP_CONFIG_URL [NSString stringWithFormat:@"http://%@/config/by_version/%@/gymclassConfig.plist", CONFIGURATION_DOMAIN, APP_VERSION_FOR_CONFIG]
 
-#define GYM_CONFIG_URL_PREFIX [NSString stringWithFormat:@"http://%@/config/gyms", CONFIGURATION_DOMAIN]
+#define GYM_CONFIG_URL_PREFIX [NSString stringWithFormat:@"http://%@/config/gyms/by_version/%@/", CONFIGURATION_DOMAIN, APP_VERSION_FOR_CONFIG]
 
 #define IPHONE_USER_AGENT_STRING @"Mozilla/5.0 (iPhone; CPU iPhone OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B179 Safari/7534.48.3"
 
@@ -57,7 +57,12 @@
 #define kLoginSuccess        @"loginSuccess"
 #define kRefreshPressed      @"refreshPressed"
 #define kLoginBadCredentials @"loginBadCredentials"
-#define kDidVisitAddGymPage  @"DidVisitAddGymPage"
+
+#define kDidVisitAddGymPage  @"didVisitAddGymPage"
+#define kDidFollowAddGymLink @"didFollowAddGymLink"
+
+#define kDidPressContactButton @"didPressContactButton"
+#define kDidStartContactEmail  @"didStartContactEmail"
 
 #define kGotoPrevDay    @"gotoPrevDay"
 #define kGotoNextDay    @"gotoNextDay"

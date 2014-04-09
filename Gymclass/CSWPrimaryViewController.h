@@ -11,8 +11,9 @@
 #import "CSWTime.h"
 #import "CSWScheduleViewCell.h"
 #import "CSWFilterViewController.h"
+#import "CSWIndicatorManager.h"
 
-@interface CSWPrimaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, CSWFilterViewControllerDelegate>
+@interface CSWPrimaryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, CSWFilterViewControllerDelegate, CSWIndicatorManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *devLabel;
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *filteringLabel;
 @property (weak, nonatomic) IBOutlet UIButton *prevDayButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextDayButton;
+@property (strong, nonatomic) UIActivityIndicatorView *networkIndicator;
 
 @property (weak, nonatomic) IBOutlet UITableView *scheduleTableView;
 

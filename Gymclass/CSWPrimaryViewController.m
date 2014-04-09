@@ -18,12 +18,14 @@
 #import "CSWWodViewController.h"
 #import "CSWColors.h"
 #import "CSWLoginViewController.h"
+#import "CSWIndicatorManager.h"
 #import "Flurry.h"
 
 #define ONE_DAY 60*60*24
 
 static NSLocale *gLocale;
 static NSDateFormatter *gDayDateFormatter;
+static int networkIndicatorCount;
 
 typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     WorkoutTimeStatusFutureNormal
@@ -52,7 +54,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) UIActivityIndicatorView *networkIndicator;
 
 @property (weak, nonatomic) IBOutlet CSWScheduleViewCell *cell;
 
@@ -70,6 +71,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     gDayDateFormatter = [[NSDateFormatter alloc] init];
     gDayDateFormatter.locale = gLocale;
     gDayDateFormatter.dateFormat = @"EEEE M/d/yyyy";
+    networkIndicatorCount = 0;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -264,6 +266,22 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     
     [self.navigationController setToolbarHidden:FALSE animated:TRUE];
     [self scrollToSelectedTime:true];
+    
+    CSWIndicatorManager *indicator = [CSWIndicatorManager sharedManager];
+    [indicator reset]; // ensure there aren't old requests outstanding or anything
+    indicator.delegate = self;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [CSWIndicatorManager sharedManager].delegate = nil;
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.store resetState];
 }
 
 //
@@ -331,7 +349,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 -(IBAction)prevDay:(id)sender
 {
     [Flurry logEvent:kGotoPrevDay withParameters:@{ @"sender" : NSStringFromClass( [sender class] ) }];
-    [self.networkIndicator stopAnimating]; // to be sure it resets
     
     NSIndexPath *firstPath = [NSIndexPath indexPathForItem:0 inSection:0];
     NSIndexPath *lastPath = [NSIndexPath indexPathForItem:self.fetchedResultsController.fetchedObjects.count-1 inSection:0];
@@ -372,7 +389,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 -(IBAction)nextDay:(id)sender
 {
     [Flurry logEvent:kGotoNextDay withParameters:@{ @"sender" : NSStringFromClass( [sender class] ) }];
-    [self.networkIndicator stopAnimating]; // to be sure it resets
     
     NSIndexPath *firstPath = [NSIndexPath indexPathForItem:0 inSection:0];
     NSIndexPath *lastPath = [NSIndexPath indexPathForItem:self.fetchedResultsController.fetchedObjects.count-1 inSection:0];
@@ -622,22 +638,22 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 {
     [self.fetchedResultsController performFetch:NULL];
     [self.scheduleTableView reloadData];
+
+    CSWIndicatorManager *activityManager = [CSWIndicatorManager sharedManager];
+    [activityManager increment];
+    [activityManager increment];
     
-    __block int refreshesNeededForIndicatorStop = 2;
-    if ( [self.store fetchGymConfigValue:@"canFetchWodDesc"] ) refreshesNeededForIndicatorStop++;
-    if ( self.store.isLoggedIn )                               refreshesNeededForIndicatorStop++;
-    
+    if ( [self.store fetchGymConfigValue:@"canFetchWodDesc"] ) [activityManager increment];
+    if ( self.store.isLoggedIn )                               [activityManager increment];
+
     __block int alertCount = 0;
     
-    //completion blocks for this call are already on main thread
     bool refreshing = [self.store loadScheduleForDay:self.selectedDay
                               weekScheduleCompletion:^(bool didRefresh, NSError *error) {
                                   
                                   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                       
-                                      if ( --refreshesNeededForIndicatorStop <= 0 ) {
-                                          [self.networkIndicator stopAnimating];
-                                      }
+                                      [activityManager decrement];
                                       
                                       if ( error ) {
                                           
@@ -671,10 +687,8 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                               reservationsCompletion:^(NSError *error) {
                                   
                                   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                                      
-                                      if ( --refreshesNeededForIndicatorStop <= 0 ) {
-                                          [self.networkIndicator stopAnimating];
-                                      }
+                                  
+                                      [activityManager decrement];
                                       
                                       if ( error ) {
                                           
@@ -704,9 +718,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                   
                                   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                       
-                                      if ( --refreshesNeededForIndicatorStop <= 0 ) {
-                                          [self.networkIndicator stopAnimating];
-                                      }
+                                      [activityManager decrement];
                                       
                                       if ( error ) {
                                           
@@ -734,27 +746,18 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                        
                               wodDescCompletion:^(NSError *error) {
                                   
-                                  refreshesNeededForIndicatorStop--;
+                                  [activityManager decrement];
                                   
-                                  if ( !error || refreshesNeededForIndicatorStop <= 0 ) {
-                                  
+                                  if ( !error ) {
                                       [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                                     
-                                          if ( refreshesNeededForIndicatorStop <= 0 ) {
-                                              [self.networkIndicator stopAnimating];
-                                          }
-                                      
-                                          // error is normal here; means wod is not yet available
-                                          if ( !error ) {
-                                              [self updateWodButtonState];
-                                          }
+                                          [self updateWodButtonState];
                                       }];
                                   }
                               }
                        ];
 
     if ( refreshing ) {
-        [self.networkIndicator startAnimating];
+        //now just a nop
     }
 }
 
@@ -817,6 +820,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
 -(void)nowPressed:(id)sender
 {
     [Flurry logEvent:kGotoNowPressed];
+
     CSWDay *today = [CSWDay dayWithDate:[NSDate date]];
     
     UIViewAnimationOptions transition;
@@ -952,8 +956,22 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     
     NSNumber *dayForSelectedWorkout = selectedWorkout.day;
     
+    NSString *filterStr;
+    switch ( self.filterViewController.activeFilterType ) {
+        case CSWFilterTypeNoFilter:
+            filterStr = @"none";
+            break;
+        case CSWFilterTypeInstructor:
+            filterStr = @"instructor";
+            break;
+        case CSWFilterTypeLocation:
+            filterStr = @"location";
+            break;
+    }
+    
     [self.store queryWorkout:selectedWorkout
                withQueryType:selectedWorkoutQueryType
+                withMetaData:@{ @"filter" : filterStr }
               withCompletion:^(NSError *error) {
                   
                   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -1327,6 +1345,23 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     }
 }
 
+////
+#pragma mark CSWIndicatorManagerDelegate protocol methods
+////
+-(void)didStart
+{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self.networkIndicator startAnimating];
+    }];
+}
 
+-(void)didStop
+{
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self.networkIndicator stopAnimating];
+    }];
+}
 
 @end
+
+

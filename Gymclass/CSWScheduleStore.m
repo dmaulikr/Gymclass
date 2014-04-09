@@ -220,8 +220,12 @@ static NSMutableDictionary *gCachedLocationsByName;
                     }
                 }];
             };
-            
+
+            u_int32_t sessionForRequest = _currentSessionId;
             void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+                if ( sessionForRequest != _currentSessionId ) return;
+                
                 if ( aCompletionBlock ) {
                     aCompletionBlock( false, nil, error );
                 }
@@ -294,6 +298,7 @@ static NSMutableDictionary *gCachedLocationsByName;
         NSString *commonUrlStr = [NSString stringWithFormat:@"%@/COMMON/COMMON_servicer_web_config.plist", GYM_CONFIG_URL_PREFIX];
         commonServicerWebConfig = [[WebAbstractConfig alloc] initWithURL:[NSURL URLWithString:commonUrlStr]];
         commonServicerWebConfig.cachePolicy = NSURLRequestReloadIgnoringCacheData;
+        commonServicerWebConfig.timeoutInterval = WEB_TIMEOUT_SECS;
        
         if ( [self isCacheRefreshNeededForDataType:@"servicerWebConfig" forObject:nil] ) {
 
@@ -328,6 +333,7 @@ static NSMutableDictionary *gCachedLocationsByName;
         NSString *urlStr = [NSString stringWithFormat:@"%@/COMMON/COMMON_signup_web_config.plist", GYM_CONFIG_URL_PREFIX];
         signupWebConfig = [[WebAbstractConfig alloc] initWithURL:[NSURL URLWithString:urlStr]];
         signupWebConfig.cachePolicy = NSURLRequestReloadIgnoringCacheData;
+        signupWebConfig.timeoutInterval = WEB_TIMEOUT_SECS;
         
         if ( [self isCacheRefreshNeededForDataType:@"signupWebConfig" forObject:nil] ) {
             
@@ -556,7 +562,10 @@ static NSMutableDictionary *gCachedLocationsByName;
                 }
             };
             
+            u_int32_t sessionForRequest = _currentSessionId;
             void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^void(AFHTTPRequestOperation *operation, NSError *error){
+                
+                if ( sessionForRequest != _currentSessionId ) return;
                 
                 //avoiding calling didFail repeatedly
                 if ( !didFail ) {
@@ -581,15 +590,21 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             if ( [self isCacheRefreshNeededForDataType:@"workoutSignupStatuses" forObject:nil] ) {
         
+                u_int32_t sessionForRequest = _currentSessionId;
                 [self refreshReservationStatusesWithCompletion:^(NSError *error) {
+
+                    if ( error ) {
+                        
+                        if ( sessionForRequest != _currentSessionId ) return;
+                        
+                    } else {
+                        [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
+                    }
                     
                     if ( reservationsBlock ) {
                         reservationsBlock( error ); // error may be nil
                     }
-            
-                    if ( !error ) {
-                        [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
-                    }
+                    
                 }];
                 
             } else {
@@ -653,7 +668,13 @@ static NSMutableDictionary *gCachedLocationsByName;
                 }];
             };
             
+            
+            u_int32_t sessionForRequest = _currentSessionId;
+            
             void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+                if ( sessionForRequest != _currentSessionId ) return;
+                
                 if ( daySpotsLeftBlock ) {
                     daySpotsLeftBlock( error );
                 }
@@ -711,8 +732,11 @@ static NSMutableDictionary *gCachedLocationsByName;
                     [mainThreadMoc save:NULL];
                 }];
             };
-            
-            void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *operation, NSError *error){
+
+            u_int32_t sessionForRequest = _currentSessionId;
+            void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+                if ( sessionForRequest != _currentSessionId ) return;
 
                 // we record cache refresh even on failure because failure is normal here
                 if ( wodDescBlock ) {
@@ -754,6 +778,7 @@ static NSMutableDictionary *gCachedLocationsByName;
 
 -(void)queryWorkout:(CSWWorkout *)aWorkout
       withQueryType:(WorkoutQueryType)aQueryType
+      withMetaData:(NSDictionary *)aMetaData
      withCompletion:(void(^)(NSError *))aBlock
 {
     if ( !self.gymId )
@@ -786,16 +811,18 @@ static NSMutableDictionary *gCachedLocationsByName;
 
     CSWDay *workoutDay = [CSWDay dayWithNumber:aWorkout.day];
     
-    NSDictionary *flurryParams = @{ @"time"        : [self timeOfDaySegmentString:aWorkout.time]
-                                   ,@"dayOfWeek"   : workoutDay.dayOfWeek
-                                   ,@"gymId"       : self.gymId
-                                   ,@"daysForward" : [self daysForwardSegmentString:[CSWDay numberOfDaysForward:workoutDay]]
-                                   ,@"instructor"  : [NSString stringWithFormat:@"%@: %@", self.gymId, aWorkout.instructor.name]
-                                   ,@"location"    : [NSString stringWithFormat:@"%@: %@", self.gymId, aWorkout.location.name]
-                                  };
+    NSMutableDictionary *flurryParams = [NSMutableDictionary dictionaryWithDictionary:@{ @"time"        : [self timeOfDaySegmentString:aWorkout.time]
+                                                                                        ,@"dayOfWeek"   : workoutDay.dayOfWeek
+                                                                                        ,@"gymId"       : self.gymId
+                                                                                        ,@"daysForward" : [self daysForwardSegmentString:[CSWDay numberOfDaysForward:workoutDay]]
+                                                                                        ,@"instructor"  : [NSString stringWithFormat:@"%@: %@", self.gymId, aWorkout.instructor.name]
+                                                                                        ,@"location"    : [NSString stringWithFormat:@"%@: %@", self.gymId, aWorkout.location.name]
+                                                                                       }
+                                         ];
+    [flurryParams addEntriesFromDictionary:aMetaData];
     
     void (^endBlock)(NSError *) = ^(NSError *error) {
-        
+
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [Flurry endTimedEvent:flurryEvent withParameters:@{ @"success" : ( error ) ? @"N" : @"Y" }];
         }];
@@ -891,17 +918,22 @@ static NSMutableDictionary *gCachedLocationsByName;
                 urlVariables[@"waitlistId"] = workoutDetailDict[@"waitlistId"];
             }
             
-            NSURLRequest *executeQueryRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"queryWorkout"
-                                                                                       forSourceTag:sourceTag
-                                                                                      withVariables:urlVariables
-                                                 ];
+            NSMutableURLRequest *executeQueryRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"queryWorkout"
+                                                                                              forSourceTag:sourceTag
+                                                                                             withVariables:urlVariables
+                                                        ];
+            executeQueryRequest.timeoutInterval = WEB_TIMEOUT_SECS;
             
             [Flurry logEvent:flurryEvent withParameters:flurryParams timed:YES];
             
             [self executeQuery:executeQueryRequest withCompletion:endBlock];
         };
         
+        u_int32_t sessionForRequest = _currentSessionId;
         void (^getDetailFailureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
+            
+            if ( sessionForRequest != _currentSessionId ) return;
+            
             [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @"N" } ];
             if ( aBlock ) aBlock(error);
         };
@@ -917,10 +949,11 @@ static NSMutableDictionary *gCachedLocationsByName;
 
     } else {
         
-        NSURLRequest *executeQueryRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"queryWorkout"
-                                                                                   forSourceTag:sourceTag
-                                                                                  withVariables:urlVariables
-                                             ];
+        NSMutableURLRequest *executeQueryRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"queryWorkout"
+                                                                                          forSourceTag:sourceTag
+                                                                                         withVariables:urlVariables
+                                                    ];
+        executeQueryRequest.timeoutInterval = WEB_TIMEOUT_SECS;
         
         [Flurry logEvent:flurryEvent withParameters:flurryParams timed:YES];
         
@@ -1050,9 +1083,13 @@ static NSMutableDictionary *gCachedLocationsByName;
         }
     };
 
+    u_int32_t sessionForRequest = _currentSessionId;
     void (^failureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
 
+        if ( sessionForRequest != _currentSessionId ) return;
+        
         [Flurry endTimedEvent:kRefreshedReservationsForDay withParameters:@{ @"success" : @"N" }];
+        
         if ( aBlock ) {
             aBlock( error );
         }
@@ -1092,11 +1129,15 @@ static NSMutableDictionary *gCachedLocationsByName;
                                                                                        withVariables:nil
                                                   ];
         sessionUrlRequest.timeoutInterval = LOGIN_TIMEOUT_SECS;
-
+        
+        u_int32_t sessionForRequest = _currentSessionId;
+        
         NSError *error;
         [CSWScheduleStore synchronousWebRequest:sessionUrlRequest error:&error];
         
         if ( error ) {
+            
+            if ( sessionForRequest != _currentSessionId ) return;
             
             if ( aBlock ) {
                 aBlock( error );
@@ -1109,6 +1150,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             NSData *isLoggedInHtmlData = [CSWScheduleStore synchronousWebRequest:isLoggedInUrlRequest error:&error];
 
             if ( error ) {
+                
+                if ( sessionForRequest != _currentSessionId ) return;
                 
                 if ( aBlock ) {
                     aBlock( error );
@@ -1152,6 +1195,8 @@ static NSMutableDictionary *gCachedLocationsByName;
                 NSData *htmlData = [CSWScheduleStore synchronousWebRequest:urlRequest error:&error];
                 
                 if ( error ) {
+
+                    if ( sessionForRequest != _currentSessionId ) return;
                     
                     if ( aBlock ) {
                         aBlock(error);
@@ -1222,7 +1267,11 @@ static NSMutableDictionary *gCachedLocationsByName;
             }
         };
         
+        u_int32_t sessionForRequest = _currentSessionId;
         void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            if ( sessionForRequest != _currentSessionId ) return;
+            
             if ( aBlock ) {
                 aBlock(error);
             }
@@ -1239,6 +1288,15 @@ static NSMutableDictionary *gCachedLocationsByName;
 -(void)logout
 {
     _isLoggedIn = FALSE;
+    
+    CSWMembership *membership = [CSWMembership sharedMembership];
+    membership.loginDesired = NO;
+    [membership persistSave];
+}
+
+-(void)resetState
+{
+    [_refreshingWeeks removeAllObjects];
 }
 
 
@@ -1271,8 +1329,11 @@ static NSMutableDictionary *gCachedLocationsByName;
             }
         }];
     };
-    
+
+    u_int32_t sessionForRequest = _currentSessionId;
     void (^failureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
+        
+        if ( sessionForRequest != _currentSessionId ) return;
         
         if ( aBlock ) {
             aBlock( error );

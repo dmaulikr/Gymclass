@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Cindy Software. All rights reserved.
 //
 
+#import "CSWAppDelegate.h"
 #import "CSWLoginViewController.h"
 #import "CSWMembership.h"
 #import "CSWScheduleStore.h"
@@ -19,23 +20,27 @@
 #import "CSWAppDelegate.h"
 #import "Flurry.h"
 
+
 #define NAV_BAR_HEIGHT 40
 #define kAddGymTitle @"Add a new gym..."
+#define kContactTitle @"Feedback appreciated!"
 
 
 @interface CSWLoginViewController ()
 {
     UIButton *_blackoutButton;
     UIButton *_escapeTextEntryButton;
-    UIBarButtonItem *_flexSpace;
+    UIBarButtonItem *_flexSpace, *_flexSpace2;
     NSOperationQueue *_backgroundQueue;
     CSWScheduleStore *_store;
     bool _gymSelectorIsDismissing;
+    __weak UIAlertView *_addGymAlert, *_contactAlert;
 }
 
 @property (strong, nonatomic) CSWGymSelector *gymSelector;
 @property (strong, nonatomic) UIBarButtonItem *selectGymButton;
 @property (strong, nonatomic) UIBarButtonItem *refreshButton;
+@property (strong, nonatomic) UIBarButtonItem *contactButton;
 
 -(void)configureView;
 
@@ -73,15 +78,18 @@
 {
     [super viewDidLoad];
 
-    self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshPressed:)];
+    self.refreshButton = [[UIBarButtonItem alloc] initWithTitle:@"refresh" style:UIBarButtonItemStyleBordered target:self action:@selector(refreshPressed:)];
     self.refreshButton.tintColor = [UIColor whiteColor];
-    self.selectGymButton = [[UIBarButtonItem alloc] initWithTitle:@"Select Gym" style:UIBarButtonItemStyleBordered target:self action:@selector(selectGymPressed:)];
+    self.contactButton = [[UIBarButtonItem alloc] initWithTitle:@"contact" style:UIBarButtonItemStyleBordered target:self action:@selector(contactPressed:)];
+    self.contactButton.tintColor = [UIColor whiteColor];
+    self.selectGymButton = [[UIBarButtonItem alloc] initWithTitle:@"   gyms" style:UIBarButtonItemStyleBordered target:self action:@selector(selectGymPressed:)];
     self.selectGymButton.tintColor = [UIColor whiteColor];
     
     self.emailTextField.delegate = self;
     self.passwordTextField.delegate = self;
     
     _flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    _flexSpace2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
     //
     // Warn user that we are using DEV backend
@@ -114,7 +122,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [self.navigationController setToolbarHidden:FALSE animated:TRUE];
-    [self setToolbarItems:@[self.refreshButton, _flexSpace, self.selectGymButton] animated:TRUE];
+    [self setToolbarItems:@[self.refreshButton, _flexSpace, self.contactButton, _flexSpace2, self.selectGymButton] animated:TRUE];
     
     if ( ![CSWMembership sharedMembership].gymId ) {
 
@@ -148,9 +156,26 @@
 //
 #pragma mark instance methods (public)
 //
+-(void)contactPressed:(id)sender
+{
+    [Flurry logEvent:kDidPressContactButton];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kContactTitle
+                                                    message:[[CSWScheduleStore sharedStore] fetchGymConfigValue:@"contactMessage"]
+                                                   delegate:self
+                                          cancelButtonTitle:@"ok"
+                                          otherButtonTitles:@"Write an email now!", nil
+                          ];
+    _contactAlert = alert;
+    [alert show];
+}
+
 -(void)selectGymPressed:(id)sender
 {
     _gymSelectorIsDismissing = NO;
+
+    //I dont want to do this but it seems to easy to get in to bug states otherwise
+    [self disableInteraction];
     
     if ( !_blackoutButton ) {
         _blackoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -209,8 +234,11 @@
     
     [_store logout];
     [CSWMembership sharedMembership].loginDesired = NO;
-    
-    [self.navigationController pushViewController:[CSWPrimaryViewController new] animated:TRUE];
+
+    //hacky way to give AppDelegate access to schedule view so it can set it to "now"
+    CSWPrimaryViewController *pvc = [CSWPrimaryViewController new];
+    self.scheduleViewController = pvc;
+    [self.navigationController pushViewController:pvc animated:TRUE];
 }
 
 -(IBAction)logoutPressed:(id)sender
@@ -313,15 +341,14 @@
             
             if ( store.isLoggedIn ) {
                 
-                CSWPrimaryViewController *vc = [CSWPrimaryViewController new];
-                [self.navigationController pushViewController:vc
+                CSWPrimaryViewController *pvc = [CSWPrimaryViewController new];
+                self.scheduleViewController = pvc;
+                [self.navigationController pushViewController:pvc
                                                      animated:TRUE
                  ];
                 
                 membership.loginDesired = YES;
                 [membership persistSave];
-                
-                
             }
         }];
     }];
@@ -373,6 +400,7 @@
     _refreshButton.enabled = YES;
     _skipButton.enabled = YES;
     _logoutButton.enabled = YES;
+    _contactButton.enabled = YES;
     _emailTextField.enabled = YES;
     _passwordTextField.enabled = YES;
 }
@@ -384,6 +412,7 @@
     _refreshButton.enabled = NO;
     _skipButton.enabled = NO;
     _logoutButton.enabled = NO;
+    _contactButton.enabled = NO;
     _emailTextField.enabled = NO;
     _passwordTextField.enabled = NO;
 }
@@ -398,6 +427,8 @@
     } else {
         _gymSelectorIsDismissing = YES;
     }
+
+    [self disableInteraction];
     
     CSWScheduleStore *store = [CSWScheduleStore sharedStore];
     
@@ -405,12 +436,14 @@
         
         [Flurry logEvent:kDidVisitAddGymPage];
         
-        [[[UIAlertView alloc] initWithTitle:kAddGymTitle
-                                    message:[store fetchGymConfigValue:@"addGymMessage"]
-                                   delegate:self
-                          cancelButtonTitle:@"ok"
-                          otherButtonTitles:@"take me there now", nil
-          ] show];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kAddGymTitle
+                                                        message:[store fetchGymConfigValue:@"addGymMessage"]
+                                                       delegate:self
+                                              cancelButtonTitle:@"ok"
+                                              otherButtonTitles:@"take me there now", nil
+                              ];
+        _addGymAlert = alert;
+        [alert show];
         
         [UIView animateWithDuration:0.25
                          animations:^{
@@ -515,7 +548,8 @@
                              }
                              completion:^(BOOL finished){
                                  [self.gymSelector.view removeFromSuperview];
-                                 self.selectGymButton.enabled = TRUE;
+                                 [self enableInteraction];
+//                                 self.selectGymButton.enabled = TRUE;
                              }
              ];
         }];
@@ -624,10 +658,48 @@
 ////
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if ( [alertView.title isEqualToString:kAddGymTitle] && buttonIndex == 1 ) {
-        NSURL *url = [NSURL URLWithString:[_store fetchGymConfigValue:@"addGymUrl"]];
-        [[UIApplication sharedApplication] openURL:url];
+    if ( alertView == _addGymAlert ) {
+        if ( buttonIndex == 1 ) {
+            
+            [Flurry logEvent:kDidFollowAddGymLink];
+            
+            [self enableInteraction];
+            NSURL *url = [NSURL URLWithString:[_store fetchGymConfigValue:@"addGymUrl"]];
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    } else if ( alertView == _contactAlert ) {
+        if ( buttonIndex == 1 ) {
+            
+            [Flurry logEvent:kDidStartContactEmail];
+            
+            if ([MFMailComposeViewController canSendMail]) {
+                MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] initWithNibName:nil bundle:nil];
+                [composeViewController setMailComposeDelegate:self];
+                [composeViewController setToRecipients:@[@"feedback@cindysoftware.com"]];
+                [composeViewController setSubject:@"feedback about Gymclass"];
+                [self presentViewController:composeViewController animated:YES completion:nil];
+            }
+        }
     }
 }
+
+////
+#pragma mark MFMailComposeViewControllerDelegate
+////
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    //Add an alert in case of failure
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if ( result == MFMailComposeResultSent ) {
+        [[[UIAlertView alloc] initWithTitle:@"Thank you!"
+                                    message:@""
+                                   delegate:nil
+                          cancelButtonTitle:@"ok"
+                          otherButtonTitles:nil]
+         show];
+    }
+}
+
 
 @end

@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		152A2BA128A04AA1989BDFAE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF7D72ADE56A4230854A063F /* libPods.a */; };
+		CE19818118F05991002835A1 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19818018F05991002835A1 /* MessageUI.framework */; };
 		CE20E2BE17DD6B7D00A8F55D /* CSWWodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE20E2BC17DD6B7D00A8F55D /* CSWWodViewController.m */; };
 		CE20E2BF17DD6B7D00A8F55D /* CSWWodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE20E2BD17DD6B7D00A8F55D /* CSWWodViewController.xib */; };
 		CE20E2C217E46D0400A8F55D /* CSWDayMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = CE20E2C117E46D0200A8F55D /* CSWDayMarker.m */; };
 		CE2F127C188D95090024E519 /* images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE2F127B188D95090024E519 /* images.xcassets */; };
+		CE605E6318F24DDC000FC4C5 /* NSDate+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = CE605E6218F24DDC000FC4C5 /* NSDate+Testing.m */; };
+		CE605E6918F45E47000FC4C5 /* CSWIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE605E6818F45E47000FC4C5 /* CSWIndicatorManager.m */; };
 		CE73CD7E18DF48CB0009024E /* libFlurry_4.3.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE73CD7D18DF48CB0009024E /* libFlurry_4.3.2.a */; };
 		CE94912518133B8300612FE6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE94912418133B8300612FE6 /* SystemConfiguration.framework */; };
 		CE94912718133CD300612FE6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE94912618133CD300612FE6 /* MobileCoreServices.framework */; };
@@ -60,18 +63,22 @@
 		E7F3A3FD165CFC0F00E1E2C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F3A3FC165CFC0F00E1E2C5 /* main.m */; };
 		E7F3A401165CFC0F00E1E2C5 /* CSWAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F3A400165CFC0F00E1E2C5 /* CSWAppDelegate.m */; };
 		E7F3A40A165CFC0F00E1E2C5 /* Gymclass.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7F3A408165CFC0F00E1E2C5 /* Gymclass.xcdatamodeld */; };
-		E7FE08B116B6AB540038B762 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FE08B016B6AB540038B762 /* KeychainItemWrapper.m */; };
 		E7FE08B616BA994B0038B762 /* CSWWod.m in Sources */ = {isa = PBXBuildFile; fileRef = E7FE08B516BA994A0038B762 /* CSWWod.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AF7D72ADE56A4230854A063F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE19818018F05991002835A1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		CE20E2BB17DD6B7C00A8F55D /* CSWWodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWWodViewController.h; sourceTree = "<group>"; };
 		CE20E2BC17DD6B7D00A8F55D /* CSWWodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWWodViewController.m; sourceTree = "<group>"; };
 		CE20E2BD17DD6B7D00A8F55D /* CSWWodViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSWWodViewController.xib; sourceTree = "<group>"; };
 		CE20E2C017E46D0100A8F55D /* CSWDayMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWDayMarker.h; sourceTree = "<group>"; };
 		CE20E2C117E46D0200A8F55D /* CSWDayMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWDayMarker.m; sourceTree = "<group>"; };
 		CE2F127B188D95090024E519 /* images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = images.xcassets; sourceTree = "<group>"; };
+		CE605E6218F24DDC000FC4C5 /* NSDate+Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Testing.m"; sourceTree = "<group>"; };
+		CE605E6418F25CE1000FC4C5 /* NSDate+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Testing.h"; sourceTree = "<group>"; };
+		CE605E6718F45E47000FC4C5 /* CSWIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWIndicatorManager.h; sourceTree = "<group>"; };
+		CE605E6818F45E47000FC4C5 /* CSWIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWIndicatorManager.m; sourceTree = "<group>"; };
 		CE73CD7C18DF48CB0009024E /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		CE73CD7D18DF48CB0009024E /* libFlurry_4.3.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.3.2.a; sourceTree = "<group>"; };
 		CE94912418133B8300612FE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -150,8 +157,6 @@
 		E7F3A3FF165CFC0F00E1E2C5 /* CSWAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CSWAppDelegate.h; sourceTree = "<group>"; };
 		E7F3A400165CFC0F00E1E2C5 /* CSWAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSWAppDelegate.m; sourceTree = "<group>"; };
 		E7F3A409165CFC0F00E1E2C5 /* Gymclass.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gymclass.xcdatamodel; sourceTree = "<group>"; };
-		E7FE08AF16B6AB530038B762 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
-		E7FE08B016B6AB540038B762 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		E7FE08B416BA994A0038B762 /* CSWWod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWWod.h; sourceTree = "<group>"; };
 		E7FE08B516BA994A0038B762 /* CSWWod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWWod.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -161,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE19818118F05991002835A1 /* MessageUI.framework in Frameworks */,
 				CE94912718133CD300612FE6 /* MobileCoreServices.framework in Frameworks */,
 				CE94912518133B8300612FE6 /* SystemConfiguration.framework in Frameworks */,
 				CE73CD7E18DF48CB0009024E /* libFlurry_4.3.2.a in Frameworks */,
@@ -254,6 +260,7 @@
 		E7F3A3ED165CFC0E00E1E2C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE19818018F05991002835A1 /* MessageUI.framework */,
 				CE94912618133CD300612FE6 /* MobileCoreServices.framework */,
 				CE94912418133B8300612FE6 /* SystemConfiguration.framework */,
 				E7A20CC3168FB57900BFDDDB /* Security.framework */,
@@ -313,7 +320,11 @@
 				CEAFB7E217EE20C900FF0E34 /* CSWColors.h */,
 				CEAFB7E317EE20C900FF0E34 /* CSWColors.m */,
 				E7A20CC2168FA58A00BFDDDB /* CSWGymclassConstants.h */,
+				CE605E6418F25CE1000FC4C5 /* NSDate+Testing.h */,
+				CE605E6218F24DDC000FC4C5 /* NSDate+Testing.m */,
 				CE73CD7C18DF48CB0009024E /* Flurry.h */,
+				CE605E6718F45E47000FC4C5 /* CSWIndicatorManager.h */,
+				CE605E6818F45E47000FC4C5 /* CSWIndicatorManager.m */,
 				CE73CD7D18DF48CB0009024E /* libFlurry_4.3.2.a */,
 				CEE07FB217BA51C700373DF9 /* images */,
 				E75EEEB9173634D60093ADEB /* WebAbstract */,
@@ -327,8 +338,6 @@
 		E7F3A3F7165CFC0F00E1E2C5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E7FE08AF16B6AB530038B762 /* KeychainItemWrapper.h */,
-				E7FE08B016B6AB540038B762 /* KeychainItemWrapper.m */,
 				E7F3A3F8165CFC0F00E1E2C5 /* Gymclass-Info.plist */,
 				E7F3A3F9165CFC0F00E1E2C5 /* InfoPlist.strings */,
 				E7F3A3FC165CFC0F00E1E2C5 /* main.m */,
@@ -463,9 +472,9 @@
 				E7A4F8F91662FFFC00F4C794 /* CSWWorkout.m in Sources */,
 				E73501701691495A0048A05B /* CSWDay.m in Sources */,
 				E73501741691498B0048A05B /* CSWTime.m in Sources */,
+				CE605E6318F24DDC000FC4C5 /* NSDate+Testing.m in Sources */,
 				E792F9A01693C1AF00DEFFAB /* CSWLocation.m in Sources */,
 				E70EAB5D16A4310C00B15E51 /* CSWInstructor.m in Sources */,
-				E7FE08B116B6AB540038B762 /* KeychainItemWrapper.m in Sources */,
 				E7FE08B616BA994B0038B762 /* CSWWod.m in Sources */,
 				E72AE65D17624450005233D4 /* TFHpple.m in Sources */,
 				E72AE65E17624450005233D4 /* TFHppleElement.m in Sources */,
@@ -477,6 +486,7 @@
 				E7EE7723176CBE7E00F2CB46 /* WebAbstractConfig.m in Sources */,
 				E707DB8F17BAB17C00BC611C /* CSWPrimaryViewController.m in Sources */,
 				E78037FB17CD2D8B00A56DF3 /* CSWScheduleViewCell.m in Sources */,
+				CE605E6918F45E47000FC4C5 /* CSWIndicatorManager.m in Sources */,
 				CE20E2BE17DD6B7D00A8F55D /* CSWWodViewController.m in Sources */,
 				E7A7C03917E0BA350033734F /* CSWFilterViewController.m in Sources */,
 				CE20E2C217E46D0400A8F55D /* CSWDayMarker.m in Sources */,
@@ -575,7 +585,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "DD94D39B-D9FB-436B-B290-824BFFED485A";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -600,7 +610,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B4EF1907-EC0E-4BDD-BE1E-AD836D0B9DB8";
+				PROVISIONING_PROFILE = "C1F23A95-6E30-4FC0-B62C-21F1E3925A19";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

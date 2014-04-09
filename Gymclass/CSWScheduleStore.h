@@ -49,6 +49,7 @@ typedef NS_ENUM( NSUInteger, WorkoutQueryType ) {
 @property (nonatomic, readonly) bool isLoggedIn;
 @property (nonatomic, readonly) NSManagedObjectContext *backgroundThreadMoc;
 @property (nonatomic, readonly) NSTimeZone *timeZone;
+@property (nonatomic) u_int32_t currentSessionId;
 
 // WARNING: fetchConfigForAllGyms and setupForGymId:error: make sychronous web requests, call in background thread only
 -(bool)fetchConfigForAllGymsWithCompletion:(void(^)(bool, NSDictionary *, NSError *))aCompletionBlock;
@@ -66,6 +67,7 @@ typedef NS_ENUM( NSUInteger, WorkoutQueryType ) {
 
 -(void)queryWorkout:(CSWWorkout *)aWorkout
       withQueryType:(WorkoutQueryType)aQueryType
+      withMetaData:(NSDictionary *)aMetaData
      withCompletion:(void(^)(NSError *))aBlock;
 
 
@@ -78,6 +80,7 @@ typedef NS_ENUM( NSUInteger, WorkoutQueryType ) {
 +(void)resetCookies;
 -(void)loginUserForcefully:(BOOL)aForcefully withCompletion:(void(^)(NSError *))aBlock;
 -(void)logout;
+-(void)resetState;
 
 
 @end

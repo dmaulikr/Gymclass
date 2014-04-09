@@ -12,15 +12,14 @@
 #import "KeychainItemWrapper.h"
 #import "CSWPrimaryViewController.h"
 #import "CSWLoginViewController.h"
+#import "CSWIndicatorManager.h"
 #import "Flurry.h"
 #import "iRate.h"
 
 @interface CSWAppDelegate()
 {
-    CSWPrimaryViewController *_primaryViewController;
     CSWLoginViewController *_loginViewController;
     CSWMembership *_membership;
-    CSWScheduleStore *_store;
     UIActivityIndicatorView *_indicator;
     UINavigationController *_nav;
 }
@@ -51,7 +50,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     _membership = [CSWMembership sharedMembership];
-    _store = [CSWScheduleStore sharedStore];
+    CSWScheduleStore *store = [CSWScheduleStore sharedStore];
+    store.currentSessionId = arc4random();
 
     bool gymIdIsSet = !!_membership.gymId;
 
@@ -85,7 +85,7 @@
         
         @try {
             
-            [_store setupForGymId:_membership.gymId error:&error];
+            [store setupForGymId:_membership.gymId error:&error];
             [self didSetupGymId];
             
         } @catch ( NSException *e ) {
@@ -114,14 +114,16 @@
 {
     if ( _membership.loginDesired && _membership.username && _membership.password ) {
         
+        CSWScheduleStore *store = [CSWScheduleStore sharedStore];
+        
         [Flurry logEvent:kUserLoggingIn
           withParameters:@{ @"reason" : @"appLaunch"
-                           ,@"gymId"  : _store.gymId
+                           ,@"gymId"  : store.gymId
                           }
                    timed:YES
          ];
         
-        [_store loginUserForcefully:NO withCompletion:^(NSError *error) {
+        [store loginUserForcefully:NO withCompletion:^(NSError *error) {
                 
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 
@@ -145,10 +147,11 @@
                     
                 } else {
                     
-                    if ( _store.isLoggedIn ) {
+                    if ( store.isLoggedIn ) {
                         
-                        _primaryViewController = [CSWPrimaryViewController new];
-                        [_nav pushViewController:_primaryViewController animated:NO];
+                        CSWPrimaryViewController *pvc = [CSWPrimaryViewController new];
+                        _loginViewController.scheduleViewController = pvc;
+                        [_nav pushViewController:pvc animated:NO];
                         
                     } else {
                         
@@ -171,9 +174,10 @@
          
         [_indicator stopAnimating];
         [_nav popViewControllerAnimated:NO]; // pop blackVC
-            
-        _primaryViewController = [CSWPrimaryViewController new];
-        [_nav pushViewController:_primaryViewController animated:FALSE];
+        
+        CSWPrimaryViewController *pvc = [CSWPrimaryViewController new];
+        _loginViewController.scheduleViewController = pvc;
+        [_nav pushViewController:pvc animated:FALSE];
     }
 }
 
@@ -198,17 +202,25 @@
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
+    CSWPrimaryViewController *pvc = _loginViewController.scheduleViewController;
+    CSWScheduleStore *store = [CSWScheduleStore sharedStore];
+    
     static bool appIsLaunching = true;
     if ( appIsLaunching ) {
         
         appIsLaunching = false;
         
-    } else if ( _primaryViewController.isViewLoaded && _primaryViewController.view.window ) {
+    } else if ( pvc.isViewLoaded && pvc.view.window ) {
         
+        u_int32_t sessionForRequest = store.currentSessionId;
         void (^completionBlock)(NSError *) = ^(NSError *error) {
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 
+                [[CSWIndicatorManager sharedManager] decrement];
+                
                 if ( error ) {
+                    
+                    if ( store.currentSessionId != sessionForRequest ) return;
                     
                     [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @"N" }];
                     
@@ -224,18 +236,15 @@
                 } else {
                     
                     [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @"Y" }];
-                    
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        [_primaryViewController setSelectedTimeToNow];
-                        [_primaryViewController focusOnSelectedDateAndTime:true];
-                    }];
                 }
             }];
         };
+
+        [[CSWIndicatorManager sharedManager] increment];
         
         if ( [CSWMembership sharedMembership].loginDesired ) {
             
-            CSWScheduleStore *store = [CSWScheduleStore sharedStore];
+            store.currentSessionId = arc4random();
             
             [Flurry logEvent:kUserLoggingIn
               withParameters:@{ @"reason" : @"appBecameActive"
@@ -243,9 +252,14 @@
                               }
                        timed:YES
              ];
+
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [pvc setSelectedTimeToNow];
+                [pvc focusOnSelectedDateAndTime:YES];
+            }];
             
             [store loginUserForcefully:YES withCompletion:completionBlock];
-            
+
         } else {
             
             completionBlock(nil);
@@ -356,6 +370,7 @@
     
     return _persistentStoreCoordinator;
 }
+
 
 #pragma mark - Application's Documents directory
 // Returns the URL to the application's Documents directory.

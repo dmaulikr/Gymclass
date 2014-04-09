@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CSWPrimaryViewController.h"
 
 @interface CSWAppDelegate : UIResponder <UIApplicationDelegate>
 

@@ -44,23 +44,23 @@
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.69999998807907104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="41">
-                    <rect key="frame" x="96" y="481" width="125" height="31"/>
+                    <rect key="frame" x="96" y="466" width="125" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="31" id="72"/>
                         <constraint firstAttribute="width" constant="125" id="952"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-MediumItalic" family="Helvetica Neue" pointSize="18"/>
-                    <state key="normal" title="Skip Login">
+                    <state key="normal" title=" Skip Login">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="skipPressed:" destination="-1" eventType="touchUpInside" id="wxT-Yt-sOF"/>
                     </connections>
                 </button>
                 <button opaque="NO" alpha="0.69999998807907104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRh-Un-EwM">
-                    <rect key="frame" x="98" y="481" width="125" height="31"/>
+                    <rect key="frame" x="98" y="466" width="125" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="125" id="RtZ-GS-zTL"/>
@@ -69,7 +69,7 @@
                     <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
                     <state key="normal" title="Logout">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="logoutPressed:" destination="-1" eventType="touchUpInside" id="POY-s9-ZWa"/>
@@ -143,7 +143,7 @@
                 <constraint firstAttribute="centerX" secondItem="com-pI-Cjy" secondAttribute="centerX" id="LXb-Kz-wJI"/>
                 <constraint firstAttribute="trailing" secondItem="ObQ-jn-ycG" secondAttribute="trailing" id="SrB-II-geH"/>
                 <constraint firstItem="15" firstAttribute="leading" secondItem="31" secondAttribute="leading" id="TfU-yc-cd9"/>
-                <constraint firstAttribute="bottom" secondItem="41" secondAttribute="bottom" constant="56" id="WlN-TM-sKq"/>
+                <constraint firstAttribute="bottom" secondItem="41" secondAttribute="bottom" constant="71" id="WlN-TM-sKq"/>
                 <constraint firstItem="31" firstAttribute="leading" secondItem="41" secondAttribute="leading" constant="-61" id="YC4-xI-qtT"/>
                 <constraint firstItem="15" firstAttribute="centerX" secondItem="ObQ-jn-ycG" secondAttribute="centerX" id="aFr-vG-TjS"/>
                 <constraint firstItem="31" firstAttribute="centerX" secondItem="24" secondAttribute="centerX" id="al6-JG-u1E"/>
@@ -151,9 +151,9 @@
                 <constraint firstAttribute="bottom" secondItem="ObQ-jn-ycG" secondAttribute="bottom" id="bdh-3D-w7N"/>
                 <constraint firstAttribute="trailing" secondItem="com-pI-Cjy" secondAttribute="trailing" constant="50" id="jaD-Xe-VUC"/>
                 <constraint firstAttribute="centerX" secondItem="31" secondAttribute="centerX" id="mJ2-p3-UAS"/>
-                <constraint firstItem="tRh-Un-EwM" firstAttribute="top" secondItem="com-pI-Cjy" secondAttribute="bottom" constant="60" id="pnz-WV-eNS"/>
+                <constraint firstItem="tRh-Un-EwM" firstAttribute="top" secondItem="com-pI-Cjy" secondAttribute="bottom" constant="45" id="pnz-WV-eNS"/>
                 <constraint firstItem="31" firstAttribute="leading" secondItem="24" secondAttribute="leading" id="pqA-wO-j0C"/>
-                <constraint firstAttribute="bottom" secondItem="tRh-Un-EwM" secondAttribute="bottom" constant="56" id="ukb-es-Qah"/>
+                <constraint firstAttribute="bottom" secondItem="tRh-Un-EwM" secondAttribute="bottom" constant="71" id="ukb-es-Qah"/>
                 <constraint firstItem="ObQ-jn-ycG" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="wVC-o1-o2j"/>
                 <constraint firstItem="31" firstAttribute="trailing" secondItem="24" secondAttribute="trailing" id="xOP-WC-zUe"/>
                 <constraint firstAttribute="centerX" secondItem="199" secondAttribute="centerX" id="xOo-TC-Z93"/>

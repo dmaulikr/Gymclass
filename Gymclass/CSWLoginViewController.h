@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "CSWGymSelector.h"
 
-@interface CSWLoginViewController : UIViewController <CSWGymSelectorDelegate, UITextFieldDelegate, UIActionSheetDelegate>
+@interface CSWLoginViewController : UIViewController <CSWGymSelectorDelegate, UITextFieldDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *gymLongNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *selectGymLabel;
@@ -21,13 +22,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *networkActivity;
 
+@property (weak, nonatomic) CSWPrimaryViewController *scheduleViewController;
+
 
 -(id)initForcingGymSelection:(bool)aForceSelection;
 -(IBAction)skipPressed:(id)sender;
 -(IBAction)loginPressed:(id)sender;
 -(IBAction)logoutPressed:(id)sender;
--(void)refreshPressed:(id)sender;
--(void)selectGymPressed:(id)sender;
 
 @end
 
