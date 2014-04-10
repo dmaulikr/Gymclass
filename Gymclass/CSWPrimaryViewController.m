@@ -255,6 +255,10 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     
     [self updateDateLabel];
 
+    CSWIndicatorManager *indicator = [CSWIndicatorManager sharedManager];
+    [indicator reset]; // ensure there aren't old requests outstanding or anything
+    indicator.delegate = self;
+
     [self fetchResultsForScheduleView];
     [self updateWodButtonState];
     [self updateFilteringText];
@@ -266,10 +270,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     
     [self.navigationController setToolbarHidden:FALSE animated:TRUE];
     [self scrollToSelectedTime:true];
-    
-    CSWIndicatorManager *indicator = [CSWIndicatorManager sharedManager];
-    [indicator reset]; // ensure there aren't old requests outstanding or anything
-    indicator.delegate = self;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -577,13 +577,19 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     
     // calculate times
     CFTimeInterval now = CFAbsoluteTimeGetCurrent();
+
+    static NSTimeZone *activeTimeZone = nil;
     
-    if ( !lastTimeCheck || now - lastTimeCheck > 60 ) {
+    if ( ![activeTimeZone isEqualToTimeZone:_gymTimeZone]
+         || ( lastTimeCheck == 0 || now - lastTimeCheck > 60 )
+       ) {
         
         lastTimeCheck = now;
         
         static NSDateFormatter *dateDf = nil, *timeDf = nil;
-        if ( !dateDf ) {
+        if ( ![activeTimeZone isEqualToTimeZone:_gymTimeZone] ) {
+
+            activeTimeZone = _gymTimeZone;
             
             dateDf = [[NSDateFormatter alloc] init];
             dateDf.timeZone = _gymTimeZone;
@@ -595,7 +601,7 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
             timeDf.locale = gLocale;
             timeDf.dateFormat = @"HHmm";
         }
-        
+
         NSDate *nowDate = [NSDate date];
         
         NSNumber *cannotUndoMins = [self.store fetchGymConfigValue:@"cannotUndoWithinMins"];
@@ -639,21 +645,12 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
     [self.fetchedResultsController performFetch:NULL];
     [self.scheduleTableView reloadData];
 
-    CSWIndicatorManager *activityManager = [CSWIndicatorManager sharedManager];
-    [activityManager increment];
-    [activityManager increment];
-    
-    if ( [self.store fetchGymConfigValue:@"canFetchWodDesc"] ) [activityManager increment];
-    if ( self.store.isLoggedIn )                               [activityManager increment];
-
     __block int alertCount = 0;
     
     bool refreshing = [self.store loadScheduleForDay:self.selectedDay
                               weekScheduleCompletion:^(bool didRefresh, NSError *error) {
                                   
                                   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                                      
-                                      [activityManager decrement];
                                       
                                       if ( error ) {
                                           
@@ -688,8 +685,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                   
                                   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                   
-                                      [activityManager decrement];
-                                      
                                       if ( error ) {
                                           
                                           NSString *msg = [NSString stringWithFormat:@"Unable to signup statuses for %@.", [self.store fetchGymConfigValue:@"displayShortName"]];
@@ -718,8 +713,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                                   
                                   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                                       
-                                      [activityManager decrement];
-                                      
                                       if ( error ) {
                                           
                                           NSString *msg = [NSString stringWithFormat:@"Unable to fetch remaining class openings for %@.", [self.store       fetchGymConfigValue:@"displayShortName"]];
@@ -745,8 +738,6 @@ typedef NS_ENUM( NSUInteger, WorkoutTimeStatus ) {
                               }
                        
                               wodDescCompletion:^(NSError *error) {
-                                  
-                                  [activityManager decrement];
                                   
                                   if ( !error ) {
                                       [[NSOperationQueue mainQueue] addOperationWithBlock:^{

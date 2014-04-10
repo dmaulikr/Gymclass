@@ -52,8 +52,6 @@ static CSWIndicatorManager *sharedInstance;
 {
     @synchronized( self ) {
         
-        NSLog(@"UP\t%d", _count + 1 );
-        
         if ( _count++ ) {
             
             return NO;
@@ -69,8 +67,6 @@ static CSWIndicatorManager *sharedInstance;
 -(BOOL)decrement
 {
     @synchronized( self ) {
-        
-        NSLog(@"DOWN\t%d", _count - 1 );
         
         if ( _count <= 0 ) {
             

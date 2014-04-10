@@ -205,12 +205,19 @@
     CSWPrimaryViewController *pvc = _loginViewController.scheduleViewController;
     CSWScheduleStore *store = [CSWScheduleStore sharedStore];
     
+    store.currentSessionId = arc4random();
+    
     static bool appIsLaunching = true;
     if ( appIsLaunching ) {
         
         appIsLaunching = false;
         
     } else if ( pvc.isViewLoaded && pvc.view.window ) {
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [pvc setSelectedTimeToNow];
+            [pvc focusOnSelectedDateAndTime:YES];
+        }];
         
         u_int32_t sessionForRequest = store.currentSessionId;
         void (^completionBlock)(NSError *) = ^(NSError *error) {
@@ -232,19 +239,17 @@
                                       cancelButtonTitle:@"ok"
                                       otherButtonTitles:nil
                       ] show];
-
+                    
                 } else {
                     
                     [Flurry endTimedEvent:kUserLoggingIn withParameters:@{ @"success" : @"Y" }];
                 }
             }];
         };
-
+        
         [[CSWIndicatorManager sharedManager] increment];
         
         if ( [CSWMembership sharedMembership].loginDesired ) {
-            
-            store.currentSessionId = arc4random();
             
             [Flurry logEvent:kUserLoggingIn
               withParameters:@{ @"reason" : @"appBecameActive"
@@ -253,11 +258,6 @@
                        timed:YES
              ];
 
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [pvc setSelectedTimeToNow];
-                [pvc focusOnSelectedDateAndTime:YES];
-            }];
-            
             [store loginUserForcefully:YES withCompletion:completionBlock];
 
         } else {

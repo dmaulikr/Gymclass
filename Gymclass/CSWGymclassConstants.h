@@ -21,7 +21,7 @@
 #endif
 
 #define APP_VERSION_FOR_CONFIG @"1.1"
-#define APP_VERSION_FOR_ANALYTICS @"1.1.5"
+#define APP_VERSION_FOR_ANALYTICS @"1.1.9"
 
 #define LOG_DEBUG 0
 

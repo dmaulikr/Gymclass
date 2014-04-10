@@ -19,6 +19,7 @@
 #import "CSWWod.h"
 #import "CSWInstructor.h"
 #import "CSWLocation.h"
+#import "CSWIndicatorManager.h"
 
 #import "Flurry.h"
 
@@ -184,6 +185,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
                 
+                [[CSWIndicatorManager sharedManager] decrement];
+                
                 NSError *error;
                 NSDictionary *appConfig = [NSPropertyListSerialization propertyListWithData:operation.responseData
                                                                                     options:NSPropertyListImmutable
@@ -223,14 +226,23 @@ static NSMutableDictionary *gCachedLocationsByName;
 
             u_int32_t sessionForRequest = _currentSessionId;
             void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+                [[CSWIndicatorManager sharedManager] decrement];
                 
-                if ( sessionForRequest != _currentSessionId ) return;
+                if ( sessionForRequest == _currentSessionId ) {
+                    _currentSessionId = arc4random();
+                } else {
+                    return;
+                }
+                
                 
                 if ( aCompletionBlock ) {
                     aCompletionBlock( false, nil, error );
                 }
             };
         
+            [[CSWIndicatorManager sharedManager] increment];
+            
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
             [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
             [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
@@ -302,8 +314,13 @@ static NSMutableDictionary *gCachedLocationsByName;
        
         if ( [self isCacheRefreshNeededForDataType:@"servicerWebConfig" forObject:nil] ) {
 
+            [[CSWIndicatorManager sharedManager] increment];
+            
             NSError *error;
             [commonServicerWebConfig refreshFromWeb:&error];
+            
+            [[CSWIndicatorManager sharedManager] decrement];
+            
             if ( error ) {
                 *aError = error;
                 return YES;
@@ -337,8 +354,13 @@ static NSMutableDictionary *gCachedLocationsByName;
         
         if ( [self isCacheRefreshNeededForDataType:@"signupWebConfig" forObject:nil] ) {
             
+            [[CSWIndicatorManager sharedManager] increment];
+            
             NSError *error;
             [signupWebConfig refreshFromWeb:&error];
+            
+            [[CSWIndicatorManager sharedManager] decrement];
+            
             if ( error ) {
                 *aError = error;
                 return YES;
@@ -485,7 +507,9 @@ static NSMutableDictionary *gCachedLocationsByName;
                                         ];
             
             void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
-            
+
+                [[CSWIndicatorManager sharedManager] decrement];
+                
                 NSDictionary *responseStruct = [self.servicerWebAbstract parseData:operation.responseData
                                                                       forOperation:@"fetchWorkouts"
                                                                       forOutputTag:@"fetchWorkouts"
@@ -522,33 +546,48 @@ static NSMutableDictionary *gCachedLocationsByName;
                 
                 if ( ++querySucceededCount == queryCount ) {
                     
-                   //@synchronized( self ) {
+                    if ( !didRequestReservationStatuses && self.isLoggedIn ) {
                         
-                        if ( !didRequestReservationStatuses && self.isLoggedIn ) {
+                        didRequestReservationStatuses = true;
+                        
+                        if ( [self isCacheRefreshNeededForDataType:@"workoutSignupStatuses" forObject:nil] ) {
                             
-                            didRequestReservationStatuses = true;
+                            [[CSWIndicatorManager sharedManager] increment];
                             
-                            if ( [self isCacheRefreshNeededForDataType:@"workoutSignupStatuses" forObject:nil] ) {
+                            u_int32_t sessionForRequest = _currentSessionId;
+                            [self refreshReservationStatusesWithCompletion:^(NSError *error) {
                                 
-                                [self refreshReservationStatusesWithCompletion:^(NSError *error) {
+                                [[CSWIndicatorManager sharedManager] decrement];
+                                
+                                if ( error ) {
+                                    
+                                    if ( sessionForRequest == _currentSessionId ) {
+                                        _currentSessionId = arc4random();
+                                    } else {
+                                        return;
+                                    }
                                     
                                     if ( reservationsBlock ) {
-                                        reservationsBlock( error ); // error may be nil
+                                        reservationsBlock( error );
                                     }
                                     
-                                    if ( !error ) {
-                                        [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
+                                } else {
+                                    
+                                    if ( reservationsBlock ) {
+                                        reservationsBlock( nil );
                                     }
-                                }];
-                                
-                            } else {
-                                
-                                if ( reservationsBlock ) {
-                                    reservationsBlock( nil );
+                                    
+                                    [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
                                 }
+                            }];
+                            
+                        } else {
+                            
+                            if ( reservationsBlock ) {
+                                reservationsBlock( nil );
                             }
                         }
-                  //}
+                    }
                     
                     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                         
@@ -565,7 +604,13 @@ static NSMutableDictionary *gCachedLocationsByName;
             u_int32_t sessionForRequest = _currentSessionId;
             void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^void(AFHTTPRequestOperation *operation, NSError *error){
                 
-                if ( sessionForRequest != _currentSessionId ) return;
+                [[CSWIndicatorManager sharedManager] decrement];
+                
+                if ( sessionForRequest == _currentSessionId ) {
+                    _currentSessionId = arc4random();
+                } else {
+                    return;
+                }
                 
                 //avoiding calling didFail repeatedly
                 if ( !didFail ) {
@@ -576,6 +621,8 @@ static NSMutableDictionary *gCachedLocationsByName;
                 }
             };
 
+            [[CSWIndicatorManager sharedManager] increment];
+            
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
             operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             //operation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -589,15 +636,27 @@ static NSMutableDictionary *gCachedLocationsByName;
         if ( !didRequestReservationStatuses && self.isLoggedIn ) {
             
             if ( [self isCacheRefreshNeededForDataType:@"workoutSignupStatuses" forObject:nil] ) {
-        
+
+                [[CSWIndicatorManager sharedManager] increment];
+                
                 u_int32_t sessionForRequest = _currentSessionId;
                 [self refreshReservationStatusesWithCompletion:^(NSError *error) {
 
+                    [[CSWIndicatorManager sharedManager] decrement];
+                    
                     if ( error ) {
                         
-                        if ( sessionForRequest != _currentSessionId ) return;
+                        if ( sessionForRequest == _currentSessionId ) {
+                            _currentSessionId = arc4random();
+                        } else {
+                            return;
+                        }
+                        
+                        // this is strange thing I still see that "submarines" threw app closure/re-opens.
+                        if ( error.code == 202 ) return;
                         
                     } else {
+                        
                         [self recordCacheDidRefreshForDataType:@"workoutSignupStatuses" forObject:nil];
                     }
                     
@@ -639,6 +698,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject){
 
+                [[CSWIndicatorManager sharedManager] decrement];
+                
                 NSDictionary *responseStruct = [self.servicerWebAbstract parseData:operation.responseData
                                                                       forOperation:@"fetchWorkouts"
                                                                       forOutputTag:@"fetchSpotsRemaining"
@@ -673,13 +734,21 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *operation, NSError *error) {
                 
-                if ( sessionForRequest != _currentSessionId ) return;
+                [[CSWIndicatorManager sharedManager] decrement];
                 
+                if ( sessionForRequest == _currentSessionId ) {
+                    _currentSessionId = arc4random();
+                } else {
+                    return;
+                }
+
                 if ( daySpotsLeftBlock ) {
                     daySpotsLeftBlock( error );
                 }
             };
     
+            [[CSWIndicatorManager sharedManager] increment];
+            
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequestForSpots];
             [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
             operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -712,6 +781,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject){
 
+                [[CSWIndicatorManager sharedManager] decrement];
+                
                 NSDictionary *wodDict = [self.servicerWebAbstract parseData:operation.responseData
                                                                forOperation:@"fetchWorkouts"
                                                                forOutputTag:@"fetchWorkoutDesc"
@@ -735,9 +806,15 @@ static NSMutableDictionary *gCachedLocationsByName;
 
             u_int32_t sessionForRequest = _currentSessionId;
             void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *operation, NSError *error) {
-                
-                if ( sessionForRequest != _currentSessionId ) return;
 
+                [[CSWIndicatorManager sharedManager] decrement];
+                
+                if ( sessionForRequest == _currentSessionId ) {
+                    _currentSessionId = arc4random();
+                } else {
+                    return;
+                }
+                
                 // we record cache refresh even on failure because failure is normal here
                 if ( wodDescBlock ) {
                     wodDescBlock( error );
@@ -750,6 +827,8 @@ static NSMutableDictionary *gCachedLocationsByName;
                 }];
             };
 
+            [[CSWIndicatorManager sharedManager] increment];
+            
             AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequestForWod];
             operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             
@@ -851,8 +930,12 @@ static NSMutableDictionary *gCachedLocationsByName;
                                   ];
         
         void (^getDetailSuccessBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            [[CSWIndicatorManager sharedManager] decrement];
 
-            [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @"Y" } ];
+            if ( !membership.membershipId ) {
+                [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @"Y" } ];
+            }
             
             NSDictionary *workoutDetailDict = [self.signupWebAbstract parseData:operation.responseData
                                                                    forOperation:@"queryWorkout"
@@ -924,6 +1007,7 @@ static NSMutableDictionary *gCachedLocationsByName;
                                                         ];
             executeQueryRequest.timeoutInterval = WEB_TIMEOUT_SECS;
             
+            
             [Flurry logEvent:flurryEvent withParameters:flurryParams timed:YES];
             
             [self executeQuery:executeQueryRequest withCompletion:endBlock];
@@ -932,18 +1016,28 @@ static NSMutableDictionary *gCachedLocationsByName;
         u_int32_t sessionForRequest = _currentSessionId;
         void (^getDetailFailureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
             
-            if ( sessionForRequest != _currentSessionId ) return;
+            [[CSWIndicatorManager sharedManager] decrement];
+            
+            if ( sessionForRequest == _currentSessionId ) {
+                _currentSessionId = arc4random();
+            } else {
+                return;
+            }
             
             [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @"N" } ];
             if ( aBlock ) aBlock(error);
         };
 
+        [[CSWIndicatorManager sharedManager] increment];
+        
         AFHTTPRequestOperation *getDetailOperation = [[AFHTTPRequestOperation alloc] initWithRequest:mRequest];
         getDetailOperation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);   //should be on main
         //getDetailOperation.failureCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         [getDetailOperation setCompletionBlockWithSuccess:getDetailSuccessBlock failure:getDetailFailureBlock];
         
-        [Flurry logEvent:kFetchingMembershipId timed:YES];
+        if ( !membership.membershipId ) {
+            [Flurry logEvent:kFetchingMembershipId timed:YES];
+        }
         
         [getDetailOperation start];
 
@@ -977,6 +1071,8 @@ static NSMutableDictionary *gCachedLocationsByName;
                                 ];
 
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id respsonseObject){
+        
+        [[CSWIndicatorManager sharedManager] decrement];
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [Flurry endTimedEvent:kRefreshedReservationsForDay withParameters:@{ @"success" : @"Y" }];
@@ -1086,7 +1182,13 @@ static NSMutableDictionary *gCachedLocationsByName;
     u_int32_t sessionForRequest = _currentSessionId;
     void (^failureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
 
-        if ( sessionForRequest != _currentSessionId ) return;
+        [[CSWIndicatorManager sharedManager] decrement];
+        
+        if ( sessionForRequest == _currentSessionId ) {
+            _currentSessionId = arc4random();
+        } else {
+            return;
+        }
         
         [Flurry endTimedEvent:kRefreshedReservationsForDay withParameters:@{ @"success" : @"N" }];
         
@@ -1094,6 +1196,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             aBlock( error );
         }
     };
+    
+    [[CSWIndicatorManager sharedManager] increment];
     
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     operation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -1131,13 +1235,20 @@ static NSMutableDictionary *gCachedLocationsByName;
         sessionUrlRequest.timeoutInterval = LOGIN_TIMEOUT_SECS;
         
         u_int32_t sessionForRequest = _currentSessionId;
-        
+
+        [[CSWIndicatorManager sharedManager] increment];
         NSError *error;
         [CSWScheduleStore synchronousWebRequest:sessionUrlRequest error:&error];
         
+        [[CSWIndicatorManager sharedManager] decrement];
+        
         if ( error ) {
             
-            if ( sessionForRequest != _currentSessionId ) return;
+            if ( sessionForRequest == _currentSessionId ) {
+                _currentSessionId = arc4random();
+            } else {
+                return;
+            }
             
             if ( aBlock ) {
                 aBlock( error );
@@ -1151,7 +1262,11 @@ static NSMutableDictionary *gCachedLocationsByName;
 
             if ( error ) {
                 
-                if ( sessionForRequest != _currentSessionId ) return;
+                if ( sessionForRequest == _currentSessionId ) {
+                    _currentSessionId = arc4random();
+                } else {
+                    return;
+                }
                 
                 if ( aBlock ) {
                     aBlock( error );
@@ -1191,12 +1306,20 @@ static NSMutableDictionary *gCachedLocationsByName;
                                                    ];
                 urlRequest.timeoutInterval = LOGIN_TIMEOUT_SECS;
         
+                [[CSWIndicatorManager sharedManager] increment];
+                
                 // lets attempt login again
                 NSData *htmlData = [CSWScheduleStore synchronousWebRequest:urlRequest error:&error];
                 
+                [[CSWIndicatorManager sharedManager] decrement];
+                
                 if ( error ) {
 
-                    if ( sessionForRequest != _currentSessionId ) return;
+                    if ( sessionForRequest == _currentSessionId ) {
+                        _currentSessionId = arc4random();
+                    } else {
+                        return;
+                    }
                     
                     if ( aBlock ) {
                         aBlock(error);
@@ -1244,6 +1367,8 @@ static NSMutableDictionary *gCachedLocationsByName;
     } else {
 
         void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            [[CSWIndicatorManager sharedManager] decrement];
             
             NSDictionary *membershipDict = [self.signupWebAbstract parseData:operation.responseData
                                                                 forOperation:@"loginUser"
@@ -1269,13 +1394,21 @@ static NSMutableDictionary *gCachedLocationsByName;
         
         u_int32_t sessionForRequest = _currentSessionId;
         void (^failureBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+
+            [[CSWIndicatorManager sharedManager] decrement];
             
-            if ( sessionForRequest != _currentSessionId ) return;
+            if ( sessionForRequest == _currentSessionId ) {
+                _currentSessionId = arc4random();
+            } else {
+                return;
+            }
             
             if ( aBlock ) {
                 aBlock(error);
             }
         };
+
+        [[CSWIndicatorManager sharedManager] increment];
         
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:isLoggedInUrlRequest];
         [operation setCompletionBlockWithSuccess:successBlock failure:failureBlock];
@@ -1315,6 +1448,8 @@ static NSMutableDictionary *gCachedLocationsByName;
      withCompletion:(void(^)(NSError *))aBlock
 {
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id respsonseObject){
+
+        [[CSWIndicatorManager sharedManager] decrement];
         
         [self refreshReservationStatusesWithCompletion:^(NSError *error) {
             
@@ -1333,12 +1468,20 @@ static NSMutableDictionary *gCachedLocationsByName;
     u_int32_t sessionForRequest = _currentSessionId;
     void (^failureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
         
-        if ( sessionForRequest != _currentSessionId ) return;
+        [[CSWIndicatorManager sharedManager] decrement];
+        
+        if ( sessionForRequest == _currentSessionId ) {
+            _currentSessionId = arc4random();
+        } else {
+            return;
+        }
         
         if ( aBlock ) {
             aBlock( error );
         }
     };
+
+    [[CSWIndicatorManager sharedManager] increment];
     
     AFHTTPRequestOperation *executeQueryOperation = [[AFHTTPRequestOperation alloc] initWithRequest:aRequest];
     executeQueryOperation.successCallbackQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
