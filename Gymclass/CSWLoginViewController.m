@@ -216,7 +216,6 @@
 
 -(IBAction)skipPressed:(id)sender
 {
-    [Flurry logEvent:kLoginSkipped withParameters:@{ @"gymId" : [CSWScheduleStore sharedStore].gymId }];
     if( !_store.gymId ) {
         
         NSString *msg = @"A gym must be selected in order to browse its schedule.";
@@ -230,6 +229,10 @@
           ] show];
         
         return;
+        
+    } else {
+        
+        [Flurry logEvent:kLoginSkipped withParameters:@{ @"gymId" : [CSWScheduleStore sharedStore].gymId }];
     }
     
     [_store logout];

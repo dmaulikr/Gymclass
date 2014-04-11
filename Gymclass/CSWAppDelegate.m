@@ -201,18 +201,19 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
+
     CSWPrimaryViewController *pvc = _loginViewController.scheduleViewController;
     CSWScheduleStore *store = [CSWScheduleStore sharedStore];
-    
-    store.currentSessionId = arc4random();
-    
+
     static bool appIsLaunching = true;
     if ( appIsLaunching ) {
         
         appIsLaunching = false;
         
     } else if ( pvc.isViewLoaded && pvc.view.window ) {
+        
+        // only reset sessionId if it wasn't reset in didFinishLaunchingWithOptions
+        store.currentSessionId = arc4random();
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [pvc setSelectedTimeToNow];

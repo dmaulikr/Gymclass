@@ -497,14 +497,15 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             CSWDay *activeDay = [sundayDay addDays:i];
             
-            NSURLRequest *urlRequest = [self.servicerWebAbstract buildUrlRequestForOperation:@"fetchWorkouts"
-                                                                                forSourceTag:@"fetchWorkouts"
-                                                                               withVariables:@{ @"startDate" : activeDay.asNumber
-                                                                                               ,@"timeZone"  : self.timeZone.name
-                                                                                               ,@"gymId"     : membership.gymId
-                                                                                               ,@"period"    : ( queryByWeek ) ? @"week" : @"day"
-                                                                                              }
-                                        ];
+            NSMutableURLRequest *urlRequest = [self.servicerWebAbstract buildUrlRequestForOperation:@"fetchWorkouts"
+                                                                                       forSourceTag:@"fetchWorkouts"
+                                                                                      withVariables:@{ @"startDate" : activeDay.asNumber
+                                                                                                      ,@"timeZone"  : self.timeZone.name
+                                                                                                      ,@"gymId"     : membership.gymId
+                                                                                                      ,@"period"    : ( queryByWeek ) ? @"week" : @"day"
+                                                                                                     }
+                                               ];
+            urlRequest.timeoutInterval = WEB_TIMEOUT_SECS;
             
             void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -653,7 +654,7 @@ static NSMutableDictionary *gCachedLocationsByName;
                         }
                         
                         // this is strange thing I still see that "submarines" threw app closure/re-opens.
-                        if ( error.code == 202 ) return;
+                        //if ( error.code == 202 ) return;
                         
                     } else {
                         
@@ -689,12 +690,13 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             refreshing |= 1;
 
-            NSURLRequest *urlRequestForSpots = [self.servicerWebAbstract buildUrlRequestForOperation:@"fetchWorkouts"
-                                                                                        forSourceTag:@"fetchSpotsRemaining"
-                                                                                       withVariables:@{ @"date"  : aDay.asNumber
-                                                                                                       ,@"gymId" : membership.gymId
-                                                                                                      }
-                                                ];
+            NSMutableURLRequest *urlRequestForSpots = [self.servicerWebAbstract buildUrlRequestForOperation:@"fetchWorkouts"
+                                                                                               forSourceTag:@"fetchSpotsRemaining"
+                                                                                              withVariables:@{ @"date"  : aDay.asNumber
+                                                                                                              ,@"gymId" : membership.gymId
+                                                                                                             }
+                                                       ];
+            urlRequestForSpots.timeoutInterval = WEB_TIMEOUT_SECS;
             
             void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject){
 
@@ -772,12 +774,13 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             refreshing |= 1;
             
-            NSURLRequest *urlRequestForWod = [self.servicerWebAbstract buildUrlRequestForOperation:@"fetchWorkouts"
-                                                                                      forSourceTag:@"fetchWorkoutDesc"
-                                                                                     withVariables:@{ @"date"  : aDay.asNumber
-                                                                                                     ,@"gymId" : membership.gymId
-                                                                                                    }
-                                              ];
+            NSMutableURLRequest *urlRequestForWod = [self.servicerWebAbstract buildUrlRequestForOperation:@"fetchWorkouts"
+                                                                                             forSourceTag:@"fetchWorkoutDesc"
+                                                                                            withVariables:@{ @"date"  : aDay.asNumber
+                                                                                                            ,@"gymId" : membership.gymId
+                                                                                                           }
+                                                     ];
+            urlRequestForWod.timeoutInterval = WEB_TIMEOUT_SECS;
             
             void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id responseObject){
 
@@ -924,10 +927,11 @@ static NSMutableDictionary *gCachedLocationsByName;
        ) {
         
         // Annoyingly, membership is only available on a workout detail page
-        NSURLRequest *mRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"queryWorkout"
-                                                                        forSourceTag:@"getDetail"
-                                                                       withVariables:@{ @"workoutId" : aWorkout.workoutId }
-                                  ];
+        NSMutableURLRequest *mRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"queryWorkout"
+                                                                               forSourceTag:@"getDetail"
+                                                                              withVariables:@{ @"workoutId" : aWorkout.workoutId }
+                                         ];
+        mRequest.timeoutInterval = WEB_TIMEOUT_SECS;
         
         void (^getDetailSuccessBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, NSError *error) {
             
@@ -1007,11 +1011,13 @@ static NSMutableDictionary *gCachedLocationsByName;
                                                         ];
             executeQueryRequest.timeoutInterval = WEB_TIMEOUT_SECS;
             
-            
             [Flurry logEvent:flurryEvent withParameters:flurryParams timed:YES];
             
             [self executeQuery:executeQueryRequest withCompletion:endBlock];
         };
+        
+        // We intentionally *DO NOT* want to check for session id here.
+        // Since this is an actual singup ... multiple error messages is ok
         
         u_int32_t sessionForRequest = _currentSessionId;
         void (^getDetailFailureBlock)(AFHTTPRequestOperation*, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *error){
@@ -1020,8 +1026,8 @@ static NSMutableDictionary *gCachedLocationsByName;
             
             if ( sessionForRequest == _currentSessionId ) {
                 _currentSessionId = arc4random();
-            } else {
-                return;
+            // } else {
+            //     return;
             }
             
             [Flurry endTimedEvent:kFetchingMembershipId withParameters:@{ @"success" : @"N" } ];
@@ -1065,10 +1071,11 @@ static NSMutableDictionary *gCachedLocationsByName;
     
     NSDictionary *urlVariables = @{ @"personId" : membership.personId ? membership.personId : @"" };
     
-    NSURLRequest *urlRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"refreshReservations"
-                                                                      forSourceTag:@"refreshReservations"
-                                                                     withVariables:urlVariables
-                                ];
+    NSMutableURLRequest *urlRequest = [self.signupWebAbstract buildUrlRequestForOperation:@"refreshReservations"
+                                                                             forSourceTag:@"refreshReservations"
+                                                                            withVariables:urlVariables
+                                       ];
+    urlRequest.timeoutInterval = WEB_TIMEOUT_SECS;
 
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id respsonseObject){
         
@@ -1472,8 +1479,8 @@ static NSMutableDictionary *gCachedLocationsByName;
         
         if ( sessionForRequest == _currentSessionId ) {
             _currentSessionId = arc4random();
-        } else {
-            return;
+        //} else {
+        //    return;
         }
         
         if ( aBlock ) {
