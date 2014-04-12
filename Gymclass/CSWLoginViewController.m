@@ -35,6 +35,7 @@
     CSWScheduleStore *_store;
     bool _gymSelectorIsDismissing;
     __weak UIAlertView *_addGymAlert, *_contactAlert;
+    bool _enabledState;
 }
 
 @property (strong, nonatomic) CSWGymSelector *gymSelector;
@@ -398,27 +399,56 @@
 
 -(void)enableInteraction
 {
-    _loginButton.enabled = YES;
-    _selectGymButton.enabled = YES;
-    _refreshButton.enabled = YES;
-    _skipButton.enabled = YES;
-    _logoutButton.enabled = YES;
-    _contactButton.enabled = YES;
-    _emailTextField.enabled = YES;
-    _passwordTextField.enabled = YES;
+    @synchronized(self) {
+
+        if ( _enabledState == 0 ) {
+            
+            _loginButton.enabled = YES;
+            _selectGymButton.enabled = YES;
+            _refreshButton.enabled = YES;
+            _skipButton.enabled = YES;
+            _logoutButton.enabled = YES;
+            _contactButton.enabled = YES;
+            _emailTextField.enabled = YES;
+            _passwordTextField.enabled = YES;
+        }
+
+        _enabledState++;
+    }
 }
 
 -(void)disableInteraction
 {
-    _loginButton.enabled = NO;
-    _selectGymButton.enabled = NO;
-    _refreshButton.enabled = NO;
-    _skipButton.enabled = NO;
-    _logoutButton.enabled = NO;
-    _contactButton.enabled = NO;
-    _emailTextField.enabled = NO;
-    _passwordTextField.enabled = NO;
+    @synchronized(self) {
+        
+        if ( _enabledState > 1 ) {
+            
+            _enabledState--;
+            
+        } else if ( _enabledState == 1 ) {
+            
+            _enabledState = 0;
+
+            _loginButton.enabled = NO;
+            _selectGymButton.enabled = NO;
+            _refreshButton.enabled = NO;
+            _skipButton.enabled = NO;
+            _logoutButton.enabled = NO;
+            _contactButton.enabled = NO;
+            _emailTextField.enabled = NO;
+            _passwordTextField.enabled = NO;
+        }
+    }
 }
+
+-(void)resetInteractionEnabledState
+{
+    @synchronized(self) {
+        _enabledState = 0;
+        [self enableInteraction];
+    }
+}
+
 
 //
 #pragma mark CSWGymSelector delegate methods

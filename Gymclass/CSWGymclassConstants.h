@@ -25,6 +25,12 @@
 
 #define LOG_DEBUG 0
 
+//
+// production Flurry API key
+// WARNING: ONLY ENABLE FOR *TRUE* production!!
+//#define FLURRY_API_KEY @"4JT87NRRH9JWJNNKPJPJ"
+
+//dev API key
 #define FLURRY_API_KEY @"CZ68D4PWS9Q5BK2BBDM7"
 
 #define BACKEND_SERVICER_DOMAIN @"sites.zenplanner.com"

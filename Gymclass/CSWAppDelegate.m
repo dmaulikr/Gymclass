@@ -204,6 +204,9 @@
 
     CSWPrimaryViewController *pvc = _loginViewController.scheduleViewController;
     CSWScheduleStore *store = [CSWScheduleStore sharedStore];
+    
+    // this is a safeguard
+    [_loginViewController resetInteractionEnabledState];
 
     static bool appIsLaunching = true;
     if ( appIsLaunching ) {
@@ -240,6 +243,9 @@
                                       cancelButtonTitle:@"ok"
                                       otherButtonTitles:nil
                       ] show];
+                    
+                    // force user to "re-login"
+                    [_nav popToRootViewControllerAnimated:YES];
                     
                 } else {
                     

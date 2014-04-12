@@ -30,5 +30,7 @@
 -(IBAction)loginPressed:(id)sender;
 -(IBAction)logoutPressed:(id)sender;
 
+-(void)resetInteractionEnabledState;
+
 @end
 
