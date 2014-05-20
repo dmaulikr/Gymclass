@@ -145,6 +145,8 @@
                                       otherButtonTitles:nil
                       ] show];
                     
+                    [_nav popToRootViewControllerAnimated:YES]; // pop to login page
+                    
                 } else {
                     
                     if ( store.isLoggedIn ) {

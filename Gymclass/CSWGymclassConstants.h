@@ -10,7 +10,7 @@
 #define CSWGymclassConstants_h
 
 // comment out this line to use production web-service
-//#define USE_DEV_BACKEND
+#define USE_DEV_BACKEND
 
 #ifdef USE_DEV_BACKEND
 #define CONFIGURATION_DOMAIN @"dev.cindysoftware.com"
@@ -21,7 +21,7 @@
 #endif
 
 #define APP_VERSION_FOR_CONFIG @"1.1"
-#define APP_VERSION_FOR_ANALYTICS @"1.1.11"
+#define APP_VERSION_FOR_ANALYTICS @"1.1.12"
 
 #define LOG_DEBUG 0
 

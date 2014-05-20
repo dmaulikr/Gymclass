@@ -654,7 +654,7 @@ static NSMutableDictionary *gCachedLocationsByName;
                         }
                         
                         // this is strange thing I still see that "submarines" threw app closure/re-opens.
-                        //if ( error.code == 202 ) return;
+                        if ( error.code == 202 ) return;
                         
                     } else {
                         
