@@ -31,12 +31,6 @@
 		E707DB8F17BAB17C00BC611C /* CSWPrimaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E707DB8D17BAB17C00BC611C /* CSWPrimaryViewController.m */; };
 		E707DB9017BAB17C00BC611C /* CSWPrimaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E707DB8E17BAB17C00BC611C /* CSWPrimaryViewController.xib */; };
 		E70EAB5D16A4310C00B15E51 /* CSWInstructor.m in Sources */ = {isa = PBXBuildFile; fileRef = E70EAB5C16A4310C00B15E51 /* CSWInstructor.m */; };
-		E72AE65D17624450005233D4 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = E72AE65817624450005233D4 /* TFHpple.m */; };
-		E72AE65E17624450005233D4 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = E72AE65A17624450005233D4 /* TFHppleElement.m */; };
-		E72AE65F17624450005233D4 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = E72AE65C17624450005233D4 /* XPathQuery.m */; };
-		E72AE667176244B5005233D4 /* HttpPostValue.m in Sources */ = {isa = PBXBuildFile; fileRef = E72AE662176244B5005233D4 /* HttpPostValue.m */; };
-		E72AE668176244B5005233D4 /* XCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = E72AE664176244B5005233D4 /* XCapture.m */; };
-		E72AE669176244B5005233D4 /* HppleOp.m in Sources */ = {isa = PBXBuildFile; fileRef = E72AE666176244B5005233D4 /* HppleOp.m */; };
 		E73501701691495A0048A05B /* CSWDay.m in Sources */ = {isa = PBXBuildFile; fileRef = E735016F1691495A0048A05B /* CSWDay.m */; };
 		E73501741691498B0048A05B /* CSWTime.m in Sources */ = {isa = PBXBuildFile; fileRef = E73501731691498B0048A05B /* CSWTime.m */; };
 		E73D2B1717D687ED00997BA1 /* CSWWeek.m in Sources */ = {isa = PBXBuildFile; fileRef = E73D2B1617D67B4500997BA1 /* CSWWeek.m */; };
@@ -53,8 +47,6 @@
 		E7DD13DB17C2C2D1003B2F5B /* waitList@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E7DD13D917C2C2D0003B2F5B /* waitList@2x.png */; };
 		E7DD13DD17C2C2E3003B2F5B /* waitList.png in Resources */ = {isa = PBXBuildFile; fileRef = E7DD13DC17C2C2E3003B2F5B /* waitList.png */; };
 		E7E8DEA117CD0D7900E7195F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E8DEA017CD0D7900E7195F /* QuartzCore.framework */; };
-		E7EE7722176CBE7E00F2CB46 /* WebAbstract.m in Sources */ = {isa = PBXBuildFile; fileRef = E7EE771F176CBE7E00F2CB46 /* WebAbstract.m */; };
-		E7EE7723176CBE7E00F2CB46 /* WebAbstractConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E7EE7721176CBE7E00F2CB46 /* WebAbstractConfig.m */; };
 		E7F3A3EF165CFC0E00E1E2C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F3A3EE165CFC0E00E1E2C5 /* UIKit.framework */; };
 		E7F3A3F1165CFC0E00E1E2C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F3A3F0165CFC0E00E1E2C5 /* Foundation.framework */; };
 		E7F3A3F3165CFC0E00E1E2C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F3A3F2165CFC0E00E1E2C5 /* CoreGraphics.framework */; };
@@ -67,6 +59,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A6DB8EA089F130A02837A4E3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		AF7D72ADE56A4230854A063F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE19818018F05991002835A1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		CE20E2BB17DD6B7C00A8F55D /* CSWWodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWWodViewController.h; sourceTree = "<group>"; };
@@ -102,18 +95,6 @@
 		E70EAB5B16A4310C00B15E51 /* CSWInstructor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWInstructor.h; sourceTree = "<group>"; };
 		E70EAB5C16A4310C00B15E51 /* CSWInstructor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWInstructor.m; sourceTree = "<group>"; };
 		E70EAB5F16ACCEC400B15E51 /* gymclassConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gymclassConfig.plist; sourceTree = "<group>"; };
-		E72AE65717624450005233D4 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
-		E72AE65817624450005233D4 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
-		E72AE65917624450005233D4 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
-		E72AE65A17624450005233D4 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
-		E72AE65B17624450005233D4 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
-		E72AE65C17624450005233D4 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
-		E72AE661176244B5005233D4 /* HttpPostValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpPostValue.h; sourceTree = "<group>"; };
-		E72AE662176244B5005233D4 /* HttpPostValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpPostValue.m; sourceTree = "<group>"; };
-		E72AE663176244B5005233D4 /* XCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCapture.h; sourceTree = "<group>"; };
-		E72AE664176244B5005233D4 /* XCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCapture.m; sourceTree = "<group>"; };
-		E72AE665176244B5005233D4 /* HppleOp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HppleOp.h; sourceTree = "<group>"; };
-		E72AE666176244B5005233D4 /* HppleOp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HppleOp.m; sourceTree = "<group>"; };
 		E735016E1691495A0048A05B /* CSWDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWDay.h; sourceTree = "<group>"; };
 		E735016F1691495A0048A05B /* CSWDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWDay.m; sourceTree = "<group>"; };
 		E73501721691498B0048A05B /* CSWTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWTime.h; sourceTree = "<group>"; };
@@ -139,12 +120,7 @@
 		E7DD13D417C27843003B2F5B /* CSWScheduleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSWScheduleViewCell.xib; sourceTree = "<group>"; };
 		E7DD13D917C2C2D0003B2F5B /* waitList@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waitList@2x.png"; sourceTree = "<group>"; };
 		E7DD13DC17C2C2E3003B2F5B /* waitList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waitList.png; sourceTree = "<group>"; };
-		E7E112D1E31A4477AC930C55 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		E7E8DEA017CD0D7900E7195F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		E7EE771E176CBE7E00F2CB46 /* WebAbstract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebAbstract.h; sourceTree = "<group>"; };
-		E7EE771F176CBE7E00F2CB46 /* WebAbstract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebAbstract.m; sourceTree = "<group>"; };
-		E7EE7720176CBE7E00F2CB46 /* WebAbstractConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebAbstractConfig.h; sourceTree = "<group>"; };
-		E7EE7721176CBE7E00F2CB46 /* WebAbstractConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebAbstractConfig.m; sourceTree = "<group>"; };
 		E7F3A3EA165CFC0E00E1E2C5 /* Gymclass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gymclass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7F3A3EE165CFC0E00E1E2C5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E7F3A3F0165CFC0E00E1E2C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -159,6 +135,7 @@
 		E7F3A409165CFC0F00E1E2C5 /* Gymclass.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gymclass.xcdatamodel; sourceTree = "<group>"; };
 		E7FE08B416BA994A0038B762 /* CSWWod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWWod.h; sourceTree = "<group>"; };
 		E7FE08B516BA994A0038B762 /* CSWWod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWWod.m; sourceTree = "<group>"; };
+		E8509BE72A4138B49E345BE2 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +161,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05DC8F7E4B7226CE168E6CEC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E8509BE72A4138B49E345BE2 /* Pods.debug.xcconfig */,
+				A6DB8EA089F130A02837A4E3 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CEE07FB217BA51C700373DF9 /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,45 +185,6 @@
 			name = images;
 			sourceTree = "<group>";
 		};
-		E72AE65617624441005233D4 /* Hpple */ = {
-			isa = PBXGroup;
-			children = (
-				E72AE65717624450005233D4 /* TFHpple.h */,
-				E72AE65817624450005233D4 /* TFHpple.m */,
-				E72AE65917624450005233D4 /* TFHppleElement.h */,
-				E72AE65A17624450005233D4 /* TFHppleElement.m */,
-				E72AE65B17624450005233D4 /* XPathQuery.h */,
-				E72AE65C17624450005233D4 /* XPathQuery.m */,
-			);
-			name = Hpple;
-			sourceTree = "<group>";
-		};
-		E72AE66017624461005233D4 /* structs */ = {
-			isa = PBXGroup;
-			children = (
-				E72AE661176244B5005233D4 /* HttpPostValue.h */,
-				E72AE662176244B5005233D4 /* HttpPostValue.m */,
-				E72AE663176244B5005233D4 /* XCapture.h */,
-				E72AE664176244B5005233D4 /* XCapture.m */,
-				E72AE665176244B5005233D4 /* HppleOp.h */,
-				E72AE666176244B5005233D4 /* HppleOp.m */,
-			);
-			name = structs;
-			sourceTree = "<group>";
-		};
-		E75EEEB9173634D60093ADEB /* WebAbstract */ = {
-			isa = PBXGroup;
-			children = (
-				E7EE771E176CBE7E00F2CB46 /* WebAbstract.h */,
-				E7EE771F176CBE7E00F2CB46 /* WebAbstract.m */,
-				E7EE7720176CBE7E00F2CB46 /* WebAbstractConfig.h */,
-				E7EE7721176CBE7E00F2CB46 /* WebAbstractConfig.m */,
-				E72AE66017624461005233D4 /* structs */,
-				E72AE65617624441005233D4 /* Hpple */,
-			);
-			name = WebAbstract;
-			sourceTree = "<group>";
-		};
 		E7F3A3DF165CFC0E00E1E2C5 = {
 			isa = PBXGroup;
 			children = (
@@ -245,7 +192,7 @@
 				E7F3A3F6165CFC0F00E1E2C5 /* Gymclass */,
 				E7F3A3ED165CFC0E00E1E2C5 /* Frameworks */,
 				E7F3A3EB165CFC0E00E1E2C5 /* Products */,
-				E7E112D1E31A4477AC930C55 /* Pods.xcconfig */,
+				05DC8F7E4B7226CE168E6CEC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -327,7 +274,6 @@
 				CE605E6818F45E47000FC4C5 /* CSWIndicatorManager.m */,
 				CE73CD7D18DF48CB0009024E /* libFlurry_4.3.2.a */,
 				CEE07FB217BA51C700373DF9 /* images */,
-				E75EEEB9173634D60093ADEB /* WebAbstract */,
 				E7F3A408165CFC0F00E1E2C5 /* Gymclass.xcdatamodeld */,
 				E70EAB5F16ACCEC400B15E51 /* gymclassConfig.plist */,
 				E7F3A3F7165CFC0F00E1E2C5 /* Supporting Files */,
@@ -438,7 +384,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F767753FDFBE48A385F205D0 /* Check Pods Manifest.lock */ = {
@@ -476,14 +422,6 @@
 				E792F9A01693C1AF00DEFFAB /* CSWLocation.m in Sources */,
 				E70EAB5D16A4310C00B15E51 /* CSWInstructor.m in Sources */,
 				E7FE08B616BA994B0038B762 /* CSWWod.m in Sources */,
-				E72AE65D17624450005233D4 /* TFHpple.m in Sources */,
-				E72AE65E17624450005233D4 /* TFHppleElement.m in Sources */,
-				E72AE65F17624450005233D4 /* XPathQuery.m in Sources */,
-				E72AE667176244B5005233D4 /* HttpPostValue.m in Sources */,
-				E72AE668176244B5005233D4 /* XCapture.m in Sources */,
-				E72AE669176244B5005233D4 /* HppleOp.m in Sources */,
-				E7EE7722176CBE7E00F2CB46 /* WebAbstract.m in Sources */,
-				E7EE7723176CBE7E00F2CB46 /* WebAbstractConfig.m in Sources */,
 				E707DB8F17BAB17C00BC611C /* CSWPrimaryViewController.m in Sources */,
 				E78037FB17CD2D8B00A56DF3 /* CSWScheduleViewCell.m in Sources */,
 				CE605E6918F45E47000FC4C5 /* CSWIndicatorManager.m in Sources */,
@@ -568,7 +506,7 @@
 		};
 		E7F3A40E165CFC0F00E1E2C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7E112D1E31A4477AC930C55 /* Pods.xcconfig */;
+			baseConfigurationReference = E8509BE72A4138B49E345BE2 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -593,7 +531,7 @@
 		};
 		E7F3A40F165CFC0F00E1E2C5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E7E112D1E31A4477AC930C55 /* Pods.xcconfig */;
+			baseConfigurationReference = A6DB8EA089F130A02837A4E3 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
